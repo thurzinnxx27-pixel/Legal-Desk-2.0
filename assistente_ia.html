@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Assistente IA - Legal Desk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #16213e, #0f3460);
+            padding: 12px 20px;
+            border-bottom: 2px solid #1a3a6b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: #64b5f6;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: #90caf9;
+            font-size: 11px;
+            opacity: 0.8;
+            display: block;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #90caf9;
+            border: 1px solid #1a3a6b;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-outline:hover {
+            background: rgba(21, 101, 192, 0.2);
+            border-color: #64b5f6;
+        }
+
+        .btn-outline.voltar {
+            border-color: #ffb74d;
+            color: #ffb74d;
+        }
+
+        .btn-outline.voltar:hover {
+            background: rgba(255, 183, 77, 0.2);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #16162e;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .card h2 {
+            font-size: 17px;
+            color: #e0e0e0;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-messages {
+            background: #0d0d1a;
+            border-radius: 8px;
+            padding: 16px;
+            max-height: 450px;
+            overflow-y: auto;
+            border: 1px solid #2a2a4a;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .chat-messages .msg {
+            padding: 10px 16px;
+            border-radius: 12px;
+            max-width: 85%;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .chat-messages .msg.user {
+            background: #0d47a1;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-messages .msg.assistant {
+            background: #1a1a3e;
+            color: #e0e0e0;
+            border: 1px solid #2a2a4a;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-messages .msg .small {
+            font-size: 11px;
+            color: #8888aa;
+            margin-top: 4px;
+        }
+
+        .chat-messages .msg .typing {
+            display: inline-block;
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 12px 16px;
+            background: #1a1a3e;
+            border: 1px solid #2a2a4a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .chat-input-area input:focus {
+            outline: none;
+            border-color: #64b5f6;
+        }
+
+        .chat-input-area button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .chat-input-area button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(21, 101, 192, 0.4);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .quick-actions .tag {
+            background: #1a1a3e;
+            border: 1px solid #2a2a4a;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #90caf9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-actions .tag:hover {
+            background: #0d47a1;
+            border-color: #64b5f6;
+        }
+
+        .config-api {
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: #0d0d1a;
+            border-radius: 8px;
+            border: 1px solid #1a3a6b;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .config-api label {
+            font-size: 12px;
+            color: #8888aa;
+        }
+
+        .config-api input {
+            flex: 1;
+            padding: 6px 12px;
+            background: #1a1a3e;
+            border: 1px solid #2a2a4a;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-size: 13px;
+            min-width: 200px;
+        }
+
+        .config-api .status {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 12px;
+        }
+
+        .config-api .status.ativo {
+            background: #1b5e20;
+            color: #81c784;
+        }
+
+        .config-api .status.inativo {
+            background: #c62828;
+            color: #ef9a9a;
+        }
+
+        .footer-mini {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 1px solid #1a3a6b;
+            text-align: center;
+            font-size: 12px;
+            color: #666688;
+        }
+
+        .footer-mini .destaque {
+            color: #ffb74d;
+        }
+
+        .badge-ia {
+            background: linear-gradient(135deg, #6a1b9a, #4a148c);
+            color: #ce93d8;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 600px) {
+            .config-api {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .chat-input-area {
+                flex-direction: column;
+            }
+            .chat-input-area button {
+                width: 100%;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d1a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a4a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3a6a;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>🤖 Assistente IA</h1>
+            <span>Conversa inteligente com personalidade</span>
+        </div>
+        <div class="header-actions">
+            <button onclick="window.location.href='launcher.html'" class="btn-outline voltar">⬅ Voltar</button>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="card">
+            <h2>💬 Converse com a IA <span class="badge-ia">v3.0</span></h2>
+            <p style="color:#8888aa;font-size:13px;margin-bottom:12px;">Pergunte qualquer coisa sobre processos, prazos ou só converse!</p>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="msg assistant">👋 Olá! Eu sou sua assistente jurídica inteligente.<br><br>Pode me perguntar sobre:<br>• Prazos urgentes<br>• Resumo do escritório<br>• Processos específicos<br>• Recomendações<br><br>Ou só me diga "oi" para começar! 😊</div>
+            </div>
+
+            <div class="quick-actions">
+                <span class="tag" onclick="enviarTexto('oi, tudo bem?')">👋 Oi</span>
+                <span class="tag" onclick="enviarTexto('quais são os prazos urgentes?')">🔴 Urgentes</span>
+                <span class="tag" onclick="enviarTexto('me dê um resumo do escritório')">📊 Resumo</span>
+                <span class="tag" onclick="enviarTexto('o que devo fazer hoje?')">🎯 Hoje</span>
+                <span class="tag" onclick="enviarTexto('lista todos os processos ativos')">📋 Ativos</span>
+                <span class="tag" onclick="enviarTexto('me ajude a organizar o dia')">📅 Organizar</span>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Digite sua mensagem...">
+                <button onclick="enviarPergunta()">Enviar</button>
+            </div>
+
+            <!-- Configuração da API (opcional) -->
+            <div class="config-api">
+                <label>🔑 Chave da API (OpenAI):</label>
+                <input type="password" id="apiKeyInput" placeholder="sk-...">
+                <span class="status inativo" id="apiStatus">Inativo</span>
+                <button onclick="salvarChaveAPI()" class="btn-outline" style="border-color:#64b5f6;color:#64b5f6;">Salvar</button>
+                <span style="font-size:11px;color:#8888aa;">(Com chave, a IA fica mais inteligente!)</span>
+            </div>
+        </div>
+
+        <div class="footer-mini">
+            <span class="destaque">🚧 Site sendo criado</span> — Em breve você poderá acessar de qualquer lugar!
+        </div>
+
+    </main>
+
+    <script>
+        // =============================================
+        // ASSISTENTE IA v3.0 - COM PERSONALIDADE
+        // =============================================
+
+        let dados = { processos: [], prazos: [] };
+        let apiKey = '';
+        let conversa = [];
+        let usuarioNome = '';
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDados();
+            carregarChaveAPI();
+            carregarNomeUsuario();
+        });
+
+        // ===== CARREGAR DADOS =====
+        function carregarDados() {
+            try {
+                const usuarios = JSON.parse(localStorage.getItem('legalManagerUsuarios') || '{}');
+                const sessao = JSON.parse(localStorage.getItem('legalManagerSessao') || '{}');
+                if (sessao.email && usuarios[sessao.email]) {
+                    dados = usuarios[sessao.email].dados || { processos: [], prazos: [] };
+                } else {
+                    const saved = localStorage.getItem('legalManagerDados');
+                    if (saved) dados = JSON.parse(saved);
+                }
+            } catch (e) {
+                dados = { processos: [], prazos: [] };
+            }
+            if (!dados.processos) dados.processos = [];
+            if (!dados.prazos) dados.prazos = [];
+        }
+
+        function carregarNomeUsuario() {
+            try {
+                const sessao = JSON.parse(localStorage.getItem('legalManagerSessao') || '{}');
+                if (sessao.nome) {
+                    usuarioNome = sessao.nome;
+                } else {
+                    usuarioNome = 'Dr(a)';
+                }
+            } catch (e) {
+                usuarioNome = 'Dr(a)';
+            }
+        }
+
+        function carregarChaveAPI() {
+            try {
+                apiKey = localStorage.getItem('legalDeskApiKey') || '';
+                document.getElementById('apiKeyInput').value = apiKey;
+                atualizarStatusAPI();
+            } catch (e) {}
+        }
+
+        function salvarChaveAPI() {
+            apiKey = document.getElementById('apiKeyInput').value.trim();
+            localStorage.setItem('legalDeskApiKey', apiKey);
+            atualizarStatusAPI();
+            alert('✅ Chave salva!');
+        }
+
+        function atualizarStatusAPI() {
+            const status = document.getElementById('apiStatus');
+            if (apiKey && apiKey.startsWith('sk-')) {
+                status.textContent = '✅ Ativo';
+                status.className = 'status ativo';
+            } else {
+                status.textContent = '⛔ Inativo';
+                status.className = 'status inativo';
+            }
+        }
+
+        // ===== ENVIAR MENSAGEM =====
+        function enviarTexto(texto) {
+            document.getElementById('chatInput').value = texto;
+            enviarPergunta();
+        }
+
+        async function enviarPergunta() {
+            const input = document.getElementById('chatInput');
+            const pergunta = input.value.trim();
+            if (!pergunta) return;
+            input.value = '';
+
+            const messages = document.getElementById('chatMessages');
+            messages.innerHTML += `<div class="msg user">${pergunta}</div>`;
+            messages.scrollTop = messages.scrollHeight;
+
+            // Indicador de digitação
+            const typingId = 'typing_' + Date.now();
+            messages.innerHTML += `<div class="msg assistant" id="${typingId}"><span class="typing">●</span> <span class="typing" style="animation-delay:0.2s">●</span> <span class="typing" style="animation-delay:0.4s">●</span></div>`;
+            messages.scrollTop = messages.scrollHeight;
+
+            let resposta = '';
+
+            // Tenta usar API (se tiver chave)
+            if (apiKey && apiKey.startsWith('sk-')) {
+                try {
+                    resposta = await consultarAPI(pergunta);
+                } catch (e) {
+                    resposta = null;
+                }
+            }
+
+            // Fallback offline (com personalidade)
+            if (!resposta) {
+                resposta = gerarRespostaOffline(pergunta);
+            }
+
+            // Remove o indicador de digitação
+            const typingEl = document.getElementById(typingId);
+            if (typingEl) typingEl.remove();
+
+            // Adiciona a resposta
+            messages.innerHTML += `<div class="msg assistant">${resposta}</div>`;
+            messages.scrollTop = messages.scrollHeight;
+
+            // Salva na conversa
+            conversa.push({ role: 'user', content: pergunta });
+            conversa.push({ role: 'assistant', content: resposta });
+        }
+
+        // ===== CONSULTAR API (OpenAI) =====
+        async function consultarAPI(pergunta) {
+            const contexto = `
+            Você é uma assistente jurídica simpática, profissional e com personalidade.
+            Chame o usuário de ${usuarioNome} quando apropriado.
+            Responda de forma clara, com emojis quando fizer sentido.
+            Seja proativa: se a pergunta for vaga, ofereça opções.
+
+            Dados disponíveis:
+            Processos: ${dados.processos.map(p => `${p.numero} (${p.cliente}) - ${p.status}`).join('; ')}
+            Prazos: ${dados.prazos.map(p => `${p.descricao} - ${new Date(p.dataVencimento).toLocaleDateString('pt-BR')} (${p.status})`).join('; ')}
+            `;
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        { role: 'system', content: contexto },
+                        { role: 'user', content: pergunta }
+                    ],
+                    temperature: 0.7,
+                    max_tokens: 600
+                })
+            });
+
+            const data = await response.json();
+            if (data.error) throw new Error(data.error.message);
+            return data.choices[0].message.content;
+        }
+
+        // ===== RESPOSTA OFFLINE COM PERSONALIDADE =====
+        function gerarRespostaOffline(pergunta) {
+            const p = pergunta.toLowerCase().trim();
+            const hoje = new Date();
+
+            // ===== SAUDAÇÕES =====
+            if (p.match(/^(oi|olá|ola|hey|e aí|tudo bem|bom dia|boa tarde|boa noite|ei|opa|fala|iae|iae|eai)/i)) {
+                const saudacoes = [
+                    `Olá, ${usuarioNome}! 😊 Tudo bem? Como posso ajudar você hoje?`,
+                    `Oi, ${usuarioNome}! 👋 Que bom ver você por aqui. Precisa de algo?`,
+                    `Olá! 👋 Estou aqui para ajudar com o que você precisar.`,
+                    `Oi! Como você está hoje? Posso ajudar com processos ou prazos.`,
+                    `Olá, ${usuarioNome}! 😊 Estou pronta para ajudar com o que você precisar.`
+                ];
+                return saudacoes[Math.floor(Math.random() * saudacoes.length)];
+            }
+
+            // ===== PERGUNTAS SOBRE A IA =====
+            if (p.includes('quem é você') || p.includes('o que você é') || p.includes('como funciona')) {
+                return `🤖 Sou sua assistente jurídica inteligente! 💼\n\nAjuda com:
+        • Análise de prazos urgentes
+        • Resumo do escritório
+        • Detalhes de processos
+        • Recomendações de ações
+        • E muito mais!
+
+        Posso usar uma IA avançada se você ativar a chave API. Por enquanto, estou no modo offline, mas já posso ajudar bastante! 😊`;
+            }
+
+            // ===== PERGUNTA SOBRE COMO USAR =====
+            if (p.includes('como usar') || p.includes('me ajuda') || p.includes('o que posso perguntar')) {
+                return `📋 Você pode me perguntar sobre:\n\n` +
+                    `1️⃣ **Prazos urgentes** – "Quais são os prazos urgentes?"\n` +
+                    `2️⃣ **Resumo** – "Me dê um resumo do escritório"\n` +
+                    `3️⃣ **Processo específico** – "Mostre o processo 0001234-56"\n` +
+                    `4️⃣ **Recomendações** – "O que devo fazer hoje?"\n` +
+                    `5️⃣ **Lista de ativos** – "Lista todos os processos ativos"\n\n` +
+                    `E também posso responder saudações e dúvidas gerais! 😊`;
+            }
+
+            // ===== PRAZOS URGENTES =====
+            if (p.includes('urgente') || p.includes('prazo') && (p.includes('venc') || p.includes('dias') || p.includes('falta'))) {
+                const urgentes = dados.prazos.filter(pr => {
+                    if (pr.status === 'Cumprido') return false;
+                    const diff = Math.ceil((new Date(pr.dataVencimento) - hoje) / (1000 * 60 * 60 * 24));
+                    return diff <= 5;
+                });
+                if (urgentes.length === 0) {
+                    return `✅ Nenhum prazo urgente no momento, ${usuarioNome}! Todos os prazos estão acima de 5 dias. 🎉`;
+                }
+                let resposta = `🔴 Você tem ${urgentes.length} prazo(s) urgente(s), ${usuarioNome}:\n\n`;
+                urgentes.forEach(pr => {
+                    const proc = dados.processos.find(p => p.id === pr.processoId);
+                    const diff = Math.ceil((new Date(pr.dataVencimento) - hoje) / (1000 * 60 * 60 * 24));
+                    resposta += `• **${pr.descricao}** (Processo ${proc ? proc.numero : 'N/A'})\n  Vence em ${diff} dias.\n\n`;
+                });
+                return resposta + '\n💡 Recomendo priorizar esses prazos hoje!';
+            }
+
+            // ===== RESUMO =====
+            if (p.includes('resumo') || p.includes('geral') || p.includes('situação') || p.includes('panorama') || p.includes(
+                    'visão')) {
+                const ativos = dados.processos.filter(p => p.status === 'Ativo').length;
+                const concluidos = dados.processos.filter(p => p.status === 'Concluído').length;
+                const arquivados = dados.processos.length - ativos - concluidos;
+                const totalPrazos = dados.prazos.length;
+                const pendentes = dados.prazos.filter(p => p.status === 'Pendente').length;
+                const urgentes = dados.prazos.filter(pr => {
+                    if (pr.status === 'Cumprido') return false;
+                    return Math.ceil((new Date(pr.dataVencimento) - hoje) / (1000 * 60 * 60 * 24)) <= 5;
+                }).length;
+
+                return `📊 **Resumo do Escritório** – ${usuarioNome}\n\n` +
+                    `📂 **Processos:** ${dados.processos.length}\n` +
+                    `   ├─ Ativos: ${ativos}\n` +
+                    `   ├─ Concluídos: ${concluidos}\n` +
+                    `   └─ Arquivados: ${arquivados}\n\n` +
+                    `⏰ **Prazos:** ${totalPrazos}\n` +
+                    `   ├─ Pendentes: ${pendentes}\n` +
+                    `   ├─ Cumpridos: ${totalPrazos - pendentes}\n` +
+                    `   └─ Urgentes (≤5 dias): ${urgentes}\n\n` +
+                    (urgentes > 0 ? `🔴 Atenção! ${urgentes} prazo(s) urgente(s) precisam de ação.` : '✅ Tudo tranquilo!');
+            }
+
+            // ===== PROCESSO ESPECÍFICO =====
+            const procMatch = dados.processos.find(p =>
+                p.numero.includes(pergunta) ||
+                p.cliente.toLowerCase().includes(p) ||
+                (p.numero.toLowerCase().includes(p))
+            );
+
+            if (procMatch) {
+                const prazos = dados.prazos.filter(pr => pr.processoId === procMatch.id);
+                let resp = `📄 **Processo ${procMatch.numero}**\n` +
+                    `Cliente: ${procMatch.cliente}\n` +
+                    `Status: ${procMatch.status}\n` +
+                    `Vara: ${procMatch.vara || 'N/A'}\n` +
+                    `Juiz: ${procMatch.juiz || 'N/A'}\n` +
+                    `Observações: ${procMatch.observacoes || 'Nenhuma'}\n\n`;
+
+                if (prazos.length === 0) {
+                    resp += `📋 Nenhum prazo cadastrado para este processo.`;
+                } else {
+                    resp += `📋 **Prazos:**\n`;
+                    prazos.forEach(pr => {
+                        const diff = Math.ceil((new Date(pr.dataVencimento) - hoje) / (1000 * 60 * 60 * 24));
+                        resp += `• ${pr.descricao} (${new Date(pr.dataVencimento).toLocaleDateString('pt-BR')}) - ${pr.status} (${diff} dias)\n`;
+                    });
+                }
+                return resp;
+            }
+
+            // ===== RECOMENDAÇÃO DE AÇÃO =====
+            if (p.includes('recomend') || p.includes('sugest') || p.includes('devo fazer') || p.includes('ação') || p.includes(
+                    'hoje')) {
+                const urgentes = dados.prazos.filter(pr => {
+                    if (pr.status === 'Cumprido') return false;
+                    return Math.ceil((new Date(pr.dataVencimento) - hoje) / (1000 * 60 * 60 * 24)) <= 5;
+                });
+                if (urgentes.length === 0) {
+                    return `✅ No momento, não há ações urgentes, ${usuarioNome}! 🎉\n\nSugiro revisar os processos ativos e verificar se há prazos médios (6-15 dias) para se planejar.`;
+                }
+                let resp = `🎯 **Recomendação para hoje, ${usuarioNome}:**\n\n`;
+                urgentes.forEach(pr => {
+                    const proc = dados.processos.find(p => p.id === pr.processoId);
+                    const diff = Math.ceil((new Date(pr.dataVencimento) - hoje) / (1000 * 60 * 60 * 24));
+                    resp += `• **Priorize** o prazo "${pr.descricao}" do processo ${proc ? proc.numero : 'N/A'} (vence em ${diff} dias).\n`;
+                });
+                resp += '\n💡 Reserve 15 minutos para revisar cada um desses processos.';
+                return resp;
+            }
+
+            // ===== LISTA DE PROCESSOS ATIVOS =====
+            if (p.includes('ativos') || p.includes('listar') && p.includes('processo')) {
+                const ativos = dados.processos.filter(p => p.status === 'Ativo');
+                if (ativos.length === 0) return `Nenhum processo ativo no momento, ${usuarioNome}.`;
+                return `📋 **Processos Ativos (${ativos.length})**\n${ativos.map(p => `• ${p.numero} (${p.cliente})`).join('\n')}`;
+            }
+
+            // ===== AGRADECIMENTOS =====
+            if (p.includes('obrigado') || p.includes('valeu') || p.includes('gratidão')) {
+                return `😊 Por nada, ${usuarioNome}! Fico feliz em ajudar. Qualquer coisa, estou aqui!`;
+            }
+
+            // ===== DESPEDIDA =====
+            if (p.includes('tchau') || p.includes('até logo') || p.includes('até mais') || p.includes('flw')) {
+                return `👋 Tchau, ${usuarioNome}! Até a próxima. Se precisar, é só chamar! 😊`;
+            }
+
+            // ===== PERGUNTA GENÉRICA =====
+            return `🤔 Hmm, não tenho certeza sobre "${pergunta}", ${usuarioNome}.\n\nTente perguntar sobre:\n\n` +
+                `• "Quais são os prazos urgentes?"\n` +
+                `• "Me dê um resumo do escritório"\n` +
+                `• "Mostre o processo 0001234-56"\n` +
+                `• "O que devo fazer hoje?"\n` +
+                `• "Liste todos os processos ativos"\n\n` +
+                `Ou me diga "oi" para começar! 😊`;
+        }
+
+        // ===== ENTER PARA ENVIAR =====
+        document.getElementById('chatInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') enviarPergunta();
+        });
+
+        console.log('🤖 Assistente IA v3.0 carregado!');
+        console.log(`👤 Usuário: ${usuarioNome}`);
+        console.log(`📂 ${dados.processos.length} processos, ⏰ ${dados.prazos.length} prazos`);
+    </script>
+
+</body>
+</html>

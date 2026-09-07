@@ -318,18 +318,18 @@
             <span>Conversa inteligente com personalidade</span>
         </div>
         <div class="header-actions">
-            <button onclick="window.location.href='launcher.html'" class="btn-outline voltar">⬅ Voltar</button>
+            <button onclick="window.location.href='index.html'" class="btn-outline voltar">⬅ Voltar</button>
         </div>
     </header>
 
     <main>
 
         <div class="card">
-            <h2>💬 Converse com a IA <span class="badge-ia">v3.0</span></h2>
+            <h2>💬 Converse com a IA <span class="badge-ia">v4.0</span></h2>
             <p style="color:#8888aa;font-size:13px;margin-bottom:12px;">Pergunte qualquer coisa sobre processos, prazos ou só converse!</p>
 
             <div class="chat-messages" id="chatMessages">
-                <div class="msg assistant">👋 Olá! Eu sou sua assistente jurídica inteligente.<br><br>Pode me perguntar sobre:<br>• Prazos urgentes<br>• Resumo do escritório<br>• Processos específicos<br>• Recomendações<br><br>Ou só me diga "oi" para começar! 😊</div>
+                <div class="msg assistant">👋 Olá! Sou sua assistente jurídica inteligente.<br><br>Pode me perguntar sobre:<br>• Prazos urgentes<br>• Resumo do escritório<br>• Processos específicos<br>• Recomendações<br><br>Ou só me diga "oi" para começar! 😊</div>
             </div>
 
             <div class="quick-actions">
@@ -364,50 +364,60 @@
 
     <script>
         // =============================================
-        // ASSISTENTE IA v3.0 - COM PERSONALIDADE
+        // ASSISTENTE IA v4.0 - INTEGRADO
         // =============================================
 
-        let dados = { processos: [], prazos: [] };
+        let dados = { processos: [], prazos: [], clientes: [] };
         let apiKey = '';
-        let conversa = [];
         let usuarioNome = '';
 
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
-            carregarDados();
+            carregarTudo();
             carregarChaveAPI();
-            carregarNomeUsuario();
         });
 
-        // ===== CARREGAR DADOS =====
-        function carregarDados() {
+        // ===== CARREGAR DADOS COMPLETOS =====
+        function carregarTudo() {
+            // 1. Dados do Legal Manager
             try {
                 const usuarios = JSON.parse(localStorage.getItem('legalManagerUsuarios') || '{}');
                 const sessao = JSON.parse(localStorage.getItem('legalManagerSessao') || '{}');
                 if (sessao.email && usuarios[sessao.email]) {
-                    dados = usuarios[sessao.email].dados || { processos: [], prazos: [] };
-                } else {
-                    const saved = localStorage.getItem('legalManagerDados');
-                    if (saved) dados = JSON.parse(saved);
+                    const userData = usuarios[sessao.email];
+                    dados.processos = userData.dados?.processos || [];
+                    dados.prazos = userData.dados?.prazos || [];
+                    if (userData.nome) usuarioNome = userData.nome;
                 }
-            } catch (e) {
-                dados = { processos: [], prazos: [] };
-            }
-            if (!dados.processos) dados.processos = [];
-            if (!dados.prazos) dados.prazos = [];
-        }
+            } catch (e) {}
 
-        function carregarNomeUsuario() {
+            // 2. Dados do Clientes/Contatos
             try {
-                const sessao = JSON.parse(localStorage.getItem('legalManagerSessao') || '{}');
-                if (sessao.nome) {
-                    usuarioNome = sessao.nome;
-                } else {
+                const clientes = JSON.parse(localStorage.getItem('clientesContatos') || '[]');
+                dados.clientes = clientes;
+            } catch (e) {}
+
+            // 3. Fallback para nome
+            if (!usuarioNome) {
+                try {
+                    const sessao = JSON.parse(localStorage.getItem('legalManagerSessao') || '{}');
+                    if (sessao.nome) usuarioNome = sessao.nome;
+                } catch (e) {
                     usuarioNome = 'Dr(a)';
                 }
-            } catch (e) {
-                usuarioNome = 'Dr(a)';
             }
+
+            // Garantir arrays
+            if (!dados.processos) dados.processos = [];
+            if (!dados.prazos) dados.prazos = [];
+            if (!dados.clientes) dados.clientes = [];
+
+            // Mostrar status no console
+            console.log('🤖 IA carregada com:');
+            console.log(`👤 Nome: ${usuarioNome}`);
+            console.log(`📂 Processos: ${dados.processos.length}`);
+            console.log(`⏰ Prazos: ${dados.prazos.length}`);
+            console.log(`👥 Clientes: ${dados.clientes.length}`);
         }
 
         function carregarChaveAPI() {
@@ -480,23 +490,24 @@
             // Adiciona a resposta
             messages.innerHTML += `<div class="msg assistant">${resposta}</div>`;
             messages.scrollTop = messages.scrollHeight;
-
-            // Salva na conversa
-            conversa.push({ role: 'user', content: pergunta });
-            conversa.push({ role: 'assistant', content: resposta });
         }
 
         // ===== CONSULTAR API (OpenAI) =====
         async function consultarAPI(pergunta) {
             const contexto = `
             Você é uma assistente jurídica simpática, profissional e com personalidade.
-            Chame o usuário de ${usuarioNome} quando apropriado.
+            O usuário se chama ${usuarioNome}.
             Responda de forma clara, com emojis quando fizer sentido.
             Seja proativa: se a pergunta for vaga, ofereça opções.
 
             Dados disponíveis:
+            - ${dados.processos.length} processos
+            - ${dados.prazos.length} prazos
+            - ${dados.clientes.length} clientes
+
             Processos: ${dados.processos.map(p => `${p.numero} (${p.cliente}) - ${p.status}`).join('; ')}
             Prazos: ${dados.prazos.map(p => `${p.descricao} - ${new Date(p.dataVencimento).toLocaleDateString('pt-BR')} (${p.status})`).join('; ')}
+            Clientes: ${dados.clientes.map(c => `${c.nome} (${c.processos || 'Nenhum processo'})`).join('; ')}
             `;
 
             const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -527,7 +538,7 @@
             const hoje = new Date();
 
             // ===== SAUDAÇÕES =====
-            if (p.match(/^(oi|olá|ola|hey|e aí|tudo bem|bom dia|boa tarde|boa noite|ei|opa|fala|iae|iae|eai)/i)) {
+            if (p.match(/^(oi|olá|ola|hey|e aí|tudo bem|bom dia|boa tarde|boa noite|ei|opa|fala|iae|eai|salve|fala aí)/i)) {
                 const saudacoes = [
                     `Olá, ${usuarioNome}! 😊 Tudo bem? Como posso ajudar você hoje?`,
                     `Oi, ${usuarioNome}! 👋 Que bom ver você por aqui. Precisa de algo?`,
@@ -540,11 +551,12 @@
 
             // ===== PERGUNTAS SOBRE A IA =====
             if (p.includes('quem é você') || p.includes('o que você é') || p.includes('como funciona')) {
-                return `🤖 Sou sua assistente jurídica inteligente! 💼\n\nAjuda com:
+                return `🤖 Sou sua assistente jurídica inteligente, ${usuarioNome}! 💼\n\nAjuda com:
         • Análise de prazos urgentes
         • Resumo do escritório
         • Detalhes de processos
         • Recomendações de ações
+        • Informações sobre clientes
         • E muito mais!
 
         Posso usar uma IA avançada se você ativar a chave API. Por enquanto, estou no modo offline, mas já posso ajudar bastante! 😊`;
@@ -557,8 +569,17 @@
                     `2️⃣ **Resumo** – "Me dê um resumo do escritório"\n` +
                     `3️⃣ **Processo específico** – "Mostre o processo 0001234-56"\n` +
                     `4️⃣ **Recomendações** – "O que devo fazer hoje?"\n` +
-                    `5️⃣ **Lista de ativos** – "Lista todos os processos ativos"\n\n` +
+                    `5️⃣ **Lista de ativos** – "Lista todos os processos ativos"\n` +
+                    `6️⃣ **Clientes** – "Quem são meus clientes?"\n\n` +
                     `E também posso responder saudações e dúvidas gerais! 😊`;
+            }
+
+            // ===== CLIENTES =====
+            if (p.includes('cliente') || p.includes('clientes')) {
+                if (dados.clientes.length === 0) {
+                    return `📭 Você ainda não tem clientes cadastrados, ${usuarioNome}. Cadastre alguns no módulo "Clientes / Contatos"!`;
+                }
+                return `👤 **Seus Clientes (${dados.clientes.length})**\n\n${dados.clientes.map(c => `• ${c.nome}${c.telefone ? ' - 📞 ' + c.telefone : ''}${c.processos ? ' - 📂 ' + c.processos : ''}`).join('\n')}`;
             }
 
             // ===== PRAZOS URGENTES =====
@@ -581,8 +602,7 @@
             }
 
             // ===== RESUMO =====
-            if (p.includes('resumo') || p.includes('geral') || p.includes('situação') || p.includes('panorama') || p.includes(
-                    'visão')) {
+            if (p.includes('resumo') || p.includes('geral') || p.includes('situação') || p.includes('panorama') || p.includes('visão')) {
                 const ativos = dados.processos.filter(p => p.status === 'Ativo').length;
                 const concluidos = dados.processos.filter(p => p.status === 'Concluído').length;
                 const arquivados = dados.processos.length - ativos - concluidos;
@@ -602,6 +622,7 @@
                     `   ├─ Pendentes: ${pendentes}\n` +
                     `   ├─ Cumpridos: ${totalPrazos - pendentes}\n` +
                     `   └─ Urgentes (≤5 dias): ${urgentes}\n\n` +
+                    `👥 **Clientes:** ${dados.clientes.length}\n\n` +
                     (urgentes > 0 ? `🔴 Atenção! ${urgentes} prazo(s) urgente(s) precisam de ação.` : '✅ Tudo tranquilo!');
             }
 
@@ -634,8 +655,7 @@
             }
 
             // ===== RECOMENDAÇÃO DE AÇÃO =====
-            if (p.includes('recomend') || p.includes('sugest') || p.includes('devo fazer') || p.includes('ação') || p.includes(
-                    'hoje')) {
+            if (p.includes('recomend') || p.includes('sugest') || p.includes('devo fazer') || p.includes('ação') || p.includes('hoje')) {
                 const urgentes = dados.prazos.filter(pr => {
                     if (pr.status === 'Cumprido') return false;
                     return Math.ceil((new Date(pr.dataVencimento) - hoje) / (1000 * 60 * 60 * 24)) <= 5;
@@ -661,12 +681,12 @@
             }
 
             // ===== AGRADECIMENTOS =====
-            if (p.includes('obrigado') || p.includes('valeu') || p.includes('gratidão')) {
+            if (p.includes('obrigado') || p.includes('valeu') || p.includes('gratidão') || p.includes('obg')) {
                 return `😊 Por nada, ${usuarioNome}! Fico feliz em ajudar. Qualquer coisa, estou aqui!`;
             }
 
             // ===== DESPEDIDA =====
-            if (p.includes('tchau') || p.includes('até logo') || p.includes('até mais') || p.includes('flw')) {
+            if (p.includes('tchau') || p.includes('até logo') || p.includes('até mais') || p.includes('flw') || p.includes('falou')) {
                 return `👋 Tchau, ${usuarioNome}! Até a próxima. Se precisar, é só chamar! 😊`;
             }
 
@@ -676,7 +696,8 @@
                 `• "Me dê um resumo do escritório"\n` +
                 `• "Mostre o processo 0001234-56"\n` +
                 `• "O que devo fazer hoje?"\n` +
-                `• "Liste todos os processos ativos"\n\n` +
+                `• "Liste todos os processos ativos"\n` +
+                `• "Quem são meus clientes?"\n\n` +
                 `Ou me diga "oi" para começar! 😊`;
         }
 
@@ -685,9 +706,9 @@
             if (e.key === 'Enter') enviarPergunta();
         });
 
-        console.log('🤖 Assistente IA v3.0 carregado!');
+        console.log('🤖 Assistente IA v4.0 carregado!');
         console.log(`👤 Usuário: ${usuarioNome}`);
-        console.log(`📂 ${dados.processos.length} processos, ⏰ ${dados.prazos.length} prazos`);
+        console.log(`📂 ${dados.processos.length} processos, ⏰ ${dados.prazos.length} prazos, 👥 ${dados.clientes.length} clientes`);
     </script>
 
 </body>

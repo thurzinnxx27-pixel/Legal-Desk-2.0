@@ -143,13 +143,8 @@
         }
 
         @keyframes blink {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.2;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
         }
 
         .chat-input-area {
@@ -318,6 +313,7 @@
             <span>Conversa inteligente com personalidade</span>
         </div>
         <div class="header-actions">
+            <!-- CORRIGIDO: AGORA VAI PARA index.html -->
             <button onclick="window.location.href='index.html'" class="btn-outline voltar">⬅ Voltar</button>
         </div>
     </header>
@@ -325,7 +321,7 @@
     <main>
 
         <div class="card">
-            <h2>💬 Converse com a IA <span class="badge-ia">v4.0</span></h2>
+            <h2>💬 Converse com a IA <span class="badge-ia">v4.1</span></h2>
             <p style="color:#8888aa;font-size:13px;margin-bottom:12px;">Pergunte qualquer coisa sobre processos, prazos ou só converse!</p>
 
             <div class="chat-messages" id="chatMessages">
@@ -346,7 +342,6 @@
                 <button onclick="enviarPergunta()">Enviar</button>
             </div>
 
-            <!-- Configuração da API (opcional) -->
             <div class="config-api">
                 <label>🔑 Chave da API (OpenAI):</label>
                 <input type="password" id="apiKeyInput" placeholder="sk-...">
@@ -364,7 +359,7 @@
 
     <script>
         // =============================================
-        // ASSISTENTE IA v4.0 - INTEGRADO
+        // ASSISTENTE IA v4.1 - INTEGRADO E CORRIGIDO
         // =============================================
 
         let dados = { processos: [], prazos: [], clientes: [] };
@@ -412,7 +407,6 @@
             if (!dados.prazos) dados.prazos = [];
             if (!dados.clientes) dados.clientes = [];
 
-            // Mostrar status no console
             console.log('🤖 IA carregada com:');
             console.log(`👤 Nome: ${usuarioNome}`);
             console.log(`📂 Processos: ${dados.processos.length}`);
@@ -462,14 +456,12 @@
             messages.innerHTML += `<div class="msg user">${pergunta}</div>`;
             messages.scrollTop = messages.scrollHeight;
 
-            // Indicador de digitação
             const typingId = 'typing_' + Date.now();
             messages.innerHTML += `<div class="msg assistant" id="${typingId}"><span class="typing">●</span> <span class="typing" style="animation-delay:0.2s">●</span> <span class="typing" style="animation-delay:0.4s">●</span></div>`;
             messages.scrollTop = messages.scrollHeight;
 
             let resposta = '';
 
-            // Tenta usar API (se tiver chave)
             if (apiKey && apiKey.startsWith('sk-')) {
                 try {
                     resposta = await consultarAPI(pergunta);
@@ -478,16 +470,13 @@
                 }
             }
 
-            // Fallback offline (com personalidade)
             if (!resposta) {
                 resposta = gerarRespostaOffline(pergunta);
             }
 
-            // Remove o indicador de digitação
             const typingEl = document.getElementById(typingId);
             if (typingEl) typingEl.remove();
 
-            // Adiciona a resposta
             messages.innerHTML += `<div class="msg assistant">${resposta}</div>`;
             messages.scrollTop = messages.scrollHeight;
         }
@@ -706,7 +695,7 @@
             if (e.key === 'Enter') enviarPergunta();
         });
 
-        console.log('🤖 Assistente IA v4.0 carregado!');
+        console.log('🤖 Assistente IA v4.1 carregado!');
         console.log(`👤 Usuário: ${usuarioNome}`);
         console.log(`📂 ${dados.processos.length} processos, ⏰ ${dados.prazos.length} prazos, 👥 ${dados.clientes.length} clientes`);
     </script>

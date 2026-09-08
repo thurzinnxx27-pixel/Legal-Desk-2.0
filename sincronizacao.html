@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☁️ Sincronização - Legal Desk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #16213e, #0f3460);
+            padding: 12px 20px;
+            border-bottom: 2px solid #1a3a6b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            color: #64b5f6;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: #90caf9;
+            font-size: 11px;
+            opacity: 0.8;
+            display: block;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #90caf9;
+            border: 1px solid #1a3a6b;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-outline:hover {
+            background: rgba(21, 101, 192, 0.2);
+            border-color: #64b5f6;
+        }
+
+        .btn-outline.voltar {
+            border-color: #ffb74d;
+            color: #ffb74d;
+        }
+
+        .btn-outline.voltar:hover {
+            background: rgba(255, 183, 77, 0.2);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #16162e;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .card h2 {
+            font-size: 17px;
+            color: #e0e0e0;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card .subtitle {
+            color: #8888aa;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .storage-meter {
+            background: #0d0d1a;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #1a3a6b;
+        }
+
+        .storage-meter .used {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e0e0e0;
+        }
+
+        .storage-meter .used .total {
+            font-size: 16px;
+            font-weight: 400;
+            color: #8888aa;
+        }
+
+        .storage-meter .bar {
+            height: 12px;
+            background: #1a1a3e;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .storage-meter .bar .fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+            background: linear-gradient(90deg, #4CAF50, #FFC107, #f44336);
+        }
+
+        .storage-meter .details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #8888aa;
+            margin-top: 4px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(21, 101, 192, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        .btn-secondary {
+            background: #2d2d44;
+            color: #e0e0e0;
+            border: 1px solid #3d3d5a;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #3d3d5a;
+        }
+
+        .btn-buy {
+            background: linear-gradient(135deg, #f57c00, #e65100);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-buy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245, 124, 0, 0.4);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .form-actions button {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .status-box {
+            background: #1a1a3e;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid #64b5f6;
+        }
+
+        .status-box.show {
+            display: flex;
+        }
+
+        .status-box.success {
+            border-left-color: #4CAF50;
+        }
+
+        .status-box.error {
+            border-left-color: #f44336;
+        }
+
+        .status-box .icon {
+            font-size: 20px;
+        }
+
+        .status-box .msg {
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        .form-group {
+            padding: 6px 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #aaaacc;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            background: #1a1a3e;
+            border: 1px solid #2a2a4a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #64b5f6;
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.2);
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .plan-card {
+            background: #0d0d1a;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #2a2a4a;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .plan-card:hover {
+            border-color: #64b5f6;
+            transform: translateY(-3px);
+        }
+
+        .plan-card .price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffb74d;
+        }
+
+        .plan-card .price small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #8888aa;
+        }
+
+        .plan-card .name {
+            font-size: 14px;
+            color: #e0e0e0;
+            margin-top: 4px;
+        }
+
+        .plan-card .btn-buy-small {
+            background: linear-gradient(135deg, #f57c00, #e65100);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .plan-card .btn-buy-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(245, 124, 0, 0.4);
+        }
+
+        .footer-mini {
+            margin-top: 30px;
+            padding-top: 16px;
+            border-top: 1px solid #1a3a6b;
+            text-align: center;
+            font-size: 12px;
+            color: #666688;
+        }
+
+        .footer-mini .destaque {
+            color: #ffb74d;
+        }
+
+        .badge-sync {
+            background: linear-gradient(135deg, #0d47a1, #1565c0);
+            color: #90caf9;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 600px) {
+            .form-actions {
+                flex-direction: column;
+            }
+            .form-actions button {
+                width: 100%;
+            }
+            .plans-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d1a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a4a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3a6a;
+        }
+
+        .sincronizado {
+            color: #81c784;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <h1>☁️ Sincronização <span class="badge-sync">Ativo</span></h1>
+            <span>Armazenamento e sincronização na nuvem</span>
+        </div>
+        <div class="header-actions">
+            <button onclick="window.location.href='index.html'" class="btn-outline voltar">⬅ Voltar</button>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ===== MEDIDOR DE ESPAÇO ===== -->
+        <div class="card">
+            <h2>📊 Espaço em Nuvem</h2>
+            <div class="storage-meter">
+                <div>
+                    <span class="used" id="espacoUsado">0 <span class="total">MB</span></span>
+                    <span style="color:#8888aa;font-size:14px;margin-left:12px;">de <span id="espacoLimite">100</span> MB</span>
+                </div>
+                <div class="bar">
+                    <div class="fill" id="barraEspaco" style="width:0%;"></div>
+                </div>
+                <div class="details">
+                    <span id="porcentagemUsada">0% usado</span>
+                    <span id="espacoLivre">100 MB livre</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SINCRONIZAÇÃO ===== -->
+        <div class="card">
+            <h2>🔄 Sincronizar Dados</h2>
+            <p class="subtitle">Salve seus dados na nuvem para acessar de qualquer dispositivo.</p>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button onclick="salvarNaNuvem()" class="btn-success" id="btnSalvar">📤 Salvar na Nuvem</button>
+                <button onclick="carregarDaNuvem()" class="btn-primary" id="btnCarregar">📥 Carregar da Nuvem</button>
+                <button onclick="verificarSincronizacao()" class="btn-secondary">🔍 Verificar</button>
+            </div>
+
+            <div id="statusSincronizacao" class="status-box">
+                <span class="icon">✅</span>
+                <span class="msg">Sincronização concluída!</span>
+            </div>
+        </div>
+
+        <!-- ===== COMPRAR MAIS ESPAÇO ===== -->
+        <div class="card">
+            <h2>💰 Comprar Mais Espaço</h2>
+            <p class="subtitle">Amplie seu armazenamento na nuvem para nunca perder seus dados.</p>
+
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="price">R$ 4,90 <small>/mês</small></div>
+                    <div class="name">📦 +1 GB</div>
+                    <button class="btn-buy-small" onclick="comprarEspaco('1gb')">Comprar</button>
+                </div>
+                <div class="plan-card">
+                    <div class="price">R$ 9,90 <small>/mês</small></div>
+                    <div class="name">📦 +5 GB</div>
+                    <button class="btn-buy-small" onclick="comprarEspaco('5gb')">Comprar</button>
+                </div>
+                <div class="plan-card">
+                    <div class="price">R$ 19,90 <small>/mês</small></div>
+                    <div class="name">📦 +10 GB</div>
+                    <button class="btn-buy-small" onclick="comprarEspaco('10gb')">Comprar</button>
+                </div>
+                <div class="plan-card">
+                    <div class="price">R$ 49,90 <small>/mês</small></div>
+                    <div class="name">📦 +50 GB</div>
+                    <button class="btn-buy-small" onclick="comprarEspaco('50gb')">Comprar</button>
+                </div>
+            </div>
+
+            <div style="margin-top:16px;padding:12px 16px;background:#0d0d1a;border-radius:8px;border:1px solid #1a3a6b;">
+                <p style="font-size:13px;color:#8888aa;text-align:center;">
+                    🔒 Pagamento seguro via <strong style="color:#64b5f6;">Mercado Pago</strong>.
+                    Após a confirmação, você receberá um código de ativação por e-mail.
+                </p>
+            </div>
+
+            <!-- Ativação por código -->
+            <div style="margin-top:16px;padding:16px;background:#0d0d1a;border-radius:8px;border:1px solid #1a3a6b;">
+                <h3 style="font-size:14px;color:#e0e0e0;margin-bottom:8px;">🔑 Ativar mais espaço com código</h3>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <input type="text" id="codigoAtivacao" placeholder="Digite o código de ativação" style="flex:1;padding:10px 14px;background:#1a1a3e;border:1px solid #2a2a4a;border-radius:8px;color:#e0e0e0;font-size:14px;min-width:200px;">
+                    <button onclick="ativarCodigo()" class="btn-primary">✅ Ativar</button>
+                </div>
+                <div id="statusAtivacao" style="margin-top:8px;font-size:13px;color:#8888aa;"></div>
+            </div>
+        </div>
+
+        <div class="footer-mini">
+            <span class="destaque">🚧 Site sendo criado</span> — Em breve você poderá acessar de qualquer lugar!
+        </div>
+
+    </main>
+
+    <script>
+        // =============================================
+        // SINCRONIZAÇÃO NA NUVEM - COM SEUS CÓDIGOS
+        // =============================================
+
+        // ===== SEUS CÓDIGOS DO JSONBIN.IO =====
+        const CONFIG = {
+            BIN_ID: '6a9f676aac6210605ab1b8ab',
+            API_KEY: '$2a$10$8Wjcl/uStay64NMtz/tdJ.ZwVj0EtKK2rYgTsygralmxa/10SkKLm',
+            LIMITE_INICIAL_MB: 100,
+            PLANOS: {
+                '1gb': { gb: 1, preco: 4.90, codigo: 'LEGAL-1GB' },
+                '5gb': { gb: 5, preco: 9.90, codigo: 'LEGAL-5GB' },
+                '10gb': { gb: 10, preco: 19.90, codigo: 'LEGAL-10GB' },
+                '50gb': { gb: 50, preco: 49.90, codigo: 'LEGAL-50GB' }
+            },
+            LINK_COMPRA: 'https://www.mercadopago.com.br/checkout'
+        };
+
+        // ===== VARIÁVEIS =====
+        let dados = { processos: [], prazos: [], clientes: [] };
+        let espacoUsado = 0;
+        let limiteMB = CONFIG.LIMITE_INICIAL_MB;
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDadosLocal();
+            carregarLimite();
+            atualizarEspaco();
+            verificarSincronizacaoInicial();
+        });
+
+        function verificarSincronizacaoInicial() {
+            // Mostra que a sincronização está configurada
+            console.log('☁️ Sincronização configurada com sucesso!');
+            console.log(`📦 BIN ID: ${CONFIG.BIN_ID}`);
+        }
+
+        // ===== CARREGAR DADOS LOCAIS =====
+        function carregarDadosLocal() {
+            try {
+                const usuarios = JSON.parse(localStorage.getItem('legalManagerUsuarios') || '{}');
+                const sessao = JSON.parse(localStorage.getItem('legalManagerSessao') || '{}');
+                if (sessao.email && usuarios[sessao.email]) {
+                    const userData = usuarios[sessao.email];
+                    dados.processos = userData.dados?.processos || [];
+                    dados.prazos = userData.dados?.prazos || [];
+                }
+                const clientes = JSON.parse(localStorage.getItem('clientesContatos') || '[]');
+                dados.clientes = clientes;
+            } catch (e) {
+                dados = { processos: [], prazos: [], clientes: [] };
+            }
+            if (!dados.processos) dados.processos = [];
+            if (!dados.prazos) dados.prazos = [];
+            if (!dados.clientes) dados.clientes = [];
+        }
+
+        // ===== LIMITE DE ESPAÇO =====
+        function carregarLimite() {
+            try {
+                const saved = localStorage.getItem('legalDeskLimiteMB');
+                if (saved) {
+                    limiteMB = parseInt(saved);
+                }
+            } catch (e) {
+                limiteMB = CONFIG.LIMITE_INICIAL_MB;
+            }
+        }
+
+        function salvarLimite() {
+            try {
+                localStorage.setItem('legalDeskLimiteMB', limiteMB.toString());
+            } catch (e) {}
+        }
+
+        // ===== CALCULAR ESPAÇO USADO =====
+        function calcularEspacoUsado() {
+            const dadosStr = JSON.stringify(dados);
+            const bytes = new Blob([dadosStr]).size;
+            const mb = bytes / (1024 * 1024);
+            return Math.round(mb * 100) / 100;
+        }
+
+        function atualizarEspaco() {
+            espacoUsado = calcularEspacoUsado();
+            const usadoMB = espacoUsado;
+            const percentual = Math.min((usadoMB / limiteMB) * 100, 100);
+
+            document.getElementById('espacoUsado').innerHTML = `${usadoMB.toFixed(2)} <span class="total">MB</span>`;
+            document.getElementById('espacoLimite').textContent = limiteMB;
+            document.getElementById('barraEspaco').style.width = percentual + '%';
+            document.getElementById('porcentagemUsada').textContent = percentual.toFixed(1) + '% usado';
+            document.getElementById('espacoLivre').textContent = Math.max(limiteMB - usadoMB, 0).toFixed(2) + ' MB livre';
+
+            const barra = document.getElementById('barraEspaco');
+            if (percentual > 80) {
+                barra.style.background = 'linear-gradient(90deg, #f44336, #c62828)';
+            } else if (percentual > 60) {
+                barra.style.background = 'linear-gradient(90deg, #FFC107, #f57c00)';
+            } else {
+                barra.style.background = 'linear-gradient(90deg, #4CAF50, #8BC34A)';
+            }
+        }
+
+        // ===== SALVAR NA NUVEM =====
+        function salvarNaNuvem() {
+            mostrarStatus('📤 Salvando na nuvem...', '');
+            const btn = document.getElementById('btnSalvar');
+            btn.disabled = true;
+            btn.textContent = '⏳ Salvando...';
+
+            const espaco = calcularEspacoUsado();
+            if (espaco > limiteMB) {
+                mostrarStatus('❌ Espaço insuficiente! Compre mais espaço.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '📤 Salvar na Nuvem';
+                return;
+            }
+
+            // Preparar dados
+            const dadosCompletos = {
+                usuario: 'legal-desk',
+                data: new Date().toISOString(),
+                dados: dados
+            };
+
+            // Envia para o JSONBin.io
+            fetch(`https://api.jsonbin.io/v3/b/${CONFIG.BIN_ID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': CONFIG.API_KEY
+                },
+                body: JSON.stringify(dadosCompletos)
+            })
+            .then(res => res.json())
+            .then(data => {
+                mostrarStatus('✅ Dados salvos na nuvem com sucesso!', 'success');
+                btn.disabled = false;
+                btn.innerHTML = '📤 Salvar na Nuvem';
+                atualizarEspaco();
+            })
+            .catch(err => {
+                mostrarStatus('❌ Erro ao salvar: ' + err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '📤 Salvar na Nuvem';
+            });
+        }
+
+        // ===== CARREGAR DA NUVEM =====
+        function carregarDaNuvem() {
+            mostrarStatus('📥 Carregando da nuvem...', '');
+            const btn = document.getElementById('btnCarregar');
+            btn.disabled = true;
+            btn.textContent = '⏳ Carregando...';
+
+            fetch(`https://api.jsonbin.io/v3/b/${CONFIG.BIN_ID}/latest`, {
+                headers: {
+                    'X-Master-Key': CONFIG.API_KEY
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                const dadosNuvem = data.record;
+                if (dadosNuvem && dadosNuvem.dados) {
+                    dados = dadosNuvem.dados;
+                    if (!dados.processos) dados.processos = [];
+                    if (!dados.prazos) dados.prazos = [];
+                    if (!dados.clientes) dados.clientes = [];
+                    salvarDadosLocal();
+                    mostrarStatus('✅ Dados carregados da nuvem com sucesso!', 'success');
+                } else {
+                    mostrarStatus('❌ Nenhum dado encontrado na nuvem.', 'error');
+                }
+                btn.disabled = false;
+                btn.innerHTML = '📥 Carregar da Nuvem';
+                atualizarEspaco();
+            })
+            .catch(err => {
+                mostrarStatus('❌ Erro ao carregar: ' + err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = '📥 Carregar da Nuvem';
+            });
+        }
+
+        function salvarDadosLocal() {
+            try {
+                const usuarios = JSON.parse(localStorage.getItem('legalManagerUsuarios') || '{}');
+                const sessao = JSON.parse(localStorage.getItem('legalManagerSessao') || '{}');
+                if (sessao.email && usuarios[sessao.email]) {
+                    usuarios[sessao.email].dados = {
+                        processos: dados.processos,
+                        prazos: dados.prazos
+                    };
+                    localStorage.setItem('legalManagerUsuarios', JSON.stringify(usuarios));
+                }
+                localStorage.setItem('clientesContatos', JSON.stringify(dados.clientes));
+            } catch (e) {}
+        }
+
+        // ===== VERIFICAR SINCRONIZAÇÃO =====
+        function verificarSincronizacao() {
+            mostrarStatus('🔍 Verificando...', '');
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Verificando...';
+
+            setTimeout(() => {
+                const espaco = calcularEspacoUsado();
+                const status = `📊 Espaço usado: ${espaco.toFixed(2)} MB / ${limiteMB} MB (${(espaco/limiteMB*100).toFixed(1)}%)`;
+                if (espaco > limiteMB) {
+                    mostrarStatus('⚠️ ' + status + ' - Espaço excedido! Compre mais espaço.', 'error');
+                } else {
+                    mostrarStatus('✅ ' + status + ' - Tudo certo!', 'success');
+                }
+                btn.disabled = false;
+                btn.textContent = '🔍 Verificar';
+                atualizarEspaco();
+            }, 1000);
+        }
+
+        // ===== COMPRAR MAIS ESPAÇO =====
+        function comprarEspaco(plano) {
+            const planoInfo = CONFIG.PLANOS[plano];
+            if (!planoInfo) return;
+
+            localStorage.setItem('planoEscolhido', JSON.stringify(planoInfo));
+
+            const link = CONFIG.LINK_COMPRA + '?plano=' + plano + '&preco=' + planoInfo.preco + '&descricao=' + encodeURIComponent(
+                planoInfo.gb + ' GB de espaço extra');
+            window.open(link, '_blank');
+
+            mostrarStatus('🔗 Redirecionando para pagamento...', '');
+        }
+
+        // ===== ATIVAR CÓDIGO =====
+        function ativarCodigo() {
+            const codigo = document.getElementById('codigoAtivacao').value.trim().toUpperCase();
+            const statusEl = document.getElementById('statusAtivacao');
+
+            if (!codigo) {
+                statusEl.textContent = '❌ Digite um código de ativação.';
+                statusEl.style.color = '#ef5350';
+                return;
+            }
+
+            let planoAtivado = null;
+            for (const key in CONFIG.PLANOS) {
+                if (CONFIG.PLANOS[key].codigo === codigo) {
+                    planoAtivado = CONFIG.PLANOS[key];
+                    break;
+                }
+            }
+
+            if (planoAtivado) {
+                limiteMB += planoAtivado.gb * 1024;
+                salvarLimite();
+                atualizarEspaco();
+                statusEl.textContent = `✅ ${planoAtivado.gb} GB adicionado! Novo limite: ${limiteMB} MB.`;
+                statusEl.style.color = '#81c784';
+                document.getElementById('codigoAtivacao').value = '';
+                mostrarStatus(`✅ ${planoAtivado.gb} GB de espaço extra ativado com sucesso!`, 'success');
+            } else {
+                statusEl.textContent = '❌ Código inválido. Verifique e tente novamente.';
+                statusEl.style.color = '#ef5350';
+            }
+        }
+
+        // ===== STATUS =====
+        function mostrarStatus(msg, tipo = '') {
+            const box = document.getElementById('statusSincronizacao');
+            const icon = box.querySelector('.icon');
+            const text = box.querySelector('.msg');
+
+            box.className = 'status-box show ' + tipo;
+            if (tipo === 'success') {
+                icon.textContent = '✅';
+            } else if (tipo === 'error') {
+                icon.textContent = '❌';
+            } else {
+                icon.textContent = '⏳';
+            }
+            text.textContent = msg;
+
+            setTimeout(() => {
+                box.classList.remove('show');
+            }, 8000);
+        }
+
+        // ===== ATUALIZAR PERIÓDICAMENTE =====
+        setInterval(atualizarEspaco, 30000);
+
+        console.log('☁️ Sincronização carregada!');
+        console.log(`📦 BIN ID: ${CONFIG.BIN_ID}`);
+        console.log(`📊 Limite: ${limiteMB} MB`);
+        console.log(`📦 Espaço usado: ${calcularEspacoUsado().toFixed(2)} MB`);
+    </script>
+
+</body>
+</html>

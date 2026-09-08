@@ -415,8 +415,7 @@
                 '5gb': { gb: 5, preco: 9.90, codigo: 'LEGAL-5GB' },
                 '10gb': { gb: 10, preco: 19.90, codigo: 'LEGAL-10GB' },
                 '50gb': { gb: 50, preco: 49.90, codigo: 'LEGAL-50GB' }
-            },
-            LINK_COMPRA: 'https://www.mercadopago.com.br/checkout'
+            }
         };
 
         let dados = { processos: [], prazos: [], clientes: [] };
@@ -573,46 +572,111 @@
             }, 1000);
         }
 
-        // ===== FUNÇÃO COMPRAR ESPAÇO (CORRIGIDA) =====
+        // ===== FUNÇÃO COMPRAR ESPAÇO =====
         function comprarEspaco(plano) {
             const planoInfo = CONFIG.PLANOS[plano];
             if (!planoInfo) return;
-
-            // Salva o plano escolhido para usar na página de pagamento
             localStorage.setItem('planoEscolhido', JSON.stringify(planoInfo));
-
-            // Redireciona para a página de pagamento (caminho relativo)
             window.location.href = 'pagamento.html';
         }
 
-        // ===== ATIVAR CÓDIGO =====
+        // ===== FUNÇÃO ATIVAR CÓDIGO (CORRIGIDA) =====
         function ativarCodigo() {
             const codigo = document.getElementById('codigoAtivacao').value.trim().toUpperCase();
             const statusEl = document.getElementById('statusAtivacao');
+
+            // Limpa mensagem anterior
+            statusEl.textContent = '';
+            statusEl.style.color = '#8888aa';
+
             if (!codigo) {
                 statusEl.textContent = '❌ Digite um código de ativação.';
                 statusEl.style.color = '#ef5350';
                 return;
             }
-            let planoAtivado = null;
-            for (const key in CONFIG.PLANOS) {
-                if (CONFIG.PLANOS[key].codigo === codigo) {
-                    planoAtivado = CONFIG.PLANOS[key];
-                    break;
-                }
-            }
-            if (planoAtivado) {
-                limiteMB += planoAtivado.gb * 1024;
-                salvarLimite();
-                atualizarEspaco();
-                statusEl.textContent = `✅ ${planoAtivado.gb} GB adicionado! Novo limite: ${limiteMB} MB.`;
-                statusEl.style.color = '#81c784';
-                document.getElementById('codigoAtivacao').value = '';
-                mostrarStatus(`✅ ${planoAtivado.gb} GB de espaço extra ativado com sucesso!`, 'success');
-            } else {
-                statusEl.textContent = '❌ Código inválido. Verifique e tente novamente.';
+
+            console.log('🔍 Verificando código:', codigo);
+
+            // Verifica o formato: LEGAL-1GB-20251015-ABCD
+            const partes = codigo.split('-');
+            if (partes.length !== 4 || partes[0] !== 'LEGAL') {
+                statusEl.textContent = '❌ Formato inválido. Use: LEGAL-1GB-20251015-ABCD';
                 statusEl.style.color = '#ef5350';
+                return;
             }
+
+            const gbTexto = partes[1];
+            const dataExpStr = partes[2];
+            const random = partes[3];
+
+            // Extrai o número de GB (ex: "1GB" → 1)
+            const gbMatch = gbTexto.match(/(\d+)GB/);
+            if (!gbMatch) {
+                statusEl.textContent = '❌ Quantidade de GB não reconhecida. Exemplo: 1GB, 5GB, etc.';
+                statusEl.style.color = '#ef5350';
+                return;
+            }
+            const gb = parseInt(gbMatch[1]);
+
+            if (isNaN(gb) || gb <= 0) {
+                statusEl.textContent = '❌ Quantidade de GB inválida.';
+                statusEl.style.color = '#ef5350';
+                return;
+            }
+
+            // Valida a data (formato YYYYMMDD)
+            if (dataExpStr.length !== 8 || !/^\d{8}$/.test(dataExpStr)) {
+                statusEl.textContent = '❌ Data de validade inválida. Formato esperado: YYYYMMDD';
+                statusEl.style.color = '#ef5350';
+                return;
+            }
+
+            const ano = parseInt(dataExpStr.substring(0, 4));
+            const mes = parseInt(dataExpStr.substring(4, 6)) - 1;
+            const dia = parseInt(dataExpStr.substring(6, 8));
+            const dataExpiracao = new Date(ano, mes, dia, 23, 59, 59);
+
+            if (isNaN(dataExpiracao.getTime())) {
+                statusEl.textContent = '❌ Data de validade inválida.';
+                statusEl.style.color = '#ef5350';
+                return;
+            }
+
+            // Verifica se o código já foi usado (evita reutilização)
+            try {
+                const codigosUsados = JSON.parse(localStorage.getItem('codigosUsados') || '[]');
+                if (codigosUsados.includes(codigo)) {
+                    statusEl.textContent = '❌ Este código já foi utilizado.';
+                    statusEl.style.color = '#ef5350';
+                    return;
+                }
+            } catch (e) {}
+
+            // Verifica validade
+            const agora = new Date();
+            if (agora > dataExpiracao) {
+                statusEl.textContent = `❌ Este código expirou em ${dataExpiracao.toLocaleDateString('pt-BR')}.`;
+                statusEl.style.color = '#ef5350';
+                return;
+            }
+
+            // ✅ Código válido: ativa o espaço
+            limiteMB += gb * 1024;
+            salvarLimite();
+            atualizarEspaco();
+
+            // Marca como usado
+            try {
+                const usados = JSON.parse(localStorage.getItem('codigosUsados') || '[]');
+                usados.push(codigo);
+                localStorage.setItem('codigosUsados', JSON.stringify(usados));
+            } catch (e) {}
+
+            statusEl.textContent = `✅ ${gb} GB ativado com sucesso! Válido até ${dataExpiracao.toLocaleDateString('pt-BR')}.`;
+            statusEl.style.color = '#81c784';
+            document.getElementById('codigoAtivacao').value = '';
+
+            mostrarStatus(`✅ ${gb} GB de espaço extra ativado com sucesso!`, 'success');
         }
 
         function mostrarStatus(msg, tipo = '') {

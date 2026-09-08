@@ -196,12 +196,20 @@
         .pix-area .chave-container .btn-copiar:hover {
             background: #1565c0;
         }
-        .pix-area .info-text {
-            font-size: 14px;
-            color: #aaaacc;
-            margin-top: 8px;
+        .pix-area .instrucao {
+            background: #1a1a3e;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: left;
+            border-left: 4px solid #ffb74d;
+            margin: 16px 0;
         }
-        .pix-area .info-text strong {
+        .pix-area .instrucao p {
+            font-size: 14px;
+            color: #ccccee;
+            line-height: 1.6;
+        }
+        .pix-area .instrucao strong {
             color: #ffb74d;
         }
         .security-badge {
@@ -265,6 +273,11 @@
             letter-spacing: 2px;
             border: 1px solid #2e7d32;
         }
+        .success-box .validade {
+            color: #a5d6a7;
+            font-size: 13px;
+            margin-top: 8px;
+        }
         .success-box .btn-finalizar {
             margin-top: 16px;
             background: #64b5f6;
@@ -301,14 +314,6 @@
                 opacity: 1;
                 transform: translateX(-50%) translateY(0);
             }
-        }
-        .chave-secundaria {
-            font-size: 13px;
-            color: #666688;
-            margin-top: 6px;
-        }
-        .chave-secundaria strong {
-            color: #8888aa;
         }
     </style>
 </head>
@@ -361,20 +366,27 @@
             <button onclick="processarPagamento('cartao')" class="btn-primary">🔒 Pagar com Cartão</button>
         </div>
 
-        <!-- ABA PIX COM SUAS CHAVES -->
+        <!-- ABA PIX -->
         <div id="tabPix" class="tab-content">
             <div class="pix-area">
                 <div class="chave-container">
-                    <div class="titulo">📌 Chave Pix (copie e cole no app do seu banco)</div>
-                    <div class="chave" id="pixChave">115.889.789-82</div>
-                    <div class="chave-telefone">📱 Também disponível: <span id="pixTelefone">(41) 98889-6304</span></div>
+                    <div class="titulo">📌 Chave Pix para pagamento</div>
+                    <div class="chave" id="pixChave">(41) 98889-6304</div>
                     <button class="btn-copiar" onclick="copiarChavePix()">📋 Copiar Chave Pix</button>
-                    <div class="chave-secundaria">
-                        💡 <strong>Dica:</strong> Você também pode usar a chave <strong id="pixTelefone2">(41) 98889-6304</strong> para pagar via Pix.
-                    </div>
                 </div>
-                <p class="info-text">📌 Copie a chave Pix e cole no app do seu banco para efetuar o pagamento.</p>
-                <button onclick="processarPagamento('pix')" class="btn-primary" style="margin-top:12px;">✅ Confirmar Pagamento via Pix</button>
+
+                <div class="instrucao">
+                    <p>
+                        <strong>📝 Como pagar via Pix:</strong><br>
+                        1. Copie a chave Pix acima.<br>
+                        2. Abra o app do seu banco e cole a chave.<br>
+                        3. Efetue o pagamento do valor correspondente.<br>
+                        4. <strong>Após o pagamento, clique no botão "Confirmar Pagamento" abaixo.</strong><br>
+                        5. Você receberá um código de ativação válido por <strong>30 dias</strong> para o espaço contratado.
+                    </p>
+                </div>
+
+                <button onclick="processarPagamento('pix')" class="btn-primary">✅ Confirmar Pagamento via Pix</button>
             </div>
         </div>
 
@@ -390,17 +402,15 @@
 
     <script>
         // =============================================
-        // SUAS CHAVES PIX (NÃO MEXA AQUI)
+        // SUA CHAVE PIX (TELEFONE)
         // =============================================
-        const CHAVE_PIX_CPF = '115.889.789-82';
-        const CHAVE_PIX_TELEFONE = '(41) 98889-6304';
+        const CHAVE_PIX = '(41) 98889-6304';
 
         // =============================================
 
         let planoSelecionado = { gb: 1, preco: 4.90, codigo: 'LEGAL-1GB' };
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Carrega o plano
             try {
                 const saved = localStorage.getItem('planoEscolhido');
                 if (saved) {
@@ -412,7 +422,6 @@
             document.getElementById('planoNome').textContent = planoSelecionado.gb + ' GB';
             document.getElementById('planoPreco').textContent = planoSelecionado.preco.toFixed(2).replace('.', ',');
 
-            // Atualiza parcelas
             const p = document.getElementById('parcelas');
             const preco = planoSelecionado.preco;
             p.innerHTML = `
@@ -421,13 +430,9 @@
                 <option value="3">3x de R$ ${(preco/3).toFixed(2).replace('.', ',')}</option>
             `;
 
-            // Exibe as chaves
-            document.getElementById('pixChave').textContent = CHAVE_PIX_CPF;
-            document.getElementById('pixTelefone').textContent = CHAVE_PIX_TELEFONE;
-            document.getElementById('pixTelefone2').textContent = CHAVE_PIX_TELEFONE;
+            document.getElementById('pixChave').textContent = CHAVE_PIX;
         });
 
-        // ===== TROCAR ABA =====
         function trocarTab(tab) {
             document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
             document.querySelector(`.tabs button[data-tab="${tab}"]`).classList.add('active');
@@ -435,13 +440,11 @@
             document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
         }
 
-        // ===== COPIAR CHAVE PIX (CPF) =====
         function copiarChavePix() {
             const chave = document.getElementById('pixChave').textContent.trim();
             navigator.clipboard.writeText(chave).then(() => {
                 mostrarFeedback('✅ Chave Pix copiada!');
             }).catch(() => {
-                // Fallback
                 const textarea = document.createElement('textarea');
                 textarea.value = chave;
                 document.body.appendChild(textarea);
@@ -459,7 +462,7 @@
             setTimeout(() => feedback.classList.remove('show'), 3000);
         }
 
-        // ===== PROCESSAR PAGAMENTO =====
+        // ===== PROCESSAR PAGAMENTO E GERAR CÓDIGO COM VALIDADE =====
         function processarPagamento(metodo) {
             if (metodo === 'cartao') {
                 const nome = document.getElementById('nomeCartao').value.trim();
@@ -478,27 +481,48 @@
 
             const btn = event.target;
             btn.disabled = true;
-            btn.textContent = '⏳ Processando...';
+            btn.textContent = '⏳ Gerando código...';
 
             setTimeout(() => {
-                const codigo = `LEGAL-${planoSelecionado.gb}GB-${Date.now().toString().slice(-6)}`;
+                // Calcula data de expiração (30 dias)
+                const hoje = new Date();
+                const expiracao = new Date(hoje);
+                expiracao.setDate(expiracao.getDate() + 30);
+                const dataExp = expiracao.toISOString().slice(0, 10).replace(/-/g, '');
+                const codigoBase = `LEGAL-${planoSelecionado.gb}GB-${dataExp}`;
+                const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+                const codigo = `${codigoBase}-${random}`;
+
+                // Salva no localStorage para ser usado na ativação
                 localStorage.setItem('ultimoCodigoAtivacao', codigo);
-                localStorage.setItem('planoAtivado', JSON.stringify(planoSelecionado));
+                localStorage.setItem('planoAtivado', JSON.stringify({
+                    gb: planoSelecionado.gb,
+                    preco: planoSelecionado.preco,
+                    codigo: codigo,
+                    expiracao: expiracao.toISOString()
+                }));
 
                 document.querySelector('.container').style.padding = '0';
                 document.querySelector('.container').innerHTML = `
                     <div style="padding:32px;">
                         <div class="success-box">
                             <div class="icon">✅</div>
-                            <h2>Pagamento Aprovado!</h2>
-                            <p>Seu espaço foi ampliado com sucesso.</p>
+                            <h2>Pagamento Confirmado!</h2>
+                            <p>Seu espaço será ativado com o código abaixo.</p>
                             <div class="codigo">${codigo}</div>
-                            <p style="font-size:12px;color:#a5d6a7;margin-top:8px;">Guarde este código para ativação manual, se necessário.</p>
-                            <button onclick="finalizarCompra()" class="btn-finalizar">🔓 Voltar para Sincronização</button>
+                            <div class="validade">
+                                📅 Válido até: ${expiracao.toLocaleDateString('pt-BR')}
+                                <br>
+                                📦 Espaço: +${planoSelecionado.gb} GB
+                            </div>
+                            <p style="font-size:12px;color:#a5d6a7;margin-top:12px;">
+                                ⚠️ Copie este código e cole na tela de Sincronização para ativar o espaço extra.
+                            </p>
+                            <button onclick="finalizarCompra()" class="btn-finalizar">🔓 Ir para Sincronização</button>
                         </div>
                     </div>
                 `;
-            }, 2000);
+            }, 1500);
         }
 
         function finalizarCompra() {
@@ -532,8 +556,7 @@
         });
 
         console.log('💳 Tela de pagamento carregada!');
-        console.log(`🔑 Chave Pix configurada: ${CHAVE_PIX_CPF}`);
-        console.log(`📱 Telefone: ${CHAVE_PIX_TELEFONE}`);
+        console.log(`🔑 Chave Pix: ${CHAVE_PIX}`);
     </script>
 
 </body>

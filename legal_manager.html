@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⚖️ Legal Desk - Gestão</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-    </script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #1a1a2e;
             color: #e0e0e0;
             min-height: 100vh;
         }
-
+        /* ===== LOGIN ===== */
         .login-overlay {
             position: fixed;
             top: 0;
@@ -35,11 +32,9 @@
             gap: 20px;
             padding: 20px;
         }
-
         .login-overlay.hidden {
             display: none;
         }
-
         .login-box {
             background: #16162e;
             padding: 40px;
@@ -48,31 +43,26 @@
             max-width: 420px;
             width: 100%;
         }
-
         .login-box .logo-icon {
             text-align: center;
             font-size: 48px;
             margin-bottom: 12px;
         }
-
         .login-box h2 {
             color: #64b5f6;
             text-align: center;
             margin-bottom: 24px;
             font-size: 24px;
         }
-
         .login-box .form-group {
             padding: 0 0 16px 0;
         }
-
         .login-box .form-group label {
             display: block;
             font-size: 13px;
             color: #aaaacc;
             margin-bottom: 4px;
         }
-
         .login-box .form-group input {
             width: 100%;
             padding: 12px 16px;
@@ -83,13 +73,11 @@
             font-size: 16px;
             transition: all 0.3s ease;
         }
-
         .login-box .form-group input:focus {
             outline: none;
             border-color: #64b5f6;
             box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.2);
         }
-
         .login-box .btn-primary {
             width: 100%;
             padding: 14px;
@@ -102,12 +90,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .login-box .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(21, 101, 192, 0.4);
         }
-
         .login-box .btn-secondary {
             width: 100%;
             padding: 12px;
@@ -121,12 +107,10 @@
             transition: all 0.3s ease;
             margin-top: 8px;
         }
-
         .login-box .btn-secondary:hover {
             background: rgba(21, 101, 192, 0.2);
             border-color: #64b5f6;
         }
-
         .login-box .error {
             color: #ef5350;
             text-align: center;
@@ -134,7 +118,6 @@
             margin-top: 10px;
             min-height: 20px;
         }
-
         .login-box .success {
             color: #81c784;
             text-align: center;
@@ -142,24 +125,20 @@
             margin-top: 10px;
             min-height: 20px;
         }
-
         .login-box .auth-switch {
             text-align: center;
             margin-top: 16px;
             font-size: 14px;
             color: #8888aa;
         }
-
         .login-box .auth-switch a {
             color: #64b5f6;
             cursor: pointer;
             text-decoration: none;
         }
-
         .login-box .auth-switch a:hover {
             text-decoration: underline;
         }
-
         .login-box .divider {
             display: flex;
             align-items: center;
@@ -168,7 +147,6 @@
             color: #666688;
             font-size: 12px;
         }
-
         .login-box .divider::before,
         .login-box .divider::after {
             content: '';
@@ -177,6 +155,7 @@
             background: #2a2a4a;
         }
 
+        /* ===== HEADER ===== */
         header {
             background: linear-gradient(135deg, #16213e, #0f3460);
             padding: 12px 20px;
@@ -190,7 +169,6 @@
             top: 0;
             z-index: 100;
         }
-
         .logo h1 {
             color: #64b5f6;
             font-size: 20px;
@@ -198,21 +176,18 @@
             align-items: center;
             gap: 8px;
         }
-
         .logo span {
             color: #90caf9;
             font-size: 11px;
             opacity: 0.8;
             display: block;
         }
-
         .header-actions {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
             align-items: center;
         }
-
         .user-info {
             color: #90caf9;
             font-size: 13px;
@@ -220,7 +195,6 @@
             align-items: center;
             gap: 6px;
         }
-
         .user-info .avatar {
             width: 30px;
             height: 30px;
@@ -233,7 +207,6 @@
             font-weight: 700;
             color: #64b5f6;
         }
-
         .btn-outline {
             background: transparent;
             color: #90caf9;
@@ -245,22 +218,20 @@
             transition: all 0.3s ease;
             white-space: nowrap;
         }
-
         .btn-outline:hover {
             background: rgba(21, 101, 192, 0.2);
             border-color: #64b5f6;
         }
-
         .btn-outline.logout {
             border-color: #c62828;
             color: #ef9a9a;
         }
-
         .btn-outline.logout:hover {
             background: rgba(198, 40, 40, 0.2);
             border-color: #ef5350;
         }
 
+        /* ===== NAV ===== */
         nav {
             background: #0d0d1a;
             border-bottom: 1px solid #1a1a3e;
@@ -270,7 +241,6 @@
             top: 60px;
             z-index: 99;
         }
-
         nav ul {
             list-style: none;
             display: flex;
@@ -278,7 +248,6 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-
         nav ul li {
             padding: 10px 14px;
             font-size: 13px;
@@ -292,18 +261,15 @@
             white-space: nowrap;
             transition: all 0.3s ease;
         }
-
         nav ul li:hover {
             color: #e0e0e0;
             background: rgba(255, 255, 255, 0.05);
         }
-
         nav ul li.active {
             color: #64b5f6;
             background: #1a1a2e;
             border-bottom: 3px solid #64b5f6;
         }
-
         nav ul li .badge {
             background: #c62828;
             color: white;
@@ -319,16 +285,13 @@
             margin: 0 auto;
             padding: 15px;
         }
-
         .tab-content {
             display: none;
             animation: fadeIn 0.3s ease;
         }
-
         .tab-content.active {
             display: block;
         }
-
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -339,7 +302,6 @@
                 transform: translateY(0);
             }
         }
-
         .card {
             background: #16162e;
             border-radius: 12px;
@@ -347,7 +309,6 @@
             margin-bottom: 16px;
             border: 1px solid #2a2a4a;
         }
-
         .card h2 {
             font-size: 17px;
             color: #e0e0e0;
@@ -358,28 +319,13 @@
             flex-wrap: wrap;
         }
 
-        .card h2 .badge-count {
-            font-size: 12px;
-            font-weight: 400;
-            background: #1a1a3e;
-            color: #8888aa;
-            padding: 2px 10px;
-            border-radius: 12px;
-        }
-
-        .card .subtitle {
-            color: #8888aa;
-            font-size: 13px;
-            margin-bottom: 16px;
-        }
-
+        /* ===== STATS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 10px;
             margin-bottom: 20px;
         }
-
         .stat-card {
             background: #16162e;
             border-radius: 10px;
@@ -388,28 +334,25 @@
             text-align: center;
             transition: all 0.3s ease;
         }
-
         .stat-card:hover {
             transform: translateY(-2px);
             border-color: #3a3a6a;
         }
-
         .stat-card .number {
             font-size: 22px;
             font-weight: 700;
             color: #e0e0e0;
         }
-
         .stat-card .label {
             font-size: 11px;
             color: #8888aa;
             margin-top: 2px;
         }
-
         .stat-card.urgent {
             border-color: #c62828;
         }
 
+        /* ===== BOTÕES ===== */
         .btn-primary {
             background: linear-gradient(135deg, #1565c0, #0d47a1);
             color: white;
@@ -421,45 +364,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(21, 101, 192, 0.4);
         }
-
-        .btn-success {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.4);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #c62828, #b71c1c);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(198, 40, 40, 0.4);
-        }
-
         .btn-secondary {
             background: #2d2d44;
             color: #e0e0e0;
@@ -470,33 +378,29 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .btn-secondary:hover {
             background: #3d3d5a;
         }
-
+        .btn-danger {
+            background: linear-gradient(135deg, #c62828, #b71c1c);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(198, 40, 40, 0.4);
+        }
         .btn-sm {
             padding: 6px 14px;
             font-size: 12px;
         }
 
-        .btn-pdf {
-            background: linear-gradient(135deg, #d32f2f, #b71c1c);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-pdf:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(211, 47, 47, 0.4);
-        }
-
+        /* ===== TOOLBAR ===== */
         .toolbar {
             display: flex;
             justify-content: space-between;
@@ -505,20 +409,17 @@
             gap: 10px;
             margin-bottom: 16px;
         }
-
         .toolbar-left {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
-
         .toolbar-right {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
             align-items: center;
         }
-
         .search-box input {
             background: #1a1a3e;
             border: 1px solid #2a2a4a;
@@ -529,13 +430,11 @@
             width: 200px;
             transition: all 0.3s ease;
         }
-
         .search-box input:focus {
             outline: none;
             border-color: #64b5f6;
             box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.2);
         }
-
         .filter-group select {
             background: #1a1a3e;
             border: 1px solid #2a2a4a;
@@ -546,33 +445,21 @@
             cursor: pointer;
         }
 
-        .filter-group input[type="date"] {
-            background: #1a1a3e;
-            border: 1px solid #2a2a4a;
-            color: #e0e0e0;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
+        /* ===== TABELA ===== */
         .table-container {
             overflow-x: auto;
             border-radius: 12px;
             border: 1px solid #2a2a4a;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
             font-size: 13px;
             min-width: 700px;
         }
-
         table thead {
             background: #0d0d1a;
         }
-
         table th {
             text-align: left;
             padding: 10px 12px;
@@ -586,17 +473,14 @@
             background: #0d0d1a;
             z-index: 5;
         }
-
         table td {
             padding: 10px 12px;
             border-top: 1px solid #1a1a3e;
             vertical-align: middle;
         }
-
         table tbody tr:hover {
             background: rgba(255, 255, 255, 0.02);
         }
-
         .empty-msg {
             text-align: center;
             color: #666688;
@@ -604,6 +488,7 @@
             font-style: italic;
         }
 
+        /* ===== BADGES ===== */
         .status-badge {
             padding: 3px 10px;
             border-radius: 20px;
@@ -611,7 +496,6 @@
             font-weight: 600;
             display: inline-block;
         }
-
         .status-ativo {
             background: #1b5e20;
             color: #81c784;
@@ -624,30 +508,19 @@
             background: #e65100;
             color: #ffb74d;
         }
-        .status-pendente {
-            background: #c62828;
-            color: #ef9a9a;
-        }
-        .status-cumprido {
-            background: #1b5e20;
-            color: #81c784;
-        }
-        .status-urgente {
-            background: #c62828;
-            color: #ef9a9a;
-            animation: pulse 1.5s infinite;
+
+        .badge-anexo {
+            font-size: 11px;
+            background: #0d47a1;
+            color: #64b5f6;
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.6;
-            }
-        }
-
+        /* ===== AÇÕES ===== */
         .action-btn {
             background: transparent;
             border: none;
@@ -657,7 +530,6 @@
             border-radius: 4px;
             transition: all 0.2s ease;
         }
-
         .action-btn:hover {
             background: rgba(255, 255, 255, 0.1);
         }
@@ -667,120 +539,11 @@
         .action-btn.delete:hover {
             color: #ef5350;
         }
-        .action-btn.check:hover {
-            color: #81c784;
-        }
         .action-btn.file:hover {
             color: #ffb74d;
         }
 
-        .checklist-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid #1a1a3e;
-        }
-
-        .checklist-item:last-child {
-            border-bottom: none;
-        }
-
-        .checklist-item .desc {
-            flex: 1;
-            font-size: 14px;
-            color: #e0e0e0;
-        }
-
-        .checklist-item .desc.concluida {
-            text-decoration: line-through;
-            color: #666688;
-        }
-
-        .checklist-item .status-icon {
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .checklist-item .status-icon:hover {
-            transform: scale(1.2);
-        }
-
-        .checklist-item .actions {
-            display: flex;
-            gap: 4px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #1a1a3e;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 8px;
-        }
-
-        .progress-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        .progress-text {
-            font-size: 12px;
-            color: #8888aa;
-            margin-top: 4px;
-        }
-
-        .anotacao-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #1a1a3e;
-        }
-
-        .anotacao-item:last-child {
-            border-bottom: none;
-        }
-
-        .anotacao-item .texto {
-            font-size: 14px;
-            color: #e0e0e0;
-        }
-
-        .anotacao-item .data {
-            font-size: 11px;
-            color: #666688;
-            margin-top: 2px;
-        }
-
-        .anexo-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid #1a1a3e;
-        }
-
-        .anexo-item:last-child {
-            border-bottom: none;
-        }
-
-        .anexo-item .nome {
-            flex: 1;
-            font-size: 13px;
-            color: #e0e0e0;
-        }
-
-        .anexo-item .tamanho {
-            font-size: 12px;
-            color: #8888aa;
-        }
-
-        .anexo-item .actions {
-            display: flex;
-            gap: 4px;
-        }
-
+        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
@@ -795,11 +558,9 @@
             padding: 20px;
             backdrop-filter: blur(4px);
         }
-
         .modal.show {
             display: flex;
         }
-
         .modal-content {
             background: #16162e;
             border-radius: 16px;
@@ -810,11 +571,9 @@
             border: 1px solid #2a2a4a;
             animation: modalIn 0.3s ease;
         }
-
         .modal-content.large {
             max-width: 900px;
         }
-
         @keyframes modalIn {
             from {
                 opacity: 0;
@@ -825,7 +584,6 @@
                 transform: scale(1) translateY(0);
             }
         }
-
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -838,44 +596,38 @@
             z-index: 10;
             border-radius: 16px 16px 0 0;
         }
-
         .modal-header h2 {
             font-size: 17px;
             color: #e0e0e0;
         }
-
         .modal-header .close {
             font-size: 24px;
             cursor: pointer;
             color: #8888aa;
             transition: all 0.3s ease;
         }
-
         .modal-header .close:hover {
             color: #ef5350;
             transform: rotate(90deg);
         }
-
         .modal-body {
             padding: 20px;
         }
 
+        /* ===== FORMULÁRIOS ===== */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
-
         @media (max-width: 500px) {
             .form-row {
                 grid-template-columns: 1fr;
             }
         }
-
         .form-group {
             padding: 6px 0;
         }
-
         .form-group label {
             display: block;
             font-size: 12px;
@@ -883,11 +635,9 @@
             margin-bottom: 3px;
             font-weight: 600;
         }
-
         .form-group label .required {
             color: #ef5350;
         }
-
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -901,7 +651,6 @@
             font-family: inherit;
             transition: all 0.3s ease;
         }
-
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -909,17 +658,18 @@
             border-color: #64b5f6;
             box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.2);
         }
-
         .form-group textarea {
             resize: vertical;
             min-height: 80px;
         }
-
         .form-group input[type="file"] {
             padding: 8px;
             background: transparent;
             border: 2px dashed #2a2a4a;
             cursor: pointer;
+        }
+        .form-group input[type="file"]:hover {
+            border-color: #64b5f6;
         }
 
         .form-actions {
@@ -931,73 +681,110 @@
             flex-wrap: wrap;
         }
 
-        .relatorio-preview {
-            background: #0d0d1a;
-            border-radius: 12px;
-            padding: 16px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            white-space: pre-wrap;
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #2a2a4a;
-            color: #ccccee;
-        }
-
-        .relatorio-acoes {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 12px;
-        }
-
-        .filtros-avancados {
+        /* ===== ANEXOS ===== */
+        .anexos-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            background: #0d0d1a;
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            border: 1px solid #1a3a6b;
+            gap: 8px;
+            margin-top: 8px;
         }
-
-        .filtros-avancados .filtro-group {
-            display: flex;
+        .anexo-item {
+            display: inline-flex;
             align-items: center;
             gap: 6px;
-        }
-
-        .filtros-avancados .filtro-group label {
-            font-size: 12px;
-            color: #8888aa;
-        }
-
-        .filtros-avancados .filtro-group input,
-        .filtros-avancados .filtro-group select {
             background: #1a1a3e;
+            padding: 4px 10px 4px 8px;
+            border-radius: 16px;
+            font-size: 12px;
             border: 1px solid #2a2a4a;
+        }
+        .anexo-item .remove {
+            cursor: pointer;
+            color: #ef5350;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .anexo-item .remove:hover {
+            color: #ff1744;
+        }
+        .anexo-item .tipo {
+            font-size: 14px;
+        }
+        .anexo-item .nome {
             color: #e0e0e0;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-
-        .filtros-avancados .filtro-group input:focus,
-        .filtros-avancados .filtro-group select:focus {
-            outline: none;
-            border-color: #64b5f6;
-        }
-
-        .badge-anexos {
-            font-size: 11px;
-            background: #0d47a1;
+        .anexo-item .download {
+            cursor: pointer;
             color: #64b5f6;
-            padding: 2px 8px;
-            border-radius: 10px;
+            font-size: 12px;
+        }
+        .anexo-item .download:hover {
+            color: #90caf9;
+        }
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .image-preview-container .img-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #2a2a4a;
+            background: #0d0d1a;
+        }
+        .image-preview-container .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .image-preview-container .img-wrapper .remove-img {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-preview-container .img-wrapper .remove-img:hover {
+            background: #c62828;
         }
 
+        /* ===== OBSERVAÇÕES ===== */
+        .observacao-item {
+            background: #0d0d1a;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 6px;
+            border-left: 3px solid #64b5f6;
+        }
+        .observacao-item .texto {
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+        .observacao-item .data {
+            font-size: 11px;
+            color: #8888aa;
+            margin-top: 2px;
+        }
+
+        /* ===== PERFIL ===== */
         .perfil-info {
             display: flex;
             flex-wrap: wrap;
@@ -1007,26 +794,24 @@
             border-radius: 8px;
             border: 1px solid #1a3a6b;
         }
-
         .perfil-info .item {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
-
         .perfil-info .item .label {
             font-size: 10px;
             color: #666688;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
         .perfil-info .item .value {
             font-size: 14px;
             color: #e0e0e0;
             font-weight: 500;
         }
 
+        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             .login-box {
                 padding: 24px;
@@ -1077,21 +862,7 @@
             .form-actions button {
                 width: 100%;
             }
-            .relatorio-acoes {
-                flex-direction: column;
-            }
-            .relatorio-acoes button {
-                width: 100%;
-            }
-            .filtros-avancados {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filtros-avancados .filtro-group {
-                flex-wrap: wrap;
-            }
         }
-
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -1108,10 +879,39 @@
             background: #3a3a6a;
         }
 
-        .hidden {
-            display: none !important;
+        /* ===== GRÁFICO ===== */
+        .chart-container {
+            margin-top: 10px;
         }
-
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .bar-label {
+            width: 80px;
+            font-size: 12px;
+            color: #aaaacc;
+        }
+        .bar-track {
+            flex: 1;
+            height: 16px;
+            background: #1a1a3e;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+        .bar-value {
+            width: 30px;
+            font-size: 12px;
+            color: #e0e0e0;
+            text-align: right;
+        }
         .prazo-item {
             display: flex;
             justify-content: space-between;
@@ -1121,90 +921,70 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-
         .prazo-item:last-child {
             border-bottom: none;
         }
-
         .prazo-item.urgente {
             color: #ef9a9a;
         }
-
         .prazo-processo {
             font-weight: 600;
             color: #e0e0e0;
             font-size: 12px;
         }
-
         .prazo-desc {
             color: #aaaacc;
             font-size: 12px;
             flex: 1;
         }
-
         .prazo-dias {
             color: #8888aa;
             font-size: 12px;
             font-weight: 600;
         }
-
         .prazo-item.urgente .prazo-dias {
             color: #ef5350;
         }
 
-        .chart-container {
-            margin-top: 10px;
+        /* ===== ABA DE CLIENTES ===== */
+        .clientes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
         }
-
-        .chart-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
+        .cliente-card {
+            background: #0d0d1a;
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid #2a2a4a;
+            transition: all 0.3s ease;
         }
-
-        .bar-label {
-            width: 80px;
-            font-size: 12px;
-            color: #aaaacc;
+        .cliente-card:hover {
+            border-color: #64b5f6;
+            transform: translateY(-2px);
         }
-
-        .bar-track {
-            flex: 1;
-            height: 16px;
-            background: #1a1a3e;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.8s ease;
-        }
-
-        .bar-value {
-            width: 30px;
-            font-size: 12px;
+        .cliente-card .nome {
+            font-size: 16px;
+            font-weight: 600;
             color: #e0e0e0;
-            text-align: right;
         }
-
-        .integracao-info {
-            background: #0d47a1;
-            color: #90caf9;
-            padding: 8px 16px;
-            border-radius: 8px;
+        .cliente-card .info {
+            font-size: 13px;
+            color: #8888aa;
+            margin-top: 4px;
+        }
+        .cliente-card .info span {
+            display: block;
+        }
+        .cliente-card .processos {
             font-size: 12px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            color: #64b5f6;
+            margin-top: 4px;
         }
-
-        .integracao-info .icone {
-            font-size: 18px;
+        .cliente-card .acoes {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
         }
     </style>
 </head>
@@ -1215,7 +995,6 @@
         <div class="login-box" id="authBox">
             <div class="logo-icon">⚖️</div>
             <h2 id="authTitle">Legal Desk - Gestão</h2>
-
             <div id="authForm">
                 <div class="form-group" id="nomeGrupo" style="display:none;">
                     <label>Nome Completo</label>
@@ -1233,16 +1012,11 @@
                     <label>Confirmar Senha</label>
                     <input type="password" id="authSenhaConfirmar" placeholder="••••••">
                 </div>
-
                 <div id="authError" class="error"></div>
                 <div id="authSuccess" class="success"></div>
-
                 <button onclick="authAction()" class="btn-primary" id="authBtn">Entrar</button>
-
                 <div class="divider">ou</div>
-
                 <button onclick="entrarConvidado()" class="btn-secondary">👤 Modo Convidado</button>
-
                 <div class="auth-switch">
                     <span id="authSwitchText">Não tem uma conta?</span>
                     <a id="authSwitchLink" onclick="switchAuthMode()">Criar conta</a>
@@ -1263,6 +1037,8 @@
                 <span id="userName">Usuário</span>
             </span>
             <button onclick="sincronizar()" class="btn-outline">☁️ Sincronizar</button>
+            <button onclick="exportarDados()" class="btn-outline">📤 Exportar</button>
+            <button onclick="importarDados()" class="btn-outline">📥 Importar</button>
             <button onclick="logout()" class="btn-outline logout">🚪 Sair</button>
         </div>
     </header>
@@ -1272,8 +1048,7 @@
         <ul>
             <li class="active" data-tab="dashboard">📊 Dashboard</li>
             <li data-tab="processos">📂 Processos <span class="badge" id="processosBadge" style="display:none;">0</span></li>
-            <li data-tab="prazos">⏰ Prazos <span class="badge" id="prazosBadge" style="display:none;">0</span></li>
-            <li data-tab="relatorios">📊 Relatórios</li>
+            <li data-tab="clientes">👤 Clientes</li>
             <li data-tab="conta">👤 Conta</li>
         </ul>
     </nav>
@@ -1283,11 +1058,6 @@
 
         <!-- ===== DASHBOARD ===== -->
         <section id="dashboard" class="tab-content active">
-            <div class="integracao-info">
-                <span class="icone">🔄</span>
-                <span><strong>Integração ativa:</strong> Ao cadastrar um processo, o cliente é automaticamente criado no módulo <strong>Clientes/Contatos</strong>.</span>
-            </div>
-
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="number" id="totalProcessos">0</div>
@@ -1301,23 +1071,14 @@
                     <div class="number" id="concluidosProcessos">0</div>
                     <div class="label">✅ Concluídos</div>
                 </div>
-                <div class="stat-card urgent">
-                    <div class="number" id="urgentesPrazos">0</div>
-                    <div class="label">🔴 Prazos Urgentes</div>
-                </div>
                 <div class="stat-card" style="border-color:#ffb74d;">
                     <div class="number" id="totalAnexos">0</div>
                     <div class="label">📎 Anexos</div>
                 </div>
                 <div class="stat-card" style="border-color:#4CAF50;">
-                    <div class="number" id="totalTarefas">0</div>
-                    <div class="label">📋 Tarefas</div>
+                    <div class="number" id="totalClientes">0</div>
+                    <div class="label">👤 Clientes</div>
                 </div>
-            </div>
-
-            <div class="card">
-                <h2>📋 Últimos Prazos</h2>
-                <div id="ultimosPrazos"><p class="empty-msg">Nenhum prazo cadastrado</p></div>
             </div>
 
             <div class="card">
@@ -1347,38 +1108,11 @@
             <div class="toolbar">
                 <div class="toolbar-left">
                     <button onclick="abrirModalProcesso()" class="btn-primary">➕ Novo Processo</button>
-                    <button onclick="toggleFiltros()" class="btn-secondary">🔍 Filtros</button>
                 </div>
                 <div class="toolbar-right">
                     <div class="search-box"><input type="text" id="buscaProcesso" placeholder="🔍 Buscar..." oninput="renderizarProcessos()"></div>
                 </div>
             </div>
-
-            <div id="filtrosAvancados" class="filtros-avancados" style="display:none;">
-                <div class="filtro-group">
-                    <label>Status</label>
-                    <select id="filtroStatus" onchange="renderizarProcessos()">
-                        <option value="todos">Todos</option>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Concluído">Concluído</option>
-                        <option value="Arquivado">Arquivado</option>
-                    </select>
-                </div>
-                <div class="filtro-group">
-                    <label>Cliente</label>
-                    <input type="text" id="filtroCliente" placeholder="Nome do cliente" oninput="renderizarProcessos()">
-                </div>
-                <div class="filtro-group">
-                    <label>Data Início</label>
-                    <input type="date" id="filtroDataInicio" onchange="renderizarProcessos()">
-                </div>
-                <div class="filtro-group">
-                    <label>Data Fim</label>
-                    <input type="date" id="filtroDataFim" onchange="renderizarProcessos()">
-                </div>
-                <button onclick="limparFiltros()" class="btn-secondary btn-sm">Limpar</button>
-            </div>
-
             <div class="table-container">
                 <table>
                     <thead>
@@ -1387,77 +1121,30 @@
                             <th>Cliente</th>
                             <th>Assunto</th>
                             <th>Status</th>
-                            <th>Tarefas</th>
                             <th>📎</th>
-                            <th>Próximo Prazo</th>
+                            <th>📝</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody id="listaProcessos">
-                        <tr><td colspan="8" class="empty-msg">Nenhum processo cadastrado</td></tr>
+                        <tr><td colspan="7" class="empty-msg">Nenhum processo cadastrado</td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- ===== PRAZOS ===== -->
-        <section id="prazos" class="tab-content">
+        <!-- ===== CLIENTES ===== -->
+        <section id="clientes" class="tab-content">
             <div class="toolbar">
                 <div class="toolbar-left">
-                    <button onclick="abrirModalPrazo()" class="btn-primary">➕ Novo Prazo</button>
+                    <button onclick="abrirModalCliente()" class="btn-primary">➕ Novo Cliente</button>
                 </div>
                 <div class="toolbar-right">
-                    <div class="filter-group">
-                        <select id="filtroPrazo" onchange="renderizarPrazos()">
-                            <option value="todos">Todos</option>
-                            <option value="pendentes">Pendentes</option>
-                            <option value="cumpridos">Cumpridos</option>
-                            <option value="urgentes">Urgentes</option>
-                        </select>
-                    </div>
+                    <div class="search-box"><input type="text" id="buscaCliente" placeholder="🔍 Buscar cliente..." oninput="renderizarClientes()"></div>
                 </div>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Processo</th>
-                            <th>Descrição</th>
-                            <th>Vencimento</th>
-                            <th>Dias</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="listaPrazos">
-                        <tr><td colspan="6" class="empty-msg">Nenhum prazo cadastrado</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- ===== RELATÓRIOS ===== -->
-        <section id="relatorios" class="tab-content">
-            <div class="card">
-                <h2>📊 Relatórios</h2>
-                <p class="subtitle">Gere relatórios de processos e prazos</p>
-
-                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
-                    <button onclick="gerarRelatorio('todos')" class="btn-primary">📊 Todos os Processos</button>
-                    <button onclick="gerarRelatorio('ativos')" class="btn-success">📊 Processos Ativos</button>
-                    <button onclick="gerarRelatorio('concluidos')" class="btn-secondary">📊 Processos Concluídos</button>
-                    <button onclick="gerarRelatorio('prazos')" class="btn-danger">📊 Prazos Pendentes</button>
-                    <button onclick="gerarRelatorio('checklist')" class="btn-pdf">📋 Checklist por Processo</button>
-                </div>
-
-                <div id="relatorioPreview" class="relatorio-preview">
-                    Selecione um tipo de relatório acima.
-                </div>
-
-                <div class="relatorio-acoes">
-                    <button onclick="exportarRelatorioPDF()" class="btn-pdf">📄 Exportar PDF</button>
-                    <button onclick="copiarRelatorio()" class="btn-secondary">📋 Copiar</button>
-                </div>
+            <div class="clientes-grid" id="listaClientes">
+                <p class="empty-msg" style="grid-column:1/-1;">Nenhum cliente cadastrado</p>
             </div>
         </section>
 
@@ -1489,8 +1176,6 @@
                 </div>
                 <div class="form-actions">
                     <button onclick="editarPerfil()" class="btn-primary">✏️ Editar Perfil</button>
-                    <button onclick="exportarDados()" class="btn-outline">📤 Exportar Dados</button>
-                    <button onclick="importarDados()" class="btn-outline">📥 Importar Dados</button>
                 </div>
             </div>
         </section>
@@ -1506,45 +1191,46 @@
             </div>
             <form id="formProcesso">
                 <div class="form-row">
-                    <div class="form-group"><label>Número <span class="required">*</span></label><input type="text" id="fNumero" required></div>
-                    <div class="form-group"><label>Cliente <span class="required">*</span></label><input type="text" id="fCliente" required></div>
+                    <div class="form-group">
+                        <label>Número <span class="required">*</span></label>
+                        <input type="text" id="fNumero" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cliente <span class="required">*</span></label>
+                        <input type="text" id="fCliente" required>
+                    </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Assunto <span class="required">*</span></label><input type="text" id="fAssunto" required></div>
-                    <div class="form-group"><label>Vara</label><input type="text" id="fVara"></div>
+                    <div class="form-group">
+                        <label>Assunto <span class="required">*</span></label>
+                        <input type="text" id="fAssunto" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vara</label>
+                        <input type="text" id="fVara">
+                    </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Juiz</label><input type="text" id="fJuiz"></div>
-                    <div class="form-group"><label>Status</label>
+                    <div class="form-group">
+                        <label>Juiz</label>
+                        <input type="text" id="fJuiz">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
                         <select id="fStatus"><option value="Ativo">Ativo</option><option value="Concluído">Concluído</option><option value="Arquivado">Arquivado</option></select>
                     </div>
                 </div>
-                <div class="form-group"><label>Observações</label><textarea id="fObservacoes" rows="2"></textarea></div>
-
                 <div class="form-group">
-                    <label>📋 Checklist (uma tarefa por linha)</label>
-                    <textarea id="fChecklist" rows="3" placeholder="Petição inicial&#10;Juntar documentos&#10;Contestação"></textarea>
+                    <label>📝 Observações</label>
+                    <textarea id="fObservacoes" rows="3" placeholder="Observações sobre o processo..."></textarea>
                 </div>
-
+                <div class="form-group">
+                    <label>📎 Anexar Arquivos (PDF, imagens, documentos)</label>
+                    <input type="file" id="fAnexos" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.xls,.xlsx">
+                    <div id="anexosPreview" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;"></div>
+                </div>
                 <div class="form-actions">
                     <button type="button" onclick="fecharModal('modalProcesso')" class="btn-secondary">Cancelar</button>
-                    <button type="submit" class="btn-primary">Salvar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- ===== MODAL PRAZO ===== -->
-    <div id="modalPrazo" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h2>⏰ Novo Prazo</h2><span class="close" onclick="fecharModal('modalPrazo')">&times;</span></div>
-            <form id="formPrazo">
-                <div class="form-group"><label>Processo <span class="required">*</span></label><select id="fProcessoPrazo" required></select></div>
-                <div class="form-group"><label>Descrição <span class="required">*</span></label><input type="text" id="fDescricaoPrazo" required></div>
-                <div class="form-group"><label>Data Vencimento <span class="required">*</span></label><input type="date" id="fDataVencimento" required></div>
-                <div class="form-group"><label>Status</label><select id="fStatusPrazo"><option value="Pendente">Pendente</option><option value="Cumprido">Cumprido</option></select></div>
-                <div class="form-actions">
-                    <button type="button" onclick="fecharModal('modalPrazo')" class="btn-secondary">Cancelar</button>
                     <button type="submit" class="btn-primary">Salvar</button>
                 </div>
             </form>
@@ -1562,22 +1248,62 @@
         </div>
     </div>
 
-    <!-- ===== MODAL ANEXO ===== -->
-    <div id="modalAnexo" class="modal">
+    <!-- ===== MODAL OBSERVAÇÃO ===== -->
+    <div id="modalObservacao" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>📎 Anexar Arquivo</h2>
-                <span class="close" onclick="fecharModal('modalAnexo')">&times;</span>
+                <h2>📝 Adicionar Observação</h2>
+                <span class="close" onclick="fecharModal('modalObservacao')">&times;</span>
             </div>
-            <form id="formAnexo">
+            <form id="formObservacao">
+                <input type="hidden" id="fObsProcessoId">
                 <div class="form-group">
-                    <label>Selecione o arquivo <span class="required">*</span></label>
-                    <input type="file" id="fArquivo" required>
+                    <label>Observação <span class="required">*</span></label>
+                    <textarea id="fObsTexto" rows="4" placeholder="Digite sua observação..." required></textarea>
                 </div>
-                <input type="hidden" id="fAnexoProcessoId">
                 <div class="form-actions">
-                    <button type="button" onclick="fecharModal('modalAnexo')" class="btn-secondary">Cancelar</button>
-                    <button type="submit" class="btn-primary">📎 Anexar</button>
+                    <button type="button" onclick="fecharModal('modalObservacao')" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL CLIENTE ===== -->
+    <div id="modalCliente" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>👤 Novo Cliente</h2>
+                <span class="close" onclick="fecharModal('modalCliente')">&times;</span>
+            </div>
+            <form id="formCliente">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nome <span class="required">*</span></label>
+                        <input type="text" id="fClienteNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" id="fClienteTelefone" placeholder="(41) 92312-2231">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="fClienteEmail" placeholder="cliente@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Processos vinculados</label>
+                        <input type="text" id="fClienteProcessos" placeholder="Números separados por vírgula">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Observações</label>
+                    <textarea id="fClienteObservacoes" rows="2"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="fecharModal('modalCliente')" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
                 </div>
             </form>
         </div>
@@ -1585,16 +1311,14 @@
 
     <script>
         // =============================================
-        // LEGAL DESK - COM INTEGRAÇÃO COM CLIENTES
+        // LEGAL DESK - GESTÃO (UNIFICADO)
         // =============================================
 
         let usuarioAtual = null;
-        let dados = { processos: [], prazos: [] };
+        let dados = { processos: [], clientes: [] };
         let modoAuth = 'login';
         let editandoProcessoId = null;
-        let editandoPrazoId = null;
-        let processoDetalhesId = null;
-        let relatorioAtual = '';
+        let editandoClienteId = null;
 
         // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
@@ -1616,7 +1340,6 @@
         function switchAuthMode() {
             const isLogin = modoAuth === 'login';
             modoAuth = isLogin ? 'register' : 'login';
-
             const title = document.getElementById('authTitle');
             const btn = document.getElementById('authBtn');
             const switchText = document.getElementById('authSwitchText');
@@ -1639,7 +1362,6 @@
                 nomeGrupo.style.display = 'none';
                 senhaConfirmar.style.display = 'none';
             }
-
             document.getElementById('authError').textContent = '';
             document.getElementById('authSuccess').textContent = '';
         }
@@ -1686,14 +1408,8 @@
                     senha: senha,
                     dados: {
                         processos: [],
-                        prazos: [],
-                        perfil: {
-                            nome: nome,
-                            oab: '',
-                            escritorio: '',
-                            telefone: '',
-                            genero: 'Dra.'
-                        }
+                        clientes: [],
+                        perfil: { nome: nome }
                     },
                     criadoEm: new Date().toISOString()
                 };
@@ -1724,7 +1440,7 @@
                 usuarioAtual = {
                     email: email,
                     nome: user.nome,
-                    dados: user.dados || { processos: [], prazos: [], perfil: {} }
+                    dados: user.dados || { processos: [], clientes: [], perfil: {} }
                 };
 
                 localStorage.setItem('legalManagerSessao', JSON.stringify({
@@ -1747,7 +1463,7 @@
             usuarioAtual = {
                 email: 'convidado@local',
                 nome: 'Convidado',
-                dados: { processos: [], prazos: [], perfil: {} }
+                dados: { processos: [], clientes: [], perfil: {} }
             };
             localStorage.setItem('legalManagerSessao', JSON.stringify({
                 email: 'convidado@local',
@@ -1765,19 +1481,22 @@
             document.getElementById('userName').textContent = usuarioAtual.nome || 'Usuário';
             document.getElementById('userAvatar').textContent = (usuarioAtual.nome || 'U')[0].toUpperCase();
 
-            carregarDados();
             configurarNavegacao();
-            atualizarDashboard();
+            carregarDados();
             renderizarProcessos();
-            renderizarPrazos();
+            renderizarClientes();
+            atualizarStats();
             atualizarPerfil();
+
+            // Sincroniza clientes com o módulo separado (para compatibilidade)
+            sincronizarClientesExterno();
         }
 
         function logout() {
             if (!confirm('Deseja sair da sua conta?')) return;
             localStorage.removeItem('legalManagerSessao');
             usuarioAtual = null;
-            dados = { processos: [], prazos: [] };
+            dados = { processos: [], clientes: [] };
             document.getElementById('loginOverlay').classList.remove('hidden');
             document.getElementById('mainHeader').style.display = 'none';
             document.getElementById('mainNav').style.display = 'none';
@@ -1786,7 +1505,6 @@
             document.getElementById('authError').textContent = '';
         }
 
-        // ===== NAVEGAÇÃO =====
         function configurarNavegacao() {
             document.querySelectorAll('nav ul li').forEach(tab => {
                 tab.addEventListener('click', function() {
@@ -1803,13 +1521,11 @@
             if (usuarioAtual && usuarioAtual.dados) {
                 dados = usuarioAtual.dados;
                 if (!dados.processos) dados.processos = [];
-                if (!dados.prazos) dados.prazos = [];
+                if (!dados.clientes) dados.clientes = [];
                 if (!dados.perfil) dados.perfil = {};
-
                 dados.processos.forEach(p => {
-                    if (!p.checklist) p.checklist = [];
-                    if (!p.anotacoes) p.anotacoes = [];
                     if (!p.anexos) p.anexos = [];
+                    if (!p.observacoes) p.observacoes = [];
                 });
             }
         }
@@ -1824,75 +1540,32 @@
                 localStorage.setItem('legalManagerUsuarios', JSON.stringify(usuarios));
             }
 
+            // Sincroniza com o módulo de clientes separado
+            sincronizarClientesExterno();
+
             window.dispatchEvent(new Event('storage'));
         }
 
-        // ===== INTEGRAÇÃO COM CLIENTES =====
-        function sincronizarCliente(clienteNome, numeroProcesso) {
+        // ===== SINCRONIZAR CLIENTES (para o módulo separado) =====
+        function sincronizarClientesExterno() {
             try {
-                // Busca lista de clientes do módulo Clientes/Contatos
-                let clientes = JSON.parse(localStorage.getItem('clientesContatos') || '[]');
-
-                // Verifica se o cliente já existe (pelo nome)
-                let clienteExistente = clientes.find(c => c.nome.toLowerCase() === clienteNome.toLowerCase());
-
-                if (clienteExistente) {
-                    // Se já existe, adiciona o processo à lista (se não estiver)
-                    let processos = clienteExistente.processos ? clienteExistente.processos.split(',').map(p => p.trim()) : [];
-                    if (!processos.includes(numeroProcesso)) {
-                        processos.push(numeroProcesso);
-                        clienteExistente.processos = processos.join(', ');
-                        // Atualiza no array
-                        const idx = clientes.findIndex(c => c.id === clienteExistente.id);
-                        if (idx !== -1) {
-                            clientes[idx] = clienteExistente;
-                        }
-                    }
-                } else {
-                    // Se não existe, cria um novo cliente
-                    const novoCliente = {
-                        id: 'cliente_' + Date.now(),
-                        nome: clienteNome,
-                        telefone: '',
-                        email: '',
-                        processos: numeroProcesso,
-                        endereco: '',
-                        observacoes: 'Criado automaticamente pelo Legal Manager',
-                        dataCriacao: new Date().toISOString()
-                    };
-                    clientes.push(novoCliente);
-                }
-
-                // Salva de volta no localStorage
-                localStorage.setItem('clientesContatos', JSON.stringify(clientes));
-            } catch (e) {
-                console.log('Erro na integração com Clientes:', e);
-            }
+                localStorage.setItem('clientesContatos', JSON.stringify(dados.clientes));
+            } catch (e) {}
         }
 
-        // ===== DASHBOARD =====
-        function atualizarDashboard() {
+        // ===== STATS =====
+        function atualizarStats() {
             const total = dados.processos.length;
             const ativos = dados.processos.filter(p => p.status === 'Ativo').length;
             const concluidos = dados.processos.filter(p => p.status === 'Concluído').length;
-
-            const hoje = new Date();
-            const urgentes = dados.prazos.filter(p => {
-                if (p.status === 'Cumprido') return false;
-                const venc = new Date(p.dataVencimento);
-                const diff = Math.ceil((venc - hoje) / (1000 * 60 * 60 * 24));
-                return diff <= 5 && diff >= 0;
-            }).length;
-
             const totalAnexos = dados.processos.reduce((acc, p) => acc + (p.anexos ? p.anexos.length : 0), 0);
-            const totalTarefas = dados.processos.reduce((acc, p) => acc + (p.checklist ? p.checklist.length : 0), 0);
+            const totalClientes = dados.clientes.length;
 
             document.getElementById('totalProcessos').textContent = total;
             document.getElementById('ativosProcessos').textContent = ativos;
             document.getElementById('concluidosProcessos').textContent = concluidos;
-            document.getElementById('urgentesPrazos').textContent = urgentes;
             document.getElementById('totalAnexos').textContent = totalAnexos;
-            document.getElementById('totalTarefas').textContent = totalTarefas;
+            document.getElementById('totalClientes').textContent = totalClientes;
 
             const max = Math.max(ativos, concluidos, 1);
             document.getElementById('barAtivos').textContent = ativos;
@@ -1907,591 +1580,13 @@
                 bars[2].style.width = (dados.processos.filter(p => p.status === 'Arquivado').length / max * 100) + '%';
             }
 
-            const container = document.getElementById('ultimosPrazos');
-            const prazosOrd = [...dados.prazos]
-                .filter(p => p.status !== 'Cumprido')
-                .sort((a, b) => new Date(a.dataVencimento) - new Date(b.dataVencimento))
-                .slice(0, 5);
-
-            if (prazosOrd.length === 0) {
-                container.innerHTML = '<p class="empty-msg">Nenhum prazo pendente</p>';
-            } else {
-                container.innerHTML = prazosOrd.map(p => {
-                    const proc = dados.processos.find(pr => pr.id === p.processoId);
-                    const nome = proc ? proc.numero : 'Processo não encontrado';
-                    const dias = Math.ceil((new Date(p.dataVencimento) - new Date()) / (1000 * 60 * 60 * 24));
-                    const cls = dias <= 5 ? 'urgente' : '';
-                    return `<div class="prazo-item ${cls}">
-                        <span class="prazo-processo">${nome}</span>
-                        <span class="prazo-desc">${p.descricao}</span>
-                        <span class="prazo-dias">${dias} dias</span>
-                    </div>`;
-                }).join('');
-            }
-
-            const pBadge = document.getElementById('prazosBadge');
-            if (urgentes > 0) {
+            const pBadge = document.getElementById('processosBadge');
+            if (ativos > 0) {
                 pBadge.style.display = 'inline';
-                pBadge.textContent = urgentes;
+                pBadge.textContent = ativos;
             } else {
                 pBadge.style.display = 'none';
             }
-
-            const procBadge = document.getElementById('processosBadge');
-            if (ativos > 0) {
-                procBadge.style.display = 'inline';
-                procBadge.textContent = ativos;
-            } else {
-                procBadge.style.display = 'none';
-            }
-        }
-
-        // ===== PROCESSOS =====
-        function renderizarProcessos() {
-            const tbody = document.getElementById('listaProcessos');
-            const busca = document.getElementById('buscaProcesso').value.toLowerCase();
-            const statusFiltro = document.getElementById('filtroStatus').value;
-            const clienteFiltro = document.getElementById('filtroCliente').value.toLowerCase();
-            const dataInicio = document.getElementById('filtroDataInicio').value;
-            const dataFim = document.getElementById('filtroDataFim').value;
-
-            let lista = [...dados.processos];
-
-            if (busca) {
-                lista = lista.filter(p =>
-                    p.numero.toLowerCase().includes(busca) ||
-                    p.cliente.toLowerCase().includes(busca) ||
-                    p.assunto.toLowerCase().includes(busca)
-                );
-            }
-
-            if (statusFiltro !== 'todos') {
-                lista = lista.filter(p => p.status === statusFiltro);
-            }
-
-            if (clienteFiltro) {
-                lista = lista.filter(p => p.cliente.toLowerCase().includes(clienteFiltro));
-            }
-
-            if (dataInicio) {
-                const di = new Date(dataInicio);
-                lista = lista.filter(p => {
-                    if (!p.dataCriacao) return true;
-                    return new Date(p.dataCriacao) >= di;
-                });
-            }
-
-            if (dataFim) {
-                const df = new Date(dataFim);
-                lista = lista.filter(p => {
-                    if (!p.dataCriacao) return true;
-                    return new Date(p.dataCriacao) <= df;
-                });
-            }
-
-            if (lista.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="empty-msg">Nenhum processo encontrado</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = lista.map(p => {
-                const statusClass = p.status === 'Ativo' ? 'status-ativo' :
-                    p.status === 'Concluído' ? 'status-concluido' : 'status-arquivado';
-                const proxPrazo = dados.prazos
-                    .filter(pr => pr.processoId === p.id && pr.status !== 'Cumprido')
-                    .sort((a, b) => new Date(a.dataVencimento) - new Date(b.dataVencimento))[0];
-                const prazoText = proxPrazo ? new Date(proxPrazo.dataVencimento).toLocaleDateString('pt-BR') : '-';
-                const totalTarefas = p.checklist ? p.checklist.length : 0;
-                const concluidas = p.checklist ? p.checklist.filter(t => t.concluida).length : 0;
-                const tarefasText = totalTarefas > 0 ? `${concluidas}/${totalTarefas}` : '-';
-                const anexosCount = p.anexos ? p.anexos.length : 0;
-
-                return `<tr>
-                    <td><strong>${p.numero}</strong></td>
-                    <td>${p.cliente}</td>
-                    <td>${p.assunto}</td>
-                    <td><span class="status-badge ${statusClass}">${p.status}</span></td>
-                    <td>${tarefasText}</td>
-                    <td>${anexosCount > 0 ? `<span class="badge-anexos">📎 ${anexosCount}</span>` : '-'}</td>
-                    <td>${prazoText}</td>
-                    <td>
-                        <button class="action-btn" onclick="verDetalhes('${p.id}')" title="Detalhes">👁️</button>
-                        <button class="action-btn edit" onclick="editarProcesso('${p.id}')" title="Editar">✏️</button>
-                        <button class="action-btn delete" onclick="excluirProcesso('${p.id}')" title="Excluir">🗑️</button>
-                        <button class="action-btn file" onclick="abrirAnexo('${p.id}')" title="Anexar">📎</button>
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        function toggleFiltros() {
-            const div = document.getElementById('filtrosAvancados');
-            div.style.display = div.style.display === 'none' ? 'flex' : 'none';
-        }
-
-        function limparFiltros() {
-            document.getElementById('filtroStatus').value = 'todos';
-            document.getElementById('filtroCliente').value = '';
-            document.getElementById('filtroDataInicio').value = '';
-            document.getElementById('filtroDataFim').value = '';
-            document.getElementById('buscaProcesso').value = '';
-            renderizarProcessos();
-        }
-
-        function abrirModalProcesso() {
-            editandoProcessoId = null;
-            document.getElementById('formProcesso').reset();
-            document.getElementById('fStatus').value = 'Ativo';
-            document.getElementById('modalProcessoTitulo').textContent = '📂 Novo Processo';
-            document.getElementById('modalProcesso').classList.add('show');
-        }
-
-        function editarProcesso(id) {
-            const p = dados.processos.find(pr => pr.id === id);
-            if (!p) return;
-            editandoProcessoId = id;
-            document.getElementById('fNumero').value = p.numero;
-            document.getElementById('fCliente').value = p.cliente;
-            document.getElementById('fAssunto').value = p.assunto;
-            document.getElementById('fVara').value = p.vara || '';
-            document.getElementById('fJuiz').value = p.juiz || '';
-            document.getElementById('fStatus').value = p.status;
-            document.getElementById('fObservacoes').value = p.observacoes || '';
-            if (p.checklist && p.checklist.length > 0) {
-                document.getElementById('fChecklist').value = p.checklist.map(t => t.descricao).join('\n');
-            } else {
-                document.getElementById('fChecklist').value = '';
-            }
-            document.getElementById('modalProcessoTitulo').textContent = '✏️ Editar Processo';
-            document.getElementById('modalProcesso').classList.add('show');
-        }
-
-        function excluirProcesso(id) {
-            if (!confirm('Tem certeza que deseja excluir este processo?')) return;
-            dados.processos = dados.processos.filter(p => p.id !== id);
-            dados.prazos = dados.prazos.filter(p => p.processoId !== id);
-            salvarDados();
-            renderizarProcessos();
-            atualizarDashboard();
-            preencherSelectProcessos();
-        }
-
-        // ===== DETALHES =====
-        function verDetalhes(id) {
-            const p = dados.processos.find(pr => pr.id === id);
-            if (!p) return;
-            processoDetalhesId = id;
-
-            document.getElementById('detalhesTitulo').textContent = `📄 ${p.numero} - ${p.cliente}`;
-
-            let html = '';
-
-            // Checklist
-            html += `<h3 style="margin-top:0;color:#64b5f6;">📋 Checklist</h3>`;
-            html += `<div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
-                <input type="text" id="novaTarefa" placeholder="Nova tarefa..." style="flex:1;padding:8px 12px;background:#1a1a3e;border:1px solid #2a2a4a;border-radius:6px;color:#e0e0e0;">
-                <button onclick="adicionarTarefa('${p.id}')" class="btn-primary btn-sm">Adicionar</button>
-            </div>`;
-
-            if (!p.checklist || p.checklist.length === 0) {
-                html += `<p class="empty-msg">Nenhuma tarefa cadastrada</p>`;
-            } else {
-                const total = p.checklist.length;
-                const concluidas = p.checklist.filter(t => t.concluida).length;
-                const progresso = total > 0 ? Math.round((concluidas / total) * 100) : 0;
-
-                html += `<div class="progress-bar"><div class="fill" style="width:${progresso}%;"></div></div>`;
-                html += `<div class="progress-text">${concluidas} de ${total} tarefas concluídas (${progresso}%)</div>`;
-
-                p.checklist.forEach((t, idx) => {
-                    html += `<div class="checklist-item">
-                        <span class="status-icon" onclick="toggleTarefa('${p.id}', ${idx})">${t.concluida ? '✅' : '⬜'}</span>
-                        <span class="desc ${t.concluida ? 'concluida' : ''}">${t.descricao}</span>
-                        <div class="actions">
-                            <button class="action-btn delete" onclick="removerTarefa('${p.id}', ${idx})" title="Remover">🗑️</button>
-                        </div>
-                    </div>`;
-                });
-            }
-
-            // Anotações
-            html += `<h3 style="margin-top:20px;color:#64b5f6;">📝 Anotações</h3>`;
-            html += `<div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
-                <input type="text" id="novaAnotacao" placeholder="Nova anotação..." style="flex:1;padding:8px 12px;background:#1a1a3e;border:1px solid #2a2a4a;border-radius:6px;color:#e0e0e0;">
-                <button onclick="adicionarAnotacao('${p.id}')" class="btn-primary btn-sm">Adicionar</button>
-            </div>`;
-
-            if (!p.anotacoes || p.anotacoes.length === 0) {
-                html += `<p class="empty-msg">Nenhuma anotação</p>`;
-            } else {
-                p.anotacoes.slice().reverse().forEach(a => {
-                    html += `<div class="anotacao-item">
-                        <div class="texto">${a.texto}</div>
-                        <div class="data">${new Date(a.data).toLocaleString('pt-BR')}</div>
-                    </div>`;
-                });
-            }
-
-            // Anexos
-            html += `<h3 style="margin-top:20px;color:#64b5f6;">📎 Anexos</h3>`;
-            html +=
-                `<button onclick="abrirAnexo('${p.id}')" class="btn-primary btn-sm" style="margin-bottom:12px;">📎 Anexar arquivo</button>`;
-
-            if (!p.anexos || p.anexos.length === 0) {
-                html += `<p class="empty-msg">Nenhum anexo</p>`;
-            } else {
-                p.anexos.forEach((a, idx) => {
-                    const tamanho = a.tamanho ? (a.tamanho / 1024).toFixed(1) + ' KB' : '';
-                    html += `<div class="anexo-item">
-                        <span class="nome">📄 ${a.nome}</span>
-                        <span class="tamanho">${tamanho}</span>
-                        <div class="actions">
-                            <button class="action-btn" onclick="baixarAnexo('${p.id}', ${idx})" title="Baixar">📥</button>
-                            <button class="action-btn delete" onclick="removerAnexo('${p.id}', ${idx})" title="Remover">🗑️</button>
-                        </div>
-                    </div>`;
-                });
-            }
-
-            document.getElementById('detalhesConteudo').innerHTML = html;
-            document.getElementById('modalDetalhes').classList.add('show');
-        }
-
-        // ===== CHECKLIST =====
-        function adicionarTarefa(processoId) {
-            const input = document.getElementById('novaTarefa');
-            const texto = input.value.trim();
-            if (!texto) return;
-            const p = dados.processos.find(pr => pr.id === processoId);
-            if (!p) return;
-            if (!p.checklist) p.checklist = [];
-            p.checklist.push({ id: 'tarefa_' + Date.now(), descricao: texto, concluida: false });
-            salvarDados();
-            verDetalhes(processoId);
-            atualizarDashboard();
-            renderizarProcessos();
-        }
-
-        function toggleTarefa(processoId, index) {
-            const p = dados.processos.find(pr => pr.id === processoId);
-            if (!p || !p.checklist || !p.checklist[index]) return;
-            p.checklist[index].concluida = !p.checklist[index].concluida;
-            salvarDados();
-            verDetalhes(processoId);
-            atualizarDashboard();
-            renderizarProcessos();
-        }
-
-        function removerTarefa(processoId, index) {
-            if (!confirm('Remover esta tarefa?')) return;
-            const p = dados.processos.find(pr => pr.id === processoId);
-            if (!p || !p.checklist) return;
-            p.checklist.splice(index, 1);
-            salvarDados();
-            verDetalhes(processoId);
-            atualizarDashboard();
-            renderizarProcessos();
-        }
-
-        // ===== ANOTAÇÕES =====
-        function adicionarAnotacao(processoId) {
-            const input = document.getElementById('novaAnotacao');
-            const texto = input.value.trim();
-            if (!texto) return;
-            const p = dados.processos.find(pr => pr.id === processoId);
-            if (!p) return;
-            if (!p.anotacoes) p.anotacoes = [];
-            p.anotacoes.push({ id: 'anot_' + Date.now(), texto: texto, data: new Date().toISOString() });
-            salvarDados();
-            verDetalhes(processoId);
-        }
-
-        // ===== ANEXOS =====
-        function abrirAnexo(processoId) {
-            document.getElementById('fAnexoProcessoId').value = processoId;
-            document.getElementById('formAnexo').reset();
-            document.getElementById('modalAnexo').classList.add('show');
-        }
-
-        document.getElementById('formAnexo').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const processoId = document.getElementById('fAnexoProcessoId').value;
-            const fileInput = document.getElementById('fArquivo');
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            const p = dados.processos.find(pr => pr.id === processoId);
-            if (!p) return;
-            if (!p.anexos) p.anexos = [];
-
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                const base64 = ev.target.result;
-                p.anexos.push({
-                    id: 'anexo_' + Date.now(),
-                    nome: file.name,
-                    tipo: file.type,
-                    tamanho: file.size,
-                    data: new Date().toISOString(),
-                    conteudo: base64
-                });
-                salvarDados();
-                fecharModal('modalAnexo');
-                verDetalhes(processoId);
-                atualizarDashboard();
-                renderizarProcessos();
-            };
-            reader.readAsDataURL(file);
-        });
-
-        function baixarAnexo(processoId, index) {
-            const p = dados.processos.find(pr => pr.id === processoId);
-            if (!p || !p.anexos || !p.anexos[index]) return;
-            const anexo = p.anexos[index];
-            const link = document.createElement('a');
-            link.href = anexo.conteudo;
-            link.download = anexo.nome;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function removerAnexo(processoId, index) {
-            if (!confirm('Remover este anexo?')) return;
-            const p = dados.processos.find(pr => pr.id === processoId);
-            if (!p || !p.anexos) return;
-            p.anexos.splice(index, 1);
-            salvarDados();
-            verDetalhes(processoId);
-            atualizarDashboard();
-            renderizarProcessos();
-        }
-
-        // ===== PRAZOS =====
-        function renderizarPrazos() {
-            const tbody = document.getElementById('listaPrazos');
-            const filtro = document.getElementById('filtroPrazo').value;
-            let lista = [...dados.prazos];
-
-            if (filtro === 'pendentes') lista = lista.filter(p => p.status === 'Pendente');
-            else if (filtro === 'cumpridos') lista = lista.filter(p => p.status === 'Cumprido');
-            else if (filtro === 'urgentes') {
-                const hoje = new Date();
-                lista = lista.filter(p => {
-                    if (p.status === 'Cumprido') return false;
-                    const diff = Math.ceil((new Date(p.dataVencimento) - hoje) / (1000 * 60 * 60 * 24));
-                    return diff <= 5 && diff >= 0;
-                });
-            }
-
-            if (lista.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="empty-msg">Nenhum prazo encontrado</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = lista.map(p => {
-                const proc = dados.processos.find(pr => pr.id === p.processoId);
-                const nome = proc ? proc.numero : 'Processo removido';
-                const dias = Math.ceil((new Date(p.dataVencimento) - new Date()) / (1000 * 60 * 60 * 24));
-                const statusClass = p.status === 'Pendente' ? 'status-pendente' : 'status-cumprido';
-                let extra = '';
-                if (p.status === 'Pendente' && dias <= 5) extra = 'status-urgente';
-                return `<tr>
-                    <td><strong>${nome}</strong></td>
-                    <td>${p.descricao}</td>
-                    <td>${new Date(p.dataVencimento).toLocaleDateString('pt-BR')}</td>
-                    <td>${p.status === 'Cumprido' ? '✅' : dias}</td>
-                    <td><span class="status-badge ${statusClass} ${extra}">${p.status}</span></td>
-                    <td>
-                        <button class="action-btn edit" onclick="editarPrazo('${p.id}')" title="Editar">✏️</button>
-                        <button class="action-btn delete" onclick="excluirPrazo('${p.id}')" title="Excluir">🗑️</button>
-                        ${p.status === 'Pendente' ? `<button class="action-btn check" onclick="marcarPrazoCumprido('${p.id}')" title="Cumprido">✅</button>` : ''}
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        function abrirModalPrazo() {
-            editandoPrazoId = null;
-            document.getElementById('formPrazo').reset();
-            document.getElementById('fStatusPrazo').value = 'Pendente';
-            if (dados.processos.length === 1) {
-                document.getElementById('fProcessoPrazo').value = dados.processos[0].id;
-            }
-            document.getElementById('modalPrazo').classList.add('show');
-        }
-
-        function editarPrazo(id) {
-            const p = dados.prazos.find(pr => pr.id === id);
-            if (!p) return;
-            editandoPrazoId = id;
-            document.getElementById('fProcessoPrazo').value = p.processoId;
-            document.getElementById('fDescricaoPrazo').value = p.descricao;
-            document.getElementById('fDataVencimento').value = p.dataVencimento;
-            document.getElementById('fStatusPrazo').value = p.status;
-            document.getElementById('modalPrazo').classList.add('show');
-        }
-
-        function excluirPrazo(id) {
-            if (!confirm('Tem certeza que deseja excluir este prazo?')) return;
-            dados.prazos = dados.prazos.filter(p => p.id !== id);
-            salvarDados();
-            renderizarPrazos();
-            atualizarDashboard();
-        }
-
-        function marcarPrazoCumprido(id) {
-            const prazo = dados.prazos.find(p => p.id === id);
-            if (!prazo) return;
-            prazo.status = 'Cumprido';
-            salvarDados();
-            renderizarPrazos();
-            atualizarDashboard();
-        }
-
-        function preencherSelectProcessos() {
-            const select = document.getElementById('fProcessoPrazo');
-            select.innerHTML = '';
-            dados.processos.forEach(p => {
-                const opt = document.createElement('option');
-                opt.value = p.id;
-                opt.textContent = p.numero + ' - ' + p.cliente;
-                select.appendChild(opt);
-            });
-            if (dados.processos.length === 0) {
-                const opt = document.createElement('option');
-                opt.value = '';
-                opt.textContent = 'Nenhum processo cadastrado';
-                select.appendChild(opt);
-            }
-        }
-
-        // ===== RELATÓRIOS =====
-        function gerarRelatorio(tipo) {
-            let relatorio = '';
-            const hoje = new Date().toLocaleDateString('pt-BR');
-
-            relatorio = '='.repeat(60) + '\n';
-            relatorio += '⚖️ LEGAL DESK - RELATÓRIO\n';
-            relatorio += `📅 Gerado em: ${hoje}\n`;
-            relatorio += `👤 Usuário: ${usuarioAtual ? usuarioAtual.nome : 'N/A'}\n`;
-            relatorio += '='.repeat(60) + '\n\n';
-
-            if (tipo === 'todos' || tipo === 'ativos' || tipo === 'concluidos') {
-                let lista = [...dados.processos];
-                if (tipo === 'ativos') lista = lista.filter(p => p.status === 'Ativo');
-                else if (tipo === 'concluidos') lista = lista.filter(p => p.status === 'Concluído');
-
-                relatorio += `📂 PROCESSOS (${lista.length})\n`;
-                relatorio += '-'.repeat(60) + '\n';
-
-                if (lista.length === 0) {
-                    relatorio += 'Nenhum processo encontrado.\n';
-                } else {
-                    lista.forEach(p => {
-                        relatorio += `Número: ${p.numero}\n`;
-                        relatorio += `Cliente: ${p.cliente}\n`;
-                        relatorio += `Assunto: ${p.assunto}\n`;
-                        relatorio += `Vara: ${p.vara || 'N/A'}\n`;
-                        relatorio += `Status: ${p.status}\n`;
-                        const tarefas = p.checklist ? p.checklist.length : 0;
-                        const concluidas = p.checklist ? p.checklist.filter(t => t.concluida).length : 0;
-                        relatorio += `Tarefas: ${concluidas}/${tarefas}\n`;
-                        const anexos = p.anexos ? p.anexos.length : 0;
-                        relatorio += `Anexos: ${anexos}\n`;
-                        relatorio += '-'.repeat(40) + '\n';
-                    });
-                }
-            } else if (tipo === 'prazos') {
-                const pendentes = dados.prazos.filter(p => p.status === 'Pendente');
-                relatorio += `⏰ PRAZOS PENDENTES (${pendentes.length})\n`;
-                relatorio += '-'.repeat(60) + '\n';
-
-                if (pendentes.length === 0) {
-                    relatorio += 'Nenhum prazo pendente.\n';
-                } else {
-                    const ordenados = pendentes.sort((a, b) => new Date(a.dataVencimento) - new Date(b.dataVencimento));
-                    ordenados.forEach(p => {
-                        const proc = dados.processos.find(pr => pr.id === p.processoId);
-                        const dias = Math.ceil((new Date(p.dataVencimento) - new Date()) / (1000 * 60 * 60 *
-                        24));
-                        relatorio += `Processo: ${proc ? proc.numero : 'N/A'}\n`;
-                        relatorio += `Descrição: ${p.descricao}\n`;
-                        relatorio += `Vencimento: ${new Date(p.dataVencimento).toLocaleDateString('pt-BR')}\n`;
-                        relatorio += `Dias restantes: ${dias}\n`;
-                        relatorio += '-'.repeat(40) + '\n';
-                    });
-                }
-            } else if (tipo === 'checklist') {
-                relatorio += `📋 CHECKLIST POR PROCESSO\n`;
-                relatorio += '-'.repeat(60) + '\n';
-
-                if (dados.processos.length === 0) {
-                    relatorio += 'Nenhum processo cadastrado.\n';
-                } else {
-                    dados.processos.forEach(p => {
-                        relatorio += `Processo: ${p.numero} - ${p.cliente}\n`;
-                        relatorio += `Status: ${p.status}\n`;
-                        if (p.checklist && p.checklist.length > 0) {
-                            p.checklist.forEach(t => {
-                                relatorio += `  ${t.concluida ? '✅' : '⬜'} ${t.descricao}\n`;
-                            });
-                        } else {
-                            relatorio += '  Nenhuma tarefa\n';
-                        }
-                        relatorio += '\n';
-                    });
-                }
-            }
-
-            relatorio += '\n' + '='.repeat(60) + '\n';
-            relatorio += 'Fim do relatório';
-
-            relatorioAtual = relatorio;
-            document.getElementById('relatorioPreview').textContent = relatorio;
-        }
-
-        function exportarRelatorioPDF() {
-            if (!relatorioAtual) {
-                alert('Gere um relatório primeiro!');
-                return;
-            }
-
-            if (typeof window.jspdf === 'undefined') {
-                alert('⚠️ Aguarde o carregamento da biblioteca jsPDF. Tente novamente em alguns segundos.');
-                return;
-            }
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'pt', 'a4');
-            const lines = relatorioAtual.split('\n');
-            let y = 40;
-            doc.setFontSize(10);
-            lines.forEach(line => {
-                if (y > 780) { doc.addPage();
-                    y = 40; }
-                doc.text(line, 40, y);
-                y += 16;
-            });
-            doc.save(`relatorio_${new Date().toISOString().slice(0,10)}.pdf`);
-        }
-
-        function copiarRelatorio() {
-            if (!relatorioAtual) {
-                alert('Gere um relatório primeiro!');
-                return;
-            }
-            navigator.clipboard.writeText(relatorioAtual).then(() => {
-                alert('📋 Relatório copiado!');
-            }).catch(() => {
-                const textarea = document.createElement('textarea');
-                textarea.value = relatorioAtual;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                alert('📋 Relatório copiado!');
-            });
         }
 
         // ===== PERFIL =====
@@ -2526,6 +1621,509 @@
             }
         }
 
+        // ===== PROCESSOS =====
+        function renderizarProcessos() {
+            const tbody = document.getElementById('listaProcessos');
+            const busca = document.getElementById('buscaProcesso').value.toLowerCase();
+
+            let lista = [...dados.processos];
+
+            if (busca) {
+                lista = lista.filter(p =>
+                    p.numero.toLowerCase().includes(busca) ||
+                    p.cliente.toLowerCase().includes(busca) ||
+                    p.assunto.toLowerCase().includes(busca)
+                );
+            }
+
+            if (lista.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-msg">Nenhum processo encontrado</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = lista.map(p => {
+                const statusClass = p.status === 'Ativo' ? 'status-ativo' :
+                    p.status === 'Concluído' ? 'status-concluido' : 'status-arquivado';
+                const anexosCount = p.anexos ? p.anexos.length : 0;
+                const obsCount = p.observacoes ? p.observacoes.length : 0;
+
+                return `<tr>
+                    <td><strong>${p.numero}</strong></td>
+                    <td>${p.cliente}</td>
+                    <td>${p.assunto}</td>
+                    <td><span class="status-badge ${statusClass}">${p.status}</span></td>
+                    <td>${anexosCount > 0 ? `<span class="badge-anexo">📎 ${anexosCount}</span>` : '-'}</td>
+                    <td>${obsCount > 0 ? `<span style="font-size:12px;color:#8888aa;">📝 ${obsCount}</span>` : '-'}</td>
+                    <td>
+                        <button class="action-btn" onclick="verDetalhes('${p.id}')" title="Detalhes">👁️</button>
+                        <button class="action-btn edit" onclick="editarProcesso('${p.id}')" title="Editar">✏️</button>
+                        <button class="action-btn delete" onclick="excluirProcesso('${p.id}')" title="Excluir">🗑️</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function abrirModalProcesso() {
+            editandoProcessoId = null;
+            document.getElementById('formProcesso').reset();
+            document.getElementById('fStatus').value = 'Ativo';
+            document.getElementById('anexosPreview').innerHTML = '';
+            document.getElementById('modalProcessoTitulo').textContent = '📂 Novo Processo';
+            document.getElementById('modalProcesso').classList.add('show');
+        }
+
+        function editarProcesso(id) {
+            const p = dados.processos.find(pr => pr.id === id);
+            if (!p) return;
+
+            editandoProcessoId = id;
+            document.getElementById('fNumero').value = p.numero;
+            document.getElementById('fCliente').value = p.cliente;
+            document.getElementById('fAssunto').value = p.assunto;
+            document.getElementById('fVara').value = p.vara || '';
+            document.getElementById('fJuiz').value = p.juiz || '';
+            document.getElementById('fStatus').value = p.status;
+            document.getElementById('fObservacoes').value = p.observacoes ? p.observacoes.map(o => o.texto).join('\n') :
+            '';
+
+            document.getElementById('anexosPreview').innerHTML = '';
+            if (p.anexos && p.anexos.length > 0) {
+                p.anexos.forEach((a, idx) => {
+                    const isImage = a.tipo && a.tipo.startsWith('image/');
+                    const preview = document.createElement('div');
+                    preview.className = 'anexo-item';
+                    preview.innerHTML = `
+                        <span class="tipo">${isImage ? '🖼️' : '📄'}</span>
+                        <span class="nome">${a.nome}</span>
+                        <span class="download" onclick="baixarAnexo('${p.id}', ${idx})">📥</span>
+                        <span class="remove" onclick="removerAnexoNaEdicao('${p.id}', ${idx})">×</span>
+                    `;
+                    document.getElementById('anexosPreview').appendChild(preview);
+                });
+            }
+
+            document.getElementById('modalProcessoTitulo').textContent = '✏️ Editar Processo';
+            document.getElementById('modalProcesso').classList.add('show');
+        }
+
+        function excluirProcesso(id) {
+            if (!confirm('Tem certeza que deseja excluir este processo?')) return;
+            dados.processos = dados.processos.filter(p => p.id !== id);
+            salvarDados();
+            renderizarProcessos();
+            atualizarStats();
+        }
+
+        // ===== FORMULÁRIO PROCESSO =====
+        document.getElementById('formProcesso').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('fAnexos');
+            const anexos = [];
+
+            if (fileInput.files.length > 0) {
+                let carregados = 0;
+                for (let f of fileInput.files) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        anexos.push({
+                            id: 'anexo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                            nome: f.name,
+                            tipo: f.type,
+                            tamanho: f.size,
+                            data: new Date().toISOString(),
+                            conteudo: ev.target.result
+                        });
+                        carregados++;
+                        if (carregados === fileInput.files.length) {
+                            finalizarSalvar(anexos);
+                        }
+                    };
+                    reader.readAsDataURL(f);
+                }
+                if (fileInput.files.length === 0) {
+                    finalizarSalvar([]);
+                }
+            } else {
+                finalizarSalvar([]);
+            }
+
+            function finalizarSalvar(novosAnexos) {
+                const obsTexto = document.getElementById('fObservacoes').value.trim();
+
+                const dadosForm = {
+                    id: editandoProcessoId || 'proc_' + Date.now(),
+                    numero: document.getElementById('fNumero').value.trim(),
+                    cliente: document.getElementById('fCliente').value.trim(),
+                    assunto: document.getElementById('fAssunto').value.trim(),
+                    vara: document.getElementById('fVara').value.trim(),
+                    juiz: document.getElementById('fJuiz').value.trim(),
+                    status: document.getElementById('fStatus').value,
+                    anexos: [],
+                    observacoes: []
+                };
+
+                if (editandoProcessoId) {
+                    const idx = dados.processos.findIndex(p => p.id === editandoProcessoId);
+                    if (idx !== -1) {
+                        const existente = dados.processos[idx];
+                        dadosForm.anexos = [...existente.anexos || [], ...novosAnexos];
+                        dadosForm.observacoes = existente.observacoes || [];
+
+                        if (obsTexto) {
+                            dadosForm.observacoes.push({
+                                id: 'obs_' + Date.now(),
+                                texto: obsTexto,
+                                data: new Date().toISOString()
+                            });
+                        }
+
+                        dados.processos[idx] = { ...existente, ...dadosForm };
+                    }
+                } else {
+                    dadosForm.anexos = novosAnexos;
+
+                    if (obsTexto) {
+                        dadosForm.observacoes.push({
+                            id: 'obs_' + Date.now(),
+                            texto: obsTexto,
+                            data: new Date().toISOString()
+                        });
+                    }
+
+                    // Adiciona o cliente automaticamente se não existir
+                    if (dadosForm.cliente) {
+                        const clienteExistente = dados.clientes.find(c =>
+                            c.nome.toLowerCase() === dadosForm.cliente.toLowerCase()
+                        );
+                        if (!clienteExistente) {
+                            dados.clientes.push({
+                                id: 'cliente_' + Date.now(),
+                                nome: dadosForm.cliente,
+                                telefone: '',
+                                email: '',
+                                processos: dadosForm.numero,
+                                observacoes: 'Criado automaticamente pelo processo'
+                            });
+                        } else {
+                            // Adiciona processo ao cliente existente
+                            const procs = clienteExistente.processos ? clienteExistente.processos.split(',').map(p => p
+                                .trim()) : [];
+                            if (!procs.includes(dadosForm.numero)) {
+                                procs.push(dadosForm.numero);
+                                clienteExistente.processos = procs.join(', ');
+                            }
+                        }
+                    }
+
+                    dados.processos.push(dadosForm);
+                }
+
+                salvarDados();
+                fecharModal('modalProcesso');
+                renderizarProcessos();
+                renderizarClientes();
+                atualizarStats();
+            }
+        });
+
+        // ===== REMOVER ANEXO NA EDIÇÃO =====
+        function removerAnexoNaEdicao(processoId, index) {
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p || !p.anexos) return;
+            p.anexos.splice(index, 1);
+            salvarDados();
+            editarProcesso(processoId);
+        }
+
+        // ===== BAIXAR ANEXO =====
+        function baixarAnexo(processoId, index) {
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p || !p.anexos || !p.anexos[index]) return;
+            const anexo = p.anexos[index];
+            const link = document.createElement('a');
+            link.href = anexo.conteudo;
+            link.download = anexo.nome;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // ===== DETALHES DO PROCESSO =====
+        function verDetalhes(id) {
+            const p = dados.processos.find(pr => pr.id === id);
+            if (!p) return;
+
+            document.getElementById('detalhesTitulo').textContent = `📄 ${p.numero} - ${p.cliente}`;
+
+            let html = '';
+
+            html += `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;background:#0d0d1a;padding:12px 16px;border-radius:8px;">
+                    <div><strong>Número:</strong> ${p.numero}</div>
+                    <div><strong>Cliente:</strong> ${p.cliente}</div>
+                    <div><strong>Assunto:</strong> ${p.assunto}</div>
+                    <div><strong>Status:</strong> <span class="status-badge ${p.status === 'Ativo' ? 'status-ativo' : p.status === 'Concluído' ? 'status-concluido' : 'status-arquivado'}">${p.status}</span></div>
+                    <div><strong>Vara:</strong> ${p.vara || 'N/A'}</div>
+                    <div><strong>Juiz:</strong> ${p.juiz || 'N/A'}</div>
+                </div>
+            `;
+
+            html += `<h3 style="color:#64b5f6;margin-top:12px;">📎 Anexos</h3>`;
+            html += `<button onclick="abrirAnexoModal('${p.id}')" class="btn-primary btn-sm" style="margin:8px 0;">➕ Adicionar Anexo</button>`;
+
+            if (!p.anexos || p.anexos.length === 0) {
+                html += `<p class="empty-msg" style="padding:16px;">Nenhum anexo</p>`;
+            } else {
+                html += `<div class="anexos-list">`;
+                p.anexos.forEach((a, idx) => {
+                    const isImage = a.tipo && a.tipo.startsWith('image/');
+                    const size = a.tamanho ? (a.tamanho / 1024).toFixed(1) + ' KB' : '';
+                    html += `
+                        <div class="anexo-item">
+                            <span class="tipo">${isImage ? '🖼️' : '📄'}</span>
+                            <span class="nome" title="${a.nome}">${a.nome}</span>
+                            <span style="font-size:10px;color:#666;">${size}</span>
+                            <span class="download" onclick="baixarAnexo('${p.id}', ${idx})">📥</span>
+                            <span class="remove" onclick="removerAnexoDetalhes('${p.id}', ${idx})">×</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+
+                const imagens = p.anexos.filter(a => a.tipo && a.tipo.startsWith('image/'));
+                if (imagens.length > 0) {
+                    html += `<div class="image-preview-container">`;
+                    imagens.forEach((img, idx) => {
+                        const realIdx = p.anexos.indexOf(img);
+                        html += `
+                            <div class="img-wrapper">
+                                <img src="${img.conteudo}" alt="${img.nome}" onclick="window.open('${img.conteudo}', '_blank')">
+                                <button class="remove-img" onclick="removerAnexoDetalhes('${p.id}', ${realIdx})">×</button>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+            }
+
+            html += `<h3 style="color:#64b5f6;margin-top:20px;">📝 Observações</h3>`;
+            html += `<button onclick="abrirModalObservacao('${p.id}')" class="btn-primary btn-sm" style="margin:8px 0;">➕ Adicionar Observação</button>`;
+
+            if (!p.observacoes || p.observacoes.length === 0) {
+                html += `<p class="empty-msg" style="padding:16px;">Nenhuma observação</p>`;
+            } else {
+                p.observacoes.slice().reverse().forEach(obs => {
+                    html += `
+                        <div class="observacao-item">
+                            <div class="texto">${obs.texto}</div>
+                            <div class="data">${new Date(obs.data).toLocaleString('pt-BR')}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('detalhesConteudo').innerHTML = html;
+            document.getElementById('modalDetalhes').classList.add('show');
+        }
+
+        // ===== MODAL ANEXO =====
+        function abrirAnexoModal(processoId) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.multiple = true;
+            input.accept = '.pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.xls,.xlsx';
+            input.onchange = function(e) {
+                const files = e.target.files;
+                if (files.length === 0) return;
+
+                const p = dados.processos.find(pr => pr.id === processoId);
+                if (!p) return;
+                if (!p.anexos) p.anexos = [];
+
+                let carregados = 0;
+                for (let f of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        p.anexos.push({
+                            id: 'anexo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                            nome: f.name,
+                            tipo: f.type,
+                            tamanho: f.size,
+                            data: new Date().toISOString(),
+                            conteudo: ev.target.result
+                        });
+                        carregados++;
+                        if (carregados === files.length) {
+                            salvarDados();
+                            verDetalhes(processoId);
+                            atualizarStats();
+                            renderizarProcessos();
+                        }
+                    };
+                    reader.readAsDataURL(f);
+                }
+            };
+            input.click();
+        }
+
+        function removerAnexoDetalhes(processoId, index) {
+            if (!confirm('Remover este anexo?')) return;
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p || !p.anexos) return;
+            p.anexos.splice(index, 1);
+            salvarDados();
+            verDetalhes(processoId);
+            atualizarStats();
+            renderizarProcessos();
+        }
+
+        // ===== MODAL OBSERVAÇÃO =====
+        function abrirModalObservacao(processoId) {
+            document.getElementById('fObsProcessoId').value = processoId;
+            document.getElementById('fObsTexto').value = '';
+            document.getElementById('modalObservacao').classList.add('show');
+        }
+
+        document.getElementById('formObservacao').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const processoId = document.getElementById('fObsProcessoId').value;
+            const texto = document.getElementById('fObsTexto').value.trim();
+
+            if (!texto) {
+                alert('Digite uma observação.');
+                return;
+            }
+
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p) return;
+            if (!p.observacoes) p.observacoes = [];
+
+            p.observacoes.push({
+                id: 'obs_' + Date.now(),
+                texto: texto,
+                data: new Date().toISOString()
+            });
+
+            salvarDados();
+            fecharModal('modalObservacao');
+            verDetalhes(processoId);
+            atualizarStats();
+            renderizarProcessos();
+        });
+
+        // ===== CLIENTES =====
+        function renderizarClientes() {
+            const container = document.getElementById('listaClientes');
+            const busca = document.getElementById('buscaCliente').value.toLowerCase();
+
+            let lista = [...dados.clientes];
+
+            if (busca) {
+                lista = lista.filter(c => c.nome.toLowerCase().includes(busca));
+            }
+
+            if (lista.length === 0) {
+                container.innerHTML = `<p class="empty-msg" style="grid-column:1/-1;">Nenhum cliente cadastrado</p>`;
+                return;
+            }
+
+            container.innerHTML = lista.map(c => {
+                const procs = c.processos ? c.processos.split(',').map(p => p.trim()).filter(p => p) : [];
+                return `
+                    <div class="cliente-card">
+                        <div class="nome">${c.nome}</div>
+                        <div class="info">
+                            ${c.telefone ? `<span>📞 ${c.telefone}</span>` : ''}
+                            ${c.email ? `<span>✉️ ${c.email}</span>` : ''}
+                        </div>
+                        <div class="processos">
+                            ${procs.length > 0 ? `📂 Processos: ${procs.join(', ')}` : 'Nenhum processo vinculado'}
+                        </div>
+                        <div class="acoes">
+                            <button class="btn-primary btn-sm" onclick="editarCliente('${c.id}')">✏️ Editar</button>
+                            <button class="btn-danger btn-sm" onclick="excluirCliente('${c.id}')">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function abrirModalCliente() {
+            editandoClienteId = null;
+            document.getElementById('formCliente').reset();
+            document.getElementById('modalCliente').classList.add('show');
+        }
+
+        function editarCliente(id) {
+            const c = dados.clientes.find(cl => cl.id === id);
+            if (!c) return;
+            editandoClienteId = id;
+            document.getElementById('fClienteNome').value = c.nome;
+            document.getElementById('fClienteTelefone').value = c.telefone || '';
+            document.getElementById('fClienteEmail').value = c.email || '';
+            document.getElementById('fClienteProcessos').value = c.processos || '';
+            document.getElementById('fClienteObservacoes').value = c.observacoes || '';
+            document.getElementById('modalCliente').classList.add('show');
+        }
+
+        function excluirCliente(id) {
+            if (!confirm('Tem certeza que deseja excluir este cliente?')) return;
+            dados.clientes = dados.clientes.filter(c => c.id !== id);
+            salvarDados();
+            renderizarClientes();
+            atualizarStats();
+        }
+
+        document.getElementById('formCliente').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const dadosForm = {
+                id: editandoClienteId || 'cliente_' + Date.now(),
+                nome: document.getElementById('fClienteNome').value.trim(),
+                telefone: document.getElementById('fClienteTelefone').value.trim(),
+                email: document.getElementById('fClienteEmail').value.trim(),
+                processos: document.getElementById('fClienteProcessos').value.trim(),
+                observacoes: document.getElementById('fClienteObservacoes').value.trim()
+            };
+
+            if (editandoClienteId) {
+                const idx = dados.clientes.findIndex(c => c.id === editandoClienteId);
+                if (idx !== -1) {
+                    dados.clientes[idx] = { ...dados.clientes[idx], ...dadosForm };
+                }
+            } else {
+                dados.clientes.push(dadosForm);
+            }
+
+            salvarDados();
+            fecharModal('modalCliente');
+            renderizarClientes();
+            atualizarStats();
+        });
+
+        // ===== MÁSCARA TELEFONE =====
+        document.getElementById('fClienteTelefone').addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '');
+            if (value.length <= 2) { this.value = value; return; }
+            if (value.length <= 6) { this.value = `(${value.substring(0, 2)}) ${value.substring(2)}`; return; }
+            if (value.length <= 11) { this.value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7)}`; return; }
+            this.value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
+        });
+
+        // ===== FUNÇÕES GLOBAIS =====
+        function fecharModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+
         // ===== EXPORTAR / IMPORTAR =====
         function exportarDados() {
             const dataStr = JSON.stringify(dados, null, 2);
@@ -2554,19 +2152,16 @@
                         if (confirm('Isso vai substituir todos os dados. Continuar?')) {
                             dados = imported;
                             if (!dados.processos) dados.processos = [];
-                            if (!dados.prazos) dados.prazos = [];
-                            if (!dados.perfil) dados.perfil = {};
+                            if (!dados.clientes) dados.clientes = [];
                             dados.processos.forEach(p => {
-                                if (!p.checklist) p.checklist = [];
-                                if (!p.anotacoes) p.anotacoes = [];
                                 if (!p.anexos) p.anexos = [];
+                                if (!p.observacoes) p.observacoes = [];
                             });
                             salvarDados();
                             renderizarProcessos();
-                            renderizarPrazos();
-                            atualizarDashboard();
+                            renderizarClientes();
+                            atualizarStats();
                             atualizarPerfil();
-                            preencherSelectProcessos();
                             alert('✅ Dados importados!');
                         }
                     } catch (err) {
@@ -2578,121 +2173,14 @@
             input.click();
         }
 
-        // ===== SINCRONIZAR =====
         function sincronizar() {
             salvarDados();
             alert('✅ Dados sincronizados!');
         }
 
-        // ===== MODAL =====
-        function fecharModal(id) {
-            document.getElementById(id).classList.remove('show');
-        }
-
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('show');
-                }
-            });
-        });
-
-        // ===== EVENTOS DOS FORMULÁRIOS (COM INTEGRAÇÃO) =====
-        document.getElementById('formProcesso').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const checklistText = document.getElementById('fChecklist').value;
-            const checklistItems = checklistText ? checklistText.split('\n').filter(t => t.trim()) : [];
-
-            const numero = document.getElementById('fNumero').value.trim();
-            const cliente = document.getElementById('fCliente').value.trim();
-
-            const dadosForm = {
-                id: editandoProcessoId || 'proc_' + Date.now(),
-                numero: numero,
-                cliente: cliente,
-                assunto: document.getElementById('fAssunto').value.trim(),
-                vara: document.getElementById('fVara').value.trim(),
-                juiz: document.getElementById('fJuiz').value.trim(),
-                status: document.getElementById('fStatus').value,
-                observacoes: document.getElementById('fObservacoes').value.trim(),
-                dataCriacao: new Date().toISOString(),
-                checklist: [],
-                anotacoes: [],
-                anexos: []
-            };
-
-            checklistItems.forEach(desc => {
-                dadosForm.checklist.push({
-                    id: 'tarefa_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-                    descricao: desc.trim(),
-                    concluida: false
-                });
-            });
-
-            if (editandoProcessoId) {
-                const idx = dados.processos.findIndex(p => p.id === editandoProcessoId);
-                if (idx !== -1) {
-                    const existente = dados.processos[idx];
-                    dadosForm.anotacoes = existente.anotacoes || [];
-                    dadosForm.anexos = existente.anexos || [];
-                    if (existente.checklist) {
-                        const novasDesc = checklistItems.map(d => d.trim());
-                        const mantidas = existente.checklist.filter(t => novasDesc.includes(t.descricao));
-                        const novas = checklistItems
-                            .filter(d => !existente.checklist.some(t => t.descricao === d.trim()))
-                            .map(d => ({
-                                id: 'tarefa_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
-                                descricao: d.trim(),
-                                concluida: false
-                            }));
-                        dadosForm.checklist = [...mantidas, ...novas];
-                    }
-                    dados.processos[idx] = { ...existente, ...dadosForm };
-                }
-            } else {
-                dados.processos.push(dadosForm);
-            }
-
-            // ===== INTEGRAÇÃO COM CLIENTES =====
-            // Se o cliente foi preenchido, sincroniza com o módulo Clientes/Contatos
-            if (cliente) {
-                sincronizarCliente(cliente, numero);
-            }
-
-            salvarDados();
-            fecharModal('modalProcesso');
-            renderizarProcessos();
-            atualizarDashboard();
-            preencherSelectProcessos();
-        });
-
-        document.getElementById('formPrazo').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const processoId = document.getElementById('fProcessoPrazo').value;
-            if (!processoId) { alert('Selecione um processo.'); return; }
-            const dadosForm = {
-                id: editandoPrazoId || 'prazo_' + Date.now(),
-                processoId: processoId,
-                descricao: document.getElementById('fDescricaoPrazo').value.trim(),
-                dataVencimento: document.getElementById('fDataVencimento').value,
-                status: document.getElementById('fStatusPrazo').value
-            };
-            if (editandoPrazoId) {
-                const idx = dados.prazos.findIndex(p => p.id === editandoPrazoId);
-                if (idx !== -1) dados.prazos[idx] = { ...dados.prazos[idx], ...dadosForm };
-            } else {
-                dados.prazos.push(dadosForm);
-            }
-            salvarDados();
-            fecharModal('modalPrazo');
-            renderizarPrazos();
-            atualizarDashboard();
-        });
-
         console.log('⚖️ Legal Desk - Gestão carregado!');
-        console.log(`👤 Usuário: ${usuarioAtual ? usuarioAtual.nome : 'Não logado'}`);
-        console.log('🔄 Integração com Clientes/Contatos ativa!');
+        console.log(`📂 ${dados.processos.length} processos`);
+        console.log(`👤 ${dados.clientes.length} clientes`);
     </script>
 
 </body>

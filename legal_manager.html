@@ -16,7 +16,6 @@
             color: #e0e0e0;
             min-height: 100vh;
         }
-        /* ===== LOGIN ===== */
         .login-overlay {
             position: fixed;
             top: 0;
@@ -154,8 +153,6 @@
             height: 1px;
             background: #2a2a4a;
         }
-
-        /* ===== HEADER ===== */
         header {
             background: linear-gradient(135deg, #16213e, #0f3460);
             padding: 12px 20px;
@@ -230,8 +227,13 @@
             background: rgba(198, 40, 40, 0.2);
             border-color: #ef5350;
         }
-
-        /* ===== NAV ===== */
+        .btn-outline.voltar {
+            border-color: #ffb74d;
+            color: #ffb74d;
+        }
+        .btn-outline.voltar:hover {
+            background: rgba(255, 183, 77, 0.2);
+        }
         nav {
             background: #0d0d1a;
             border-bottom: 1px solid #1a1a3e;
@@ -279,7 +281,6 @@
             font-weight: 700;
             margin-left: 4px;
         }
-
         main {
             max-width: 1400px;
             margin: 0 auto;
@@ -318,8 +319,6 @@
             gap: 10px;
             flex-wrap: wrap;
         }
-
-        /* ===== STATS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -351,8 +350,6 @@
         .stat-card.urgent {
             border-color: #c62828;
         }
-
-        /* ===== BOTÕES ===== */
         .btn-primary {
             background: linear-gradient(135deg, #1565c0, #0d47a1);
             color: white;
@@ -399,8 +396,6 @@
             padding: 6px 14px;
             font-size: 12px;
         }
-
-        /* ===== TOOLBAR ===== */
         .toolbar {
             display: flex;
             justify-content: space-between;
@@ -444,8 +439,6 @@
             font-size: 14px;
             cursor: pointer;
         }
-
-        /* ===== TABELA ===== */
         .table-container {
             overflow-x: auto;
             border-radius: 12px;
@@ -487,8 +480,6 @@
             padding: 40px 20px !important;
             font-style: italic;
         }
-
-        /* ===== BADGES ===== */
         .status-badge {
             padding: 3px 10px;
             border-radius: 20px;
@@ -508,7 +499,6 @@
             background: #e65100;
             color: #ffb74d;
         }
-
         .badge-anexo {
             font-size: 11px;
             background: #0d47a1;
@@ -519,8 +509,6 @@
             align-items: center;
             gap: 4px;
         }
-
-        /* ===== AÇÕES ===== */
         .action-btn {
             background: transparent;
             border: none;
@@ -542,8 +530,6 @@
         .action-btn.file:hover {
             color: #ffb74d;
         }
-
-        /* ===== MODAL ===== */
         .modal {
             display: none;
             position: fixed;
@@ -613,8 +599,6 @@
         .modal-body {
             padding: 20px;
         }
-
-        /* ===== FORMULÁRIOS ===== */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -671,7 +655,6 @@
         .form-group input[type="file"]:hover {
             border-color: #64b5f6;
         }
-
         .form-actions {
             display: flex;
             justify-content: flex-end;
@@ -680,8 +663,6 @@
             border-top: 1px solid #2a2a4a;
             flex-wrap: wrap;
         }
-
-        /* ===== ANEXOS ===== */
         .anexos-list {
             display: flex;
             flex-wrap: wrap;
@@ -765,8 +746,6 @@
         .image-preview-container .img-wrapper .remove-img:hover {
             background: #c62828;
         }
-
-        /* ===== OBSERVAÇÕES ===== */
         .observacao-item {
             background: #0d0d1a;
             border-radius: 6px;
@@ -783,8 +762,6 @@
             color: #8888aa;
             margin-top: 2px;
         }
-
-        /* ===== PERFIL ===== */
         .perfil-info {
             display: flex;
             flex-wrap: wrap;
@@ -810,8 +787,6 @@
             color: #e0e0e0;
             font-weight: 500;
         }
-
-        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             .login-box {
                 padding: 24px;
@@ -878,8 +853,6 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #3a3a6a;
         }
-
-        /* ===== GRÁFICO ===== */
         .chart-container {
             margin-top: 10px;
         }
@@ -945,8 +918,6 @@
         .prazo-item.urgente .prazo-dias {
             color: #ef5350;
         }
-
-        /* ===== ABA DE CLIENTES ===== */
         .clientes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -1032,6 +1003,8 @@
             <span>Gerenciamento de Processos</span>
         </div>
         <div class="header-actions">
+            <!-- BOTÃO VOLTAR ADICIONADO AQUI -->
+            <button onclick="window.location.href='index.html'" class="btn-outline voltar">⬅ Voltar</button>
             <span class="user-info">
                 <span class="avatar" id="userAvatar">D</span>
                 <span id="userName">Usuário</span>
@@ -1320,7 +1293,6 @@
         let editandoProcessoId = null;
         let editandoClienteId = null;
 
-        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
             const sessao = localStorage.getItem('legalManagerSessao');
             if (sessao) {
@@ -1336,7 +1308,6 @@
             document.getElementById('loginOverlay').classList.remove('hidden');
         });
 
-        // ===== AUTENTICAÇÃO =====
         function switchAuthMode() {
             const isLogin = modoAuth === 'login';
             modoAuth = isLogin ? 'register' : 'login';
@@ -1487,8 +1458,6 @@
             renderizarClientes();
             atualizarStats();
             atualizarPerfil();
-
-            // Sincroniza clientes com o módulo separado (para compatibilidade)
             sincronizarClientesExterno();
         }
 
@@ -1516,7 +1485,6 @@
             });
         }
 
-        // ===== DADOS =====
         function carregarDados() {
             if (usuarioAtual && usuarioAtual.dados) {
                 dados = usuarioAtual.dados;
@@ -1539,21 +1507,16 @@
                 usuarios[usuarioAtual.email].dados = dados;
                 localStorage.setItem('legalManagerUsuarios', JSON.stringify(usuarios));
             }
-
-            // Sincroniza com o módulo de clientes separado
             sincronizarClientesExterno();
-
             window.dispatchEvent(new Event('storage'));
         }
 
-        // ===== SINCRONIZAR CLIENTES (para o módulo separado) =====
         function sincronizarClientesExterno() {
             try {
                 localStorage.setItem('clientesContatos', JSON.stringify(dados.clientes));
             } catch (e) {}
         }
 
-        // ===== STATS =====
         function atualizarStats() {
             const total = dados.processos.length;
             const ativos = dados.processos.filter(p => p.status === 'Ativo').length;
@@ -1589,7 +1552,6 @@
             }
         }
 
-        // ===== PERFIL =====
         function atualizarPerfil() {
             const perfil = dados.perfil || {};
             document.getElementById('perfilNome').textContent = perfil.nome || 'Não configurado';
@@ -1621,7 +1583,6 @@
             }
         }
 
-        // ===== PROCESSOS =====
         function renderizarProcessos() {
             const tbody = document.getElementById('listaProcessos');
             const busca = document.getElementById('buscaProcesso').value.toLowerCase();
@@ -1714,7 +1675,6 @@
             atualizarStats();
         }
 
-        // ===== FORMULÁRIO PROCESSO =====
         document.getElementById('formProcesso').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -1791,7 +1751,6 @@
                         });
                     }
 
-                    // Adiciona o cliente automaticamente se não existir
                     if (dadosForm.cliente) {
                         const clienteExistente = dados.clientes.find(c =>
                             c.nome.toLowerCase() === dadosForm.cliente.toLowerCase()
@@ -1806,7 +1765,6 @@
                                 observacoes: 'Criado automaticamente pelo processo'
                             });
                         } else {
-                            // Adiciona processo ao cliente existente
                             const procs = clienteExistente.processos ? clienteExistente.processos.split(',').map(p => p
                                 .trim()) : [];
                             if (!procs.includes(dadosForm.numero)) {
@@ -1827,7 +1785,6 @@
             }
         });
 
-        // ===== REMOVER ANEXO NA EDIÇÃO =====
         function removerAnexoNaEdicao(processoId, index) {
             const p = dados.processos.find(pr => pr.id === processoId);
             if (!p || !p.anexos) return;
@@ -1836,7 +1793,6 @@
             editarProcesso(processoId);
         }
 
-        // ===== BAIXAR ANEXO =====
         function baixarAnexo(processoId, index) {
             const p = dados.processos.find(pr => pr.id === processoId);
             if (!p || !p.anexos || !p.anexos[index]) return;
@@ -1849,7 +1805,6 @@
             document.body.removeChild(link);
         }
 
-        // ===== DETALHES DO PROCESSO =====
         function verDetalhes(id) {
             const p = dados.processos.find(pr => pr.id === id);
             if (!p) return;
@@ -1927,7 +1882,6 @@
             document.getElementById('modalDetalhes').classList.add('show');
         }
 
-        // ===== MODAL ANEXO =====
         function abrirAnexoModal(processoId) {
             const input = document.createElement('input');
             input.type = 'file';
@@ -1978,7 +1932,6 @@
             renderizarProcessos();
         }
 
-        // ===== MODAL OBSERVAÇÃO =====
         function abrirModalObservacao(processoId) {
             document.getElementById('fObsProcessoId').value = processoId;
             document.getElementById('fObsTexto').value = '';
@@ -2012,7 +1965,6 @@
             renderizarProcessos();
         });
 
-        // ===== CLIENTES =====
         function renderizarClientes() {
             const container = document.getElementById('listaClientes');
             const busca = document.getElementById('buscaCliente').value.toLowerCase();
@@ -2102,7 +2054,6 @@
             atualizarStats();
         });
 
-        // ===== MÁSCARA TELEFONE =====
         document.getElementById('fClienteTelefone').addEventListener('input', function(e) {
             let value = this.value.replace(/\D/g, '');
             if (value.length <= 2) { this.value = value; return; }
@@ -2111,7 +2062,6 @@
             this.value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
         });
 
-        // ===== FUNÇÕES GLOBAIS =====
         function fecharModal(id) {
             document.getElementById(id).classList.remove('show');
         }
@@ -2124,7 +2074,6 @@
             });
         });
 
-        // ===== EXPORTAR / IMPORTAR =====
         function exportarDados() {
             const dataStr = JSON.stringify(dados, null, 2);
             const blob = new Blob([dataStr], { type: 'application/json' });

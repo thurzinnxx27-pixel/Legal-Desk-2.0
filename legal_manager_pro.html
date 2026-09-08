@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ Legal Manager Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #1a1a2e;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(135deg, #16213e, #0f3460);
+            padding: 12px 20px;
+            border-bottom: 2px solid #1a3a6b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo h1 {
+            color: #64b5f6;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: #90caf9;
+            font-size: 11px;
+            opacity: 0.8;
+            display: block;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #90caf9;
+            border: 1px solid #1a3a6b;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-outline:hover {
+            background: rgba(21, 101, 192, 0.2);
+            border-color: #64b5f6;
+        }
+
+        .btn-outline.logout {
+            border-color: #c62828;
+            color: #ef9a9a;
+        }
+
+        .btn-outline.logout:hover {
+            background: rgba(198, 40, 40, 0.2);
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .card {
+            background: #16162e;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .card h2 {
+            font-size: 17px;
+            color: #e0e0e0;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #16162e;
+            border-radius: 10px;
+            padding: 14px;
+            border: 1px solid #2a2a4a;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: #3a3a6a;
+        }
+
+        .stat-card .number {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e0e0e0;
+        }
+
+        .stat-card .label {
+            font-size: 11px;
+            color: #8888aa;
+            margin-top: 2px;
+        }
+
+        .stat-card .label .emoji {
+            font-size: 16px;
+        }
+
+        /* ===== TOOLBAR ===== */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .toolbar-left {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-right {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(21, 101, 192, 0.4);
+        }
+
+        .btn-secondary {
+            background: #2d2d44;
+            color: #e0e0e0;
+            border: 1px solid #3d3d5a;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #3d3d5a;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #c62828, #b71c1c);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(198, 40, 40, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        .search-box input {
+            background: #1a1a3e;
+            border: 1px solid #2a2a4a;
+            color: #e0e0e0;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #64b5f6;
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.2);
+        }
+
+        /* ===== TABELA ===== */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #2a2a4a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 700px;
+        }
+
+        table thead {
+            background: #0d0d1a;
+        }
+
+        table th {
+            text-align: left;
+            padding: 10px 12px;
+            color: #8888aa;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            background: #0d0d1a;
+            z-index: 5;
+        }
+
+        table td {
+            padding: 10px 12px;
+            border-top: 1px solid #1a1a3e;
+            vertical-align: middle;
+        }
+
+        table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: #666688;
+            padding: 40px 20px !important;
+            font-style: italic;
+        }
+
+        /* ===== BADGES ===== */
+        .status-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-ativo {
+            background: #1b5e20;
+            color: #81c784;
+        }
+        .status-concluido {
+            background: #0d47a1;
+            color: #64b5f6;
+        }
+        .status-arquivado {
+            background: #e65100;
+            color: #ffb74d;
+        }
+
+        .badge-anexo {
+            font-size: 11px;
+            background: #0d47a1;
+            color: #64b5f6;
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== AÇÕES ===== */
+        .action-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 3px 5px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .action-btn.edit:hover {
+            color: #64b5f6;
+        }
+        .action-btn.delete:hover {
+            color: #ef5350;
+        }
+        .action-btn.file:hover {
+            color: #ffb74d;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #16162e;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid #2a2a4a;
+            animation: modalIn 0.3s ease;
+        }
+
+        .modal-content.large {
+            max-width: 900px;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            border-bottom: 1px solid #2a2a4a;
+            position: sticky;
+            top: 0;
+            background: #16162e;
+            z-index: 10;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .modal-header h2 {
+            font-size: 17px;
+            color: #e0e0e0;
+        }
+
+        .modal-header .close {
+            font-size: 24px;
+            cursor: pointer;
+            color: #8888aa;
+            transition: all 0.3s ease;
+        }
+
+        .modal-header .close:hover {
+            color: #ef5350;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* ===== FORMULÁRIOS ===== */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            padding: 6px 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #aaaacc;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .form-group label .required {
+            color: #ef5350;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: #1a1a3e;
+            border: 1px solid #2a2a4a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #64b5f6;
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input[type="file"] {
+            padding: 8px;
+            background: transparent;
+            border: 2px dashed #2a2a4a;
+            cursor: pointer;
+        }
+
+        .form-group input[type="file"]:hover {
+            border-color: #64b5f6;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 14px 16px;
+            border-top: 1px solid #2a2a4a;
+            flex-wrap: wrap;
+        }
+
+        /* ===== LISTA DE ANEXOS NA MODAL ===== */
+        .anexos-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .anexo-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #1a1a3e;
+            padding: 4px 10px 4px 8px;
+            border-radius: 16px;
+            font-size: 12px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .anexo-item .remove {
+            cursor: pointer;
+            color: #ef5350;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .anexo-item .remove:hover {
+            color: #ff1744;
+        }
+
+        .anexo-item .tipo {
+            font-size: 14px;
+        }
+
+        .anexo-item .nome {
+            color: #e0e0e0;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .anexo-item .download {
+            cursor: pointer;
+            color: #64b5f6;
+            font-size: 12px;
+        }
+
+        .anexo-item .download:hover {
+            color: #90caf9;
+        }
+
+        /* ===== OBSERVAÇÕES NA MODAL ===== */
+        .observacao-item {
+            background: #0d0d1a;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 6px;
+            border-left: 3px solid #64b5f6;
+        }
+
+        .observacao-item .texto {
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        .observacao-item .data {
+            font-size: 11px;
+            color: #8888aa;
+            margin-top: 2px;
+        }
+
+        /* ===== RESPONSIVO ===== */
+        @media (max-width: 768px) {
+            .login-box {
+                padding: 24px;
+            }
+            header {
+                padding: 10px 12px;
+            }
+            .logo h1 {
+                font-size: 16px;
+            }
+            main {
+                padding: 10px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+            .stat-card {
+                padding: 10px;
+            }
+            .stat-card .number {
+                font-size: 18px;
+            }
+            .modal-content {
+                margin: 10px;
+            }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .toolbar-left,
+            .toolbar-right {
+                width: 100%;
+            }
+            .search-box input {
+                width: 100%;
+            }
+            .form-actions {
+                flex-direction: column;
+            }
+            .form-actions button {
+                width: 100%;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d1a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2a4a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3a6a;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== VISUALIZADOR DE IMAGEM ===== */
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-top: 8px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .image-preview-container .img-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #2a2a4a;
+            background: #0d0d1a;
+        }
+
+        .image-preview-container .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview-container .img-wrapper .remove-img {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-preview-container .img-wrapper .remove-img:hover {
+            background: #c62828;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== LOGIN ===== -->
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-box" id="authBox">
+            <div class="logo-icon">⚖️</div>
+            <h2 id="authTitle">Legal Manager Pro</h2>
+
+            <div id="authForm">
+                <div class="form-group" id="nomeGrupo" style="display:none;">
+                    <label>Nome Completo</label>
+                    <input type="text" id="authNome" placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="authEmail" placeholder="seu@email.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="authSenha" placeholder="••••••" autocomplete="current-password">
+                </div>
+                <div class="form-group" id="senhaConfirmarGrupo" style="display:none;">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="authSenhaConfirmar" placeholder="••••••">
+                </div>
+
+                <div id="authError" class="error"></div>
+                <div id="authSuccess" class="success"></div>
+
+                <button onclick="authAction()" class="btn-primary" id="authBtn">Entrar</button>
+
+                <div class="divider">ou</div>
+
+                <button onclick="entrarConvidado()" class="btn-secondary">👤 Modo Convidado</button>
+
+                <div class="auth-switch">
+                    <span id="authSwitchText">Não tem uma conta?</span>
+                    <a id="authSwitchLink" onclick="switchAuthMode()">Criar conta</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header id="mainHeader" style="display:none;">
+        <div class="logo">
+            <h1>⚖️ Legal Manager Pro</h1>
+            <span>Gerenciamento de Processos</span>
+        </div>
+        <div class="header-actions">
+            <span class="user-info">
+                <span class="avatar" id="userAvatar">D</span>
+                <span id="userName">Usuário</span>
+            </span>
+            <button onclick="sincronizar()" class="btn-outline">☁️ Sincronizar</button>
+            <button onclick="exportarDados()" class="btn-outline">📤 Exportar</button>
+            <button onclick="importarDados()" class="btn-outline">📥 Importar</button>
+            <button onclick="logout()" class="btn-outline logout">🚪 Sair</button>
+        </div>
+    </header>
+
+    <!-- ===== CONTEÚDO ===== -->
+    <main id="mainContent" style="display:none;">
+
+        <!-- ===== STATS ===== -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number" id="totalProcessos">0</div>
+                <div class="label"><span class="emoji">📂</span> Processos</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="ativosProcessos">0</div>
+                <div class="label"><span class="emoji">⚖️</span> Ativos</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="concluidosProcessos">0</div>
+                <div class="label"><span class="emoji">✅</span> Concluídos</div>
+            </div>
+            <div class="stat-card" style="border-color:#ffb74d;">
+                <div class="number" id="totalAnexos">0</div>
+                <div class="label"><span class="emoji">📎</span> Anexos</div>
+            </div>
+        </div>
+
+        <!-- ===== LISTA DE PROCESSOS ===== -->
+        <div class="card">
+            <h2>📋 Processos</h2>
+
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <button onclick="abrirModalProcesso()" class="btn-primary">➕ Novo Processo</button>
+                </div>
+                <div class="toolbar-right">
+                    <div class="search-box">
+                        <input type="text" id="buscaProcesso" placeholder="🔍 Buscar..." oninput="renderizarProcessos()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Cliente</th>
+                            <th>Assunto</th>
+                            <th>Status</th>
+                            <th>📎</th>
+                            <th>📝</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaProcessos">
+                        <tr><td colspan="7" class="empty-msg">Nenhum processo cadastrado</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ===== MODAL PROCESSO ===== -->
+    <div id="modalProcesso" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="modalProcessoTitulo">📂 Novo Processo</h2>
+                <span class="close" onclick="fecharModal('modalProcesso')">&times;</span>
+            </div>
+            <form id="formProcesso">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Número do Processo <span class="required">*</span></label>
+                        <input type="text" id="fNumero" placeholder="0001234-56.2024.8.16.0001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cliente <span class="required">*</span></label>
+                        <input type="text" id="fCliente" placeholder="Nome do cliente" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Assunto <span class="required">*</span></label>
+                        <input type="text" id="fAssunto" placeholder="Assunto do processo" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vara</label>
+                        <input type="text" id="fVara" placeholder="1ª Vara Cível">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Juiz</label>
+                        <input type="text" id="fJuiz" placeholder="Dr. Juiz">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="fStatus">
+                            <option value="Ativo">Ativo</option>
+                            <option value="Concluído">Concluído</option>
+                            <option value="Arquivado">Arquivado</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>📝 Observações</label>
+                    <textarea id="fObservacoes" rows="3" placeholder="Observações sobre o processo..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>📎 Anexar Arquivos (PDF, imagens, documentos)</label>
+                    <input type="file" id="fAnexos" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.xls,.xlsx">
+                    <div id="anexosPreview" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" onclick="fecharModal('modalProcesso')" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== MODAL DETALHES ===== -->
+    <div id="modalDetalhes" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="detalhesTitulo">📄 Detalhes do Processo</h2>
+                <span class="close" onclick="fecharModal('modalDetalhes')">&times;</span>
+            </div>
+            <div class="modal-body" id="detalhesConteudo"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL OBSERVAÇÃO ===== -->
+    <div id="modalObservacao" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📝 Adicionar Observação</h2>
+                <span class="close" onclick="fecharModal('modalObservacao')">&times;</span>
+            </div>
+            <form id="formObservacao">
+                <input type="hidden" id="fObsProcessoId">
+                <div class="form-group">
+                    <label>Observação <span class="required">*</span></label>
+                    <textarea id="fObsTexto" rows="4" placeholder="Digite sua observação..." required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="fecharModal('modalObservacao')" class="btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // LEGAL MANAGER PRO - COM ANEXOS E OBSERVAÇÕES
+        // =============================================
+
+        // ===== VARIÁVEIS =====
+        let usuarioAtual = null;
+        let dados = { processos: [] };
+        let modoAuth = 'login';
+        let editandoProcessoId = null;
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessao = localStorage.getItem('legalManagerSessao');
+            if (sessao) {
+                try {
+                    const dadosSessao = JSON.parse(sessao);
+                    if (dadosSessao.email) {
+                        usuarioAtual = dadosSessao;
+                        entrarNoSistema();
+                        return;
+                    }
+                } catch (e) {}
+            }
+            document.getElementById('loginOverlay').classList.remove('hidden');
+        });
+
+        // ===== AUTENTICAÇÃO =====
+        function switchAuthMode() {
+            const isLogin = modoAuth === 'login';
+            modoAuth = isLogin ? 'register' : 'login';
+
+            const title = document.getElementById('authTitle');
+            const btn = document.getElementById('authBtn');
+            const switchText = document.getElementById('authSwitchText');
+            const switchLink = document.getElementById('authSwitchLink');
+            const nomeGrupo = document.getElementById('nomeGrupo');
+            const senhaConfirmar = document.getElementById('senhaConfirmarGrupo');
+
+            if (modoAuth === 'register') {
+                title.textContent = '📝 Criar Conta';
+                btn.textContent = 'Criar Conta';
+                switchText.textContent = 'Já tem uma conta?';
+                switchLink.textContent = 'Fazer login';
+                nomeGrupo.style.display = 'block';
+                senhaConfirmar.style.display = 'block';
+            } else {
+                title.textContent = '⚖️ Legal Manager Pro';
+                btn.textContent = 'Entrar';
+                switchText.textContent = 'Não tem uma conta?';
+                switchLink.textContent = 'Criar conta';
+                nomeGrupo.style.display = 'none';
+                senhaConfirmar.style.display = 'none';
+            }
+
+            document.getElementById('authError').textContent = '';
+            document.getElementById('authSuccess').textContent = '';
+        }
+
+        function authAction() {
+            const email = document.getElementById('authEmail').value.trim();
+            const senha = document.getElementById('authSenha').value;
+            const error = document.getElementById('authError');
+            const success = document.getElementById('authSuccess');
+
+            error.textContent = '';
+            success.textContent = '';
+
+            if (!email || !senha) {
+                error.textContent = 'Preencha todos os campos.';
+                return;
+            }
+
+            if (modoAuth === 'register') {
+                const nome = document.getElementById('authNome').value.trim();
+                const confirmar = document.getElementById('authSenhaConfirmar').value;
+
+                if (!nome) {
+                    error.textContent = 'Digite seu nome.';
+                    return;
+                }
+                if (senha !== confirmar) {
+                    error.textContent = 'As senhas não coincidem.';
+                    return;
+                }
+                if (senha.length < 4) {
+                    error.textContent = 'A senha deve ter no mínimo 4 caracteres.';
+                    return;
+                }
+
+                const usuarios = JSON.parse(localStorage.getItem('legalManagerUsuarios') || '{}');
+                if (usuarios[email]) {
+                    error.textContent = 'Este e-mail já está cadastrado.';
+                    return;
+                }
+
+                usuarios[email] = {
+                    nome: nome,
+                    senha: senha,
+                    dados: {
+                        processos: [],
+                        perfil: { nome: nome }
+                    },
+                    criadoEm: new Date().toISOString()
+                };
+                localStorage.setItem('legalManagerUsuarios', JSON.stringify(usuarios));
+
+                success.textContent = '✅ Conta criada! Faça login.';
+                modoAuth = 'login';
+                switchAuthMode();
+
+                document.getElementById('authNome').value = '';
+                document.getElementById('authSenhaConfirmar').value = '';
+                document.getElementById('authSenha').value = '';
+
+            } else {
+                const usuarios = JSON.parse(localStorage.getItem('legalManagerUsuarios') || '{}');
+                const user = usuarios[email];
+
+                if (!user) {
+                    error.textContent = 'E-mail não encontrado.';
+                    return;
+                }
+
+                if (user.senha !== senha) {
+                    error.textContent = 'Senha incorreta.';
+                    return;
+                }
+
+                usuarioAtual = {
+                    email: email,
+                    nome: user.nome,
+                    dados: user.dados || { processos: [], perfil: {} }
+                };
+
+                localStorage.setItem('legalManagerSessao', JSON.stringify({
+                    email: email,
+                    nome: user.nome
+                }));
+
+                entrarNoSistema();
+            }
+        }
+
+        document.getElementById('authSenha').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') authAction();
+        });
+        document.getElementById('authSenhaConfirmar').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') authAction();
+        });
+
+        function entrarConvidado() {
+            usuarioAtual = {
+                email: 'convidado@local',
+                nome: 'Convidado',
+                dados: { processos: [], perfil: {} }
+            };
+            localStorage.setItem('legalManagerSessao', JSON.stringify({
+                email: 'convidado@local',
+                nome: 'Convidado'
+            }));
+            entrarNoSistema();
+        }
+
+        function entrarNoSistema() {
+            document.getElementById('loginOverlay').classList.add('hidden');
+            document.getElementById('mainHeader').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'block';
+
+            document.getElementById('userName').textContent = usuarioAtual.nome || 'Usuário';
+            document.getElementById('userAvatar').textContent = (usuarioAtual.nome || 'U')[0].toUpperCase();
+
+            carregarDados();
+            renderizarProcessos();
+            atualizarStats();
+        }
+
+        function logout() {
+            if (!confirm('Deseja sair da sua conta?')) return;
+            localStorage.removeItem('legalManagerSessao');
+            usuarioAtual = null;
+            dados = { processos: [] };
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('mainHeader').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('authSenha').value = '';
+            document.getElementById('authError').textContent = '';
+        }
+
+        // ===== DADOS =====
+        function carregarDados() {
+            if (usuarioAtual && usuarioAtual.dados) {
+                dados = usuarioAtual.dados;
+                if (!dados.processos) dados.processos = [];
+                if (!dados.perfil) dados.perfil = {};
+                dados.processos.forEach(p => {
+                    if (!p.anexos) p.anexos = [];
+                    if (!p.observacoes) p.observacoes = [];
+                });
+            }
+        }
+
+        function salvarDados() {
+            if (!usuarioAtual) return;
+
+            usuarioAtual.dados = dados;
+            const usuarios = JSON.parse(localStorage.getItem('legalManagerUsuarios') || '{}');
+            if (usuarios[usuarioAtual.email]) {
+                usuarios[usuarioAtual.email].dados = dados;
+                localStorage.setItem('legalManagerUsuarios', JSON.stringify(usuarios));
+            }
+
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        // ===== STATS =====
+        function atualizarStats() {
+            const total = dados.processos.length;
+            const ativos = dados.processos.filter(p => p.status === 'Ativo').length;
+            const concluidos = dados.processos.filter(p => p.status === 'Concluído').length;
+            const totalAnexos = dados.processos.reduce((acc, p) => acc + (p.anexos ? p.anexos.length : 0), 0);
+
+            document.getElementById('totalProcessos').textContent = total;
+            document.getElementById('ativosProcessos').textContent = ativos;
+            document.getElementById('concluidosProcessos').textContent = concluidos;
+            document.getElementById('totalAnexos').textContent = totalAnexos;
+        }
+
+        // ===== RENDERIZAR PROCESSOS =====
+        function renderizarProcessos() {
+            const tbody = document.getElementById('listaProcessos');
+            const busca = document.getElementById('buscaProcesso').value.toLowerCase();
+
+            let lista = [...dados.processos];
+
+            if (busca) {
+                lista = lista.filter(p =>
+                    p.numero.toLowerCase().includes(busca) ||
+                    p.cliente.toLowerCase().includes(busca) ||
+                    p.assunto.toLowerCase().includes(busca)
+                );
+            }
+
+            if (lista.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="empty-msg">Nenhum processo encontrado</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = lista.map(p => {
+                const statusClass = p.status === 'Ativo' ? 'status-ativo' :
+                    p.status === 'Concluído' ? 'status-concluido' : 'status-arquivado';
+                const anexosCount = p.anexos ? p.anexos.length : 0;
+                const obsCount = p.observacoes ? p.observacoes.length : 0;
+
+                return `<tr>
+                    <td><strong>${p.numero}</strong></td>
+                    <td>${p.cliente}</td>
+                    <td>${p.assunto}</td>
+                    <td><span class="status-badge ${statusClass}">${p.status}</span></td>
+                    <td>${anexosCount > 0 ? `<span class="badge-anexo">📎 ${anexosCount}</span>` : '-'}</td>
+                    <td>${obsCount > 0 ? `<span style="font-size:12px;color:#8888aa;">📝 ${obsCount}</span>` : '-'}</td>
+                    <td>
+                        <button class="action-btn" onclick="verDetalhes('${p.id}')" title="Detalhes">👁️</button>
+                        <button class="action-btn edit" onclick="editarProcesso('${p.id}')" title="Editar">✏️</button>
+                        <button class="action-btn delete" onclick="excluirProcesso('${p.id}')" title="Excluir">🗑️</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        // ===== MODAL PROCESSO =====
+        function abrirModalProcesso() {
+            editandoProcessoId = null;
+            document.getElementById('formProcesso').reset();
+            document.getElementById('fStatus').value = 'Ativo';
+            document.getElementById('anexosPreview').innerHTML = '';
+            document.getElementById('modalProcessoTitulo').textContent = '📂 Novo Processo';
+            document.getElementById('modalProcesso').classList.add('show');
+        }
+
+        function editarProcesso(id) {
+            const p = dados.processos.find(pr => pr.id === id);
+            if (!p) return;
+
+            editandoProcessoId = id;
+            document.getElementById('fNumero').value = p.numero;
+            document.getElementById('fCliente').value = p.cliente;
+            document.getElementById('fAssunto').value = p.assunto;
+            document.getElementById('fVara').value = p.vara || '';
+            document.getElementById('fJuiz').value = p.juiz || '';
+            document.getElementById('fStatus').value = p.status;
+            document.getElementById('fObservacoes').value = p.observacoes ? p.observacoes.map(o => o.texto).join('\n') :
+            '';
+
+            document.getElementById('anexosPreview').innerHTML = '';
+            if (p.anexos && p.anexos.length > 0) {
+                p.anexos.forEach((a, idx) => {
+                    const isImage = a.tipo && a.tipo.startsWith('image/');
+                    const preview = document.createElement('div');
+                    preview.className = 'anexo-item';
+                    preview.innerHTML = `
+                        <span class="tipo">${isImage ? '🖼️' : '📄'}</span>
+                        <span class="nome">${a.nome}</span>
+                        <span class="download" onclick="baixarAnexo('${p.id}', ${idx})">📥</span>
+                        <span class="remove" onclick="removerAnexoNaEdicao('${p.id}', ${idx})">×</span>
+                    `;
+                    document.getElementById('anexosPreview').appendChild(preview);
+                });
+            }
+
+            document.getElementById('modalProcessoTitulo').textContent = '✏️ Editar Processo';
+            document.getElementById('modalProcesso').classList.add('show');
+        }
+
+        function excluirProcesso(id) {
+            if (!confirm('Tem certeza que deseja excluir este processo?')) return;
+            dados.processos = dados.processos.filter(p => p.id !== id);
+            salvarDados();
+            renderizarProcessos();
+            atualizarStats();
+        }
+
+        // ===== FORMULÁRIO PROCESSO =====
+        document.getElementById('formProcesso').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Processa anexos
+            const fileInput = document.getElementById('fAnexos');
+            const anexos = [];
+            if (fileInput.files.length > 0) {
+                for (let f of fileInput.files) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        anexos.push({
+                            id: 'anexo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                            nome: f.name,
+                            tipo: f.type,
+                            tamanho: f.size,
+                            data: new Date().toISOString(),
+                            conteudo: ev.target.result
+                        });
+                        if (anexos.length === fileInput.files.length) {
+                            finalizarSalvar(anexos);
+                        }
+                    };
+                    reader.readAsDataURL(f);
+                }
+                if (fileInput.files.length === 0) {
+                    finalizarSalvar([]);
+                }
+            } else {
+                finalizarSalvar([]);
+            }
+
+            function finalizarSalvar(novosAnexos) {
+                const obsTexto = document.getElementById('fObservacoes').value.trim();
+
+                const dadosForm = {
+                    id: editandoProcessoId || 'proc_' + Date.now(),
+                    numero: document.getElementById('fNumero').value.trim(),
+                    cliente: document.getElementById('fCliente').value.trim(),
+                    assunto: document.getElementById('fAssunto').value.trim(),
+                    vara: document.getElementById('fVara').value.trim(),
+                    juiz: document.getElementById('fJuiz').value.trim(),
+                    status: document.getElementById('fStatus').value,
+                    anexos: [],
+                    observacoes: []
+                };
+
+                if (editandoProcessoId) {
+                    const idx = dados.processos.findIndex(p => p.id === editandoProcessoId);
+                    if (idx !== -1) {
+                        const existente = dados.processos[idx];
+                        dadosForm.anexos = [...existente.anexos || [], ...novosAnexos];
+                        dadosForm.observacoes = existente.observacoes || [];
+
+                        // Se o campo de observações foi preenchido, adiciona como nova observação
+                        if (obsTexto) {
+                            dadosForm.observacoes.push({
+                                id: 'obs_' + Date.now(),
+                                texto: obsTexto,
+                                data: new Date().toISOString()
+                            });
+                        }
+
+                        dados.processos[idx] = { ...existente, ...dadosForm };
+                    }
+                } else {
+                    dadosForm.anexos = novosAnexos;
+
+                    // Adiciona observação inicial se preenchida
+                    if (obsTexto) {
+                        dadosForm.observacoes.push({
+                            id: 'obs_' + Date.now(),
+                            texto: obsTexto,
+                            data: new Date().toISOString()
+                        });
+                    }
+
+                    dados.processos.push(dadosForm);
+                }
+
+                salvarDados();
+                fecharModal('modalProcesso');
+                renderizarProcessos();
+                atualizarStats();
+            }
+        });
+
+        // ===== REMOVER ANEXO NA EDIÇÃO =====
+        function removerAnexoNaEdicao(processoId, index) {
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p || !p.anexos) return;
+            p.anexos.splice(index, 1);
+            salvarDados();
+            editarProcesso(processoId);
+        }
+
+        // ===== BAIXAR ANEXO =====
+        function baixarAnexo(processoId, index) {
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p || !p.anexos || !p.anexos[index]) return;
+            const anexo = p.anexos[index];
+            const link = document.createElement('a');
+            link.href = anexo.conteudo;
+            link.download = anexo.nome;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // ===== DETALHES DO PROCESSO =====
+        function verDetalhes(id) {
+            const p = dados.processos.find(pr => pr.id === id);
+            if (!p) return;
+
+            document.getElementById('detalhesTitulo').textContent = `📄 ${p.numero} - ${p.cliente}`;
+
+            let html = '';
+
+            // Informações básicas
+            html += `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;background:#0d0d1a;padding:12px 16px;border-radius:8px;">
+                    <div><strong>Número:</strong> ${p.numero}</div>
+                    <div><strong>Cliente:</strong> ${p.cliente}</div>
+                    <div><strong>Assunto:</strong> ${p.assunto}</div>
+                    <div><strong>Status:</strong> <span class="status-badge ${p.status === 'Ativo' ? 'status-ativo' : p.status === 'Concluído' ? 'status-concluido' : 'status-arquivado'}">${p.status}</span></div>
+                    <div><strong>Vara:</strong> ${p.vara || 'N/A'}</div>
+                    <div><strong>Juiz:</strong> ${p.juiz || 'N/A'}</div>
+                </div>
+            `;
+
+            // Anexos
+            html += `<h3 style="color:#64b5f6;margin-top:12px;">📎 Anexos</h3>`;
+            html += `<button onclick="abrirAnexoModal('${p.id}')" class="btn-primary btn-sm" style="margin:8px 0;">➕ Adicionar Anexo</button>`;
+
+            if (!p.anexos || p.anexos.length === 0) {
+                html += `<p class="empty-msg" style="padding:16px;">Nenhum anexo</p>`;
+            } else {
+                html += `<div class="anexos-list">`;
+                p.anexos.forEach((a, idx) => {
+                    const isImage = a.tipo && a.tipo.startsWith('image/');
+                    const size = a.tamanho ? (a.tamanho / 1024).toFixed(1) + ' KB' : '';
+                    html += `
+                        <div class="anexo-item">
+                            <span class="tipo">${isImage ? '🖼️' : '📄'}</span>
+                            <span class="nome" title="${a.nome}">${a.nome}</span>
+                            <span style="font-size:10px;color:#666;">${size}</span>
+                            <span class="download" onclick="baixarAnexo('${p.id}', ${idx})">📥</span>
+                            <span class="remove" onclick="removerAnexoDetalhes('${p.id}', ${idx})">×</span>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+
+                // Exibe imagens
+                const imagens = p.anexos.filter(a => a.tipo && a.tipo.startsWith('image/'));
+                if (imagens.length > 0) {
+                    html += `<div class="image-preview-container">`;
+                    imagens.forEach((img, idx) => {
+                        const realIdx = p.anexos.indexOf(img);
+                        html += `
+                            <div class="img-wrapper">
+                                <img src="${img.conteudo}" alt="${img.nome}" onclick="window.open('${img.conteudo}', '_blank')">
+                                <button class="remove-img" onclick="removerAnexoDetalhes('${p.id}', ${realIdx})">×</button>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+            }
+
+            // Observações
+            html += `<h3 style="color:#64b5f6;margin-top:20px;">📝 Observações</h3>`;
+            html += `<button onclick="abrirModalObservacao('${p.id}')" class="btn-primary btn-sm" style="margin:8px 0;">➕ Adicionar Observação</button>`;
+
+            if (!p.observacoes || p.observacoes.length === 0) {
+                html += `<p class="empty-msg" style="padding:16px;">Nenhuma observação</p>`;
+            } else {
+                p.observacoes.slice().reverse().forEach(obs => {
+                    html += `
+                        <div class="observacao-item">
+                            <div class="texto">${obs.texto}</div>
+                            <div class="data">${new Date(obs.data).toLocaleString('pt-BR')}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('detalhesConteudo').innerHTML = html;
+            document.getElementById('modalDetalhes').classList.add('show');
+        }
+
+        // ===== MODAL ANEXO (dentro de detalhes) =====
+        function abrirAnexoModal(processoId) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.multiple = true;
+            input.accept = '.pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.txt,.xls,.xlsx';
+            input.onchange = function(e) {
+                const files = e.target.files;
+                if (files.length === 0) return;
+
+                const p = dados.processos.find(pr => pr.id === processoId);
+                if (!p) return;
+                if (!p.anexos) p.anexos = [];
+
+                let carregados = 0;
+                for (let f of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(ev) {
+                        p.anexos.push({
+                            id: 'anexo_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                            nome: f.name,
+                            tipo: f.type,
+                            tamanho: f.size,
+                            data: new Date().toISOString(),
+                            conteudo: ev.target.result
+                        });
+                        carregados++;
+                        if (carregados === files.length) {
+                            salvarDados();
+                            verDetalhes(processoId);
+                            atualizarStats();
+                            renderizarProcessos();
+                        }
+                    };
+                    reader.readAsDataURL(f);
+                }
+            };
+            input.click();
+        }
+
+        function removerAnexoDetalhes(processoId, index) {
+            if (!confirm('Remover este anexo?')) return;
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p || !p.anexos) return;
+            p.anexos.splice(index, 1);
+            salvarDados();
+            verDetalhes(processoId);
+            atualizarStats();
+            renderizarProcessos();
+        }
+
+        // ===== MODAL OBSERVAÇÃO =====
+        function abrirModalObservacao(processoId) {
+            document.getElementById('fObsProcessoId').value = processoId;
+            document.getElementById('fObsTexto').value = '';
+            document.getElementById('modalObservacao').classList.add('show');
+        }
+
+        document.getElementById('formObservacao').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const processoId = document.getElementById('fObsProcessoId').value;
+            const texto = document.getElementById('fObsTexto').value.trim();
+
+            if (!texto) {
+                alert('Digite uma observação.');
+                return;
+            }
+
+            const p = dados.processos.find(pr => pr.id === processoId);
+            if (!p) return;
+            if (!p.observacoes) p.observacoes = [];
+
+            p.observacoes.push({
+                id: 'obs_' + Date.now(),
+                texto: texto,
+                data: new Date().toISOString()
+            });
+
+            salvarDados();
+            fecharModal('modalObservacao');
+            verDetalhes(processoId);
+            atualizarStats();
+            renderizarProcessos();
+        });
+
+        // ===== FUNÇÕES GLOBAIS =====
+        function fecharModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                }
+            });
+        });
+
+        // ===== EXPORTAR / IMPORTAR =====
+        function exportarDados() {
+            const dataStr = JSON.stringify(dados, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `legal_manager_backup_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importarDados() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    try {
+                        const imported = JSON.parse(ev.target.result);
+                        if (confirm('Isso vai substituir todos os dados. Continuar?')) {
+                            dados = imported;
+                            if (!dados.processos) dados.processos = [];
+                            dados.processos.forEach(p => {
+                                if (!p.anexos) p.anexos = [];
+                                if (!p.observacoes) p.observacoes = [];
+                            });
+                            salvarDados();
+                            renderizarProcessos();
+                            atualizarStats();
+                            alert('✅ Dados importados!');
+                        }
+                    } catch (err) {
+                        alert('❌ Erro ao importar: ' + err.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function sincronizar() {
+            salvarDados();
+            alert('✅ Dados sincronizados!');
+        }
+
+        console.log('⚖️ Legal Manager Pro carregado!');
+        console.log(`📂 ${dados.processos.length} processos`);
+    </script>
+
+</body>
+</html>

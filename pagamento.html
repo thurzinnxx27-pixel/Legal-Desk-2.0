@@ -158,70 +158,50 @@
             text-align: center;
             padding: 20px 0;
         }
-        .pix-area .qr-code {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid #2a2a4a;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .pix-area .qr-code img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
         .pix-area .chave-container {
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
             background: #0d0d1a;
-            padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 12px;
+            padding: 20px;
             border: 1px solid #1a3a6b;
+            margin-bottom: 16px;
+        }
+        .pix-area .chave-container .titulo {
+            font-size: 13px;
+            color: #8888aa;
+            margin-bottom: 8px;
         }
         .pix-area .chave-container .chave {
-            font-size: 14px;
-            color: #e0e0e0;
-        }
-        .pix-area .chave-container .chave strong {
+            font-size: 22px;
+            font-weight: 700;
             color: #64b5f6;
+            word-break: break-all;
+        }
+        .pix-area .chave-container .chave-telefone {
+            font-size: 16px;
+            color: #90caf9;
+            margin-top: 4px;
         }
         .pix-area .chave-container .btn-copiar {
+            margin-top: 12px;
             background: #0d47a1;
             color: white;
             border: none;
-            padding: 4px 12px;
-            border-radius: 4px;
+            padding: 10px 24px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            width: 100%;
         }
         .pix-area .chave-container .btn-copiar:hover {
             background: #1565c0;
         }
         .pix-area .info-text {
-            font-size: 13px;
-            color: #8888aa;
+            font-size: 14px;
+            color: #aaaacc;
             margin-top: 8px;
         }
-        .pix-area .aviso {
-            margin-top: 12px;
-            padding: 10px 14px;
-            background: #1a1a3e;
-            border-radius: 8px;
-            border-left: 3px solid #ffb74d;
-            font-size: 12px;
-            color: #aaaacc;
-            text-align: left;
-        }
-        .pix-area .aviso strong {
+        .pix-area .info-text strong {
             color: #ffb74d;
         }
         .security-badge {
@@ -322,6 +302,14 @@
                 transform: translateX(-50%) translateY(0);
             }
         }
+        .chave-secundaria {
+            font-size: 13px;
+            color: #666688;
+            margin-top: 6px;
+        }
+        .chave-secundaria strong {
+            color: #8888aa;
+        }
     </style>
 </head>
 <body>
@@ -373,20 +361,19 @@
             <button onclick="processarPagamento('cartao')" class="btn-primary">🔒 Pagar com Cartão</button>
         </div>
 
-        <!-- ABA PIX -->
+        <!-- ABA PIX COM SUAS CHAVES -->
         <div id="tabPix" class="tab-content">
             <div class="pix-area">
-                <div class="qr-code" id="qrCodeContainer">
-                    <img id="qrCodeImage" src="" alt="QR Code Pix">
-                </div>
                 <div class="chave-container">
-                    <span class="chave">Chave Pix: <strong id="pixChave">legal@desk.com.br</strong></span>
-                    <button class="btn-copiar" onclick="copiarChavePix()">📋 Copiar</button>
+                    <div class="titulo">📌 Chave Pix (copie e cole no app do seu banco)</div>
+                    <div class="chave" id="pixChave">115.889.789-82</div>
+                    <div class="chave-telefone">📱 Também disponível: <span id="pixTelefone">(41) 98889-6304</span></div>
+                    <button class="btn-copiar" onclick="copiarChavePix()">📋 Copiar Chave Pix</button>
+                    <div class="chave-secundaria">
+                        💡 <strong>Dica:</strong> Você também pode usar a chave <strong id="pixTelefone2">(41) 98889-6304</strong> para pagar via Pix.
+                    </div>
                 </div>
-                <p class="info-text">📌 Escaneie o QR Code com o <strong>app do seu banco</strong> (não use o leitor genérico da câmera).</p>
-                <div class="aviso">
-                    <strong>ℹ️ Importante:</strong> Caso o QR Code abra seu e-mail, <strong>copie a chave Pix</strong> manualmente e cole no app do seu banco para efetuar o pagamento.
-                </div>
+                <p class="info-text">📌 Copie a chave Pix e cole no app do seu banco para efetuar o pagamento.</p>
                 <button onclick="processarPagamento('pix')" class="btn-primary" style="margin-top:12px;">✅ Confirmar Pagamento via Pix</button>
             </div>
         </div>
@@ -402,7 +389,14 @@
     <div id="copyFeedback" class="copy-feedback">✅ Chave Pix copiada!</div>
 
     <script>
-        // ===== PLANO ESCOLHIDO =====
+        // =============================================
+        // SUAS CHAVES PIX (NÃO MEXA AQUI)
+        // =============================================
+        const CHAVE_PIX_CPF = '115.889.789-82';
+        const CHAVE_PIX_TELEFONE = '(41) 98889-6304';
+
+        // =============================================
+
         let planoSelecionado = { gb: 1, preco: 4.90, codigo: 'LEGAL-1GB' };
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -427,11 +421,10 @@
                 <option value="3">3x de R$ ${(preco/3).toFixed(2).replace('.', ',')}</option>
             `;
 
-            // Gera QR Code com a chave Pix (usando API gratuita)
-            const chavePix = 'legal@desk.com.br';
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(chavePix)}`;
-            document.getElementById('qrCodeImage').src = qrUrl;
-            document.getElementById('pixChave').textContent = chavePix;
+            // Exibe as chaves
+            document.getElementById('pixChave').textContent = CHAVE_PIX_CPF;
+            document.getElementById('pixTelefone').textContent = CHAVE_PIX_TELEFONE;
+            document.getElementById('pixTelefone2').textContent = CHAVE_PIX_TELEFONE;
         });
 
         // ===== TROCAR ABA =====
@@ -442,13 +435,11 @@
             document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
         }
 
-        // ===== COPIAR CHAVE PIX =====
+        // ===== COPIAR CHAVE PIX (CPF) =====
         function copiarChavePix() {
-            const chave = document.getElementById('pixChave').textContent;
+            const chave = document.getElementById('pixChave').textContent.trim();
             navigator.clipboard.writeText(chave).then(() => {
-                const feedback = document.getElementById('copyFeedback');
-                feedback.classList.add('show');
-                setTimeout(() => feedback.classList.remove('show'), 3000);
+                mostrarFeedback('✅ Chave Pix copiada!');
             }).catch(() => {
                 // Fallback
                 const textarea = document.createElement('textarea');
@@ -457,10 +448,15 @@
                 textarea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
-                const feedback = document.getElementById('copyFeedback');
-                feedback.classList.add('show');
-                setTimeout(() => feedback.classList.remove('show'), 3000);
+                mostrarFeedback('✅ Chave Pix copiada!');
             });
+        }
+
+        function mostrarFeedback(msg) {
+            const feedback = document.getElementById('copyFeedback');
+            feedback.textContent = msg;
+            feedback.classList.add('show');
+            setTimeout(() => feedback.classList.remove('show'), 3000);
         }
 
         // ===== PROCESSAR PAGAMENTO =====
@@ -536,6 +532,8 @@
         });
 
         console.log('💳 Tela de pagamento carregada!');
+        console.log(`🔑 Chave Pix configurada: ${CHAVE_PIX_CPF}`);
+        console.log(`📱 Telefone: ${CHAVE_PIX_TELEFONE}`);
     </script>
 
 </body>
